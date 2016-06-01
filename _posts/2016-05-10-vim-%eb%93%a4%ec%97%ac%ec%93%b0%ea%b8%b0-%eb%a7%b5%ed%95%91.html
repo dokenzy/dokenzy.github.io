@@ -1,0 +1,30 @@
+---
+layout: post
+title: 'Vim: 들여쓰기 맵핑'
+post_id: '2199'
+date: 2016-05-10 00:55:11.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- macvim
+- vimrc
+- 들여쓰기
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>나는 파이썬을 주로 쓰는데, 최근에 React를 공부하면서 자바스크립트 코드를 매일 접하고 있다.</p>
+<p>파이썬을 할 때는 탭 간격을 4로 주었는데(실제로는 스페이스 4개로 치환된다), 다른 사람이 작성한 자바스크립트 코드는 보통 탭 간격이 2이다. 그리고 자바스크립트 특성상, 특히 jsx에서 파이썬보다 들여쓰기를 많이 하게 된다.</p>
+<p>그러다보니 MacVim 기본 탭 간격과 자동 들여쓰기 레벨인 4를 자바스크립트 코드를 수정할 때마다 일일이 set ts=2, set sw=2 명령으로 바꿨는데, 도저히 귀찮아서 이대로는 참을 수가 없다.</p>
+<p>간단하게 F2키와 F4키에 들여쓰기 레벨을 바꾸도록 맵핑하는 코드를 .vimrc에 추가해 주었다.</p>
+<pre class="lang:vim decode:true ">map &lt;F2&gt; &lt;Esc&gt;:set ts=2&lt;CR&gt;:set sw=2&lt;CR&gt;
+map &lt;F4&gt; &lt;Esc&gt;:set ts=4&lt;CR&gt;:set sw=4&lt;CR&gt;</pre>
+<p>F2키를 누르면 탭 간격을 2로, F4키를 누르면 탭 간격을 4로 바꿔준다.</p>

@@ -1,0 +1,76 @@
+---
+layout: post
+title: 리눅스에 TeXLive 2013 medium + ko.TeX 설치하기
+post_id: '1451'
+date: 2014-05-09 12:32:23.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- ko.tex
+- kotex
+- linux
+- medium
+- texlive
+- tlmgr
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>리눅스에 TeXLive 2013을 medium으로 설치할 일이 생겼다. 작년 11월부터는 full로 설치하면 kotex*까지 함께 설치가 되는데, medium으로 설치하면 kotex은 따로 설치해 주어야 한다.</p>
+<h2>1. TeXLive 2013을 medium으로 설치하기</h2>
+<ol>
+<li><a href="http://tug.org/texlive/acquire-netinstall.html">http://tug.org/texlive/acquire-netinstall.html</a>에서 설치 스크립트(install-tl-unx.tar.gz)를 다운로드한다.</li>
+<li>압축을 풀고 터미널에서 설치 스크립트를 실행한다.<br />
+<span class="lang:default decode:true crayon-inline">sudo ./install-tl --repository http://ftp.ktug.or.kr/tex-archive/systems/texlive/tlnet/</span><br />
+repository 옵션은 말 그대로 옵션이다. 기본으로 자주 선택되는 미러가 KAIST 서버인데 속도가 너무 느리다. KTUG서버에서 받으면 빠르다.<br />
+만약 perl-tk가 설치되어 있다면 아래 명령으로 GUI로 설치할 수 있다.<br />
+<span class="lang:default decode:true crayon-inline">sudo ./install-tl --repository &amp;nbsp;--repository http://ftp.ktug.or.kr/tex-archive/systems/texlive/tlnet/ --gui</span><br />
+gui로 설치하게 되면 Progress님의 블로그 중 <a href="http://progress.tistory.com/214">TeXLive 2014 pretest</a> 글에 나오는 스크린샷처럼 설치할 수 있다.</li>
+<li>잠시 기다리면 옵션 대화상자가 보인다. 중요한 부분이 S 항목에 있는 scheme-full이다.<br />
+<span class="lang:default decode:true  crayon-inline">&lt;S&gt; set installation scheme (scheme-full)</span><br />
+이를 medium으로 변경한다.<br />
+<span class="lang:default decode:true  crayon-inline">&lt;S&gt; set installation scheme (scheme-medium)</span></li>
+<li>i를 입력하고 엔터를 누르면 TeXLive를 설치한다. 2014년 5월 9일 현재 819개의 패키지가 설치된다.</li>
+</ol>
+<h2>2. TeXLive 설정</h2>
+<ol>
+<li>심볼릭 링크<br />
+<span class="lang:default decode:true crayon-inline">sudo ln -s /usr/local/texlive/2013/bin/아키텍쳐이름/ /usr/texbin</span></li>
+<li>/etc/profile 또는 홈디렉토리/.bash_profile에 다음을 추가
+<pre class="lang:default decode:true crayon-selected">PATH=/usr/texbin:$PATH
+MANPATH=/usr/local/texlive/2013/texmf-dist/doc/man:$MANPATH
+INFOPATH=/usr/local/texlive/2013/texmf-dist/doc/info:$INFOPATH</pre>
+<p>/etc/profile을 수정하려면 root 권한으로 해야 한다.<br />
+수정하고 나면 한 번 로그아웃 하고 오던지 아니면 아래 명령을 실행한다.<br />
+<span class="lang:default decode:true  crayon-inline  crayon-selected">source ~/.bash_profile</span><br />
+물론 /etc/profile을 수정했다면 그 파일에 대해 source 명령을 해준다.</li>
+<li>만약 sudo tlmgr 했을 때 command not found라고 나온다면 다음 명령을 실행해보자.<br />
+<span class="lang:default decode:true crayon-inline">sudo env PATH="$PATH" tlmgr path add</span></li>
+<li>이제 texlive가 제대로 깔렸는지, 설정이 제대로 됐는지 확인도 할 겸 다음 명령을 실행해 보자.<br />
+<span class="lang:default decode:true crayon-inline crayon-selected">sudo tlmgr update --self --all</span><br />
+네트워크 설치를 했기 때문에 업데이트할 것은 아마 없겠지만 명령은 잘 실행이 되어야 한다.</li>
+</ol>
+<h2> 3. ko.TeX 설치</h2>
+<p>2013년 10월 28일 kotex이 CTAN에 등록된 데 이어, 2013년 11월 9일 드디어 TeXLive에도 포함되었다! (관련글: <a href="http://www.ktug.org/xe/index.php?document_srl=176730">http://www.ktug.org/xe/index.php?document_srl=176730</a>) 따라서 TeXLive 2013을 full로 설치하면 kotex도 자동으로 설치된다.</p>
+<p>하지만 이 글에서는 medium으로 설치했기 때문에 kotex을 추가적으로 설치해 주어야 한다. 하지만 이미 texlive를 깔았기 때문에 아주 쉽게 설치할 수 있다.</p>
+<pre class="lang:default decode:true crayon-selected">sudo tlmgr install nanumtype1 cjk cjk-ko uhc kotex-utf kotex-plain kotex-oblivoir kotex-utils</pre>
+<p>textpos같은 패키지도 위와 같이 설치할 수 있다.</p>
+<pre class="lang:default decode:true">sudo tlmgr install textpos</pre>
+<p>끝. 그 외 옛한글이나 jiwonlipsum 등의 패키지는 ktug의 사설저장소를 추가하면 되는데, 그런 건 필요한 사람만 알아서...</p>
+<h2>4. 참고한 글</h2>
+<ul>
+<li><a href="http://doeun.blogspot.kr/2011/12/texlive-medium.html">texlive medium으로 살아보기</a></li>
+<li><a href="http://wiki.ktug.org/wiki/wiki.php/%EB%A6%AC%EB%88%85%EC%8A%A4%EC%97%90%EC%84%9C%EC%9D%98%20TeX%20Live%EC%99%80%20ko.TeX%EC%9D%98%20%EC%84%A4%EC%B9%98">리눅스에서의 TeX Live와 ko.TeX의 설치</a></li>
+<li><a href="http://askubuntu.com/questions/66498/setting-tex-live-path-for-root">Setting TeX Live path for root</a></li>
+<li><a href="http://faq.ktug.org/faq/%B8%AE%B4%AA%BD%BA%BF%A1%BC%AD%BC%B3%C4%A1%C7%CF%B1%E2">리눅스에서 설치하기</a></li>
+<li><a href="http://www.ktug.org/xe/index.php?document_srl=176730">ko.TeX CTAN 등록</a></li>
+</ul>
+<p>위에 소개한 글 중에는 kotex이 TeXLive 2013에 포함되기 전에 작성된 글이 있다. 따라서  texlive 2013을 설치된 시스템에서 kotex을 설치하는 방법은 지금 읽고 있는 이 글만 참고하면 된다.</p>

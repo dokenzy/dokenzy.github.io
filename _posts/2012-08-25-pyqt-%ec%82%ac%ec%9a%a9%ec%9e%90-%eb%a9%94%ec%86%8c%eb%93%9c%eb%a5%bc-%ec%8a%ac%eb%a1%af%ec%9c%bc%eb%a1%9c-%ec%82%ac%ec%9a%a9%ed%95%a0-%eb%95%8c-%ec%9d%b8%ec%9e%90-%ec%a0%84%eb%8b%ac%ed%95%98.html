@@ -1,0 +1,38 @@
+---
+layout: post
+title: 'PyQt: 사용자 메소드를 슬롯으로 사용할 때 인자 전달하기'
+post_id: '72'
+date: 2012-08-25 17:28:50.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- lambda
+- pyqt
+- Python
+- signal
+- slot
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyQt는 Signal, Slot이라는 개념으로 이벤트 처리를 한다.</p>
+<p>"Signal이 발생하면 Slot이 처리한다"같은 식이다.</p>
+<pre>self.connect(btnCancel, SIGNAL("clicked()"), SLOT("reject()"))</pre>
+<p>위 예에서는 btnCancel버튼에 clicked()라는 시그널이 발생하면 reject()라는 슬롯이 호출된다.</p>
+<p>위와 같이 PyQt에서 제공하는 슬롯( reject() ) 외에 사용자가 정의한 함수도 슬롯으로 사용할 수 있다.</p>
+<pre>self.connect(btnOK, SIGNAL("clicked()"), self.renamer())</pre>
+<p>와 같은 방식이다. 그런데 renamer라는 메소드는 다음과 같이 정의되어 있다.</p>
+<pre>def renamer(self, ori_name, new_name):
+	#pass</pre>
+<p>즉, self.renamer()가 슬롯으로 호출될 때에 두 가지 인자를 전달해 주어야 하는 것이다.</p>
+<pre>self.connect(btnOK, SIGNAL("clicked()"), self.renamer(ori_name, new_name))</pre>
+<p>이렇게 하면 참 좋겠지만, PyQt에서는 이렇게 사용할 수 없다. 다음과 같이 Lambda를 이용하면 간단하게 처리할 수 있다.</p>
+<pre>self.connect(btnOK, SIGNAL("clicked()"), lambda: self.renamer(ori_name, new_name))</pre>

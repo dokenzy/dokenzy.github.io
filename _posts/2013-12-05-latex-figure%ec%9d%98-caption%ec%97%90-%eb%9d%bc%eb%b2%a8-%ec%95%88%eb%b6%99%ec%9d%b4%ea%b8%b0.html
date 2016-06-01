@@ -1,0 +1,37 @@
+---
+layout: post
+title: 'LaTeX:: figure의 caption에 라벨 안붙이기'
+post_id: '712'
+date: 2013-12-05 19:42:03.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- caption
+- figure
+- label
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>이렇게 하면 이런 텍스트박스에도 캡션을 넣으면 라벨이 자동으로 붙는다.</p>
+<pre class="lang:tex decode:true">\begin{figure}
+나는 우리나라가 세계에서 가장 아름다운 나라가 되기를 원한다. 가장 부강한 나라가 되기를 원하는 것은 아니다. 내가 남의 침략에 가슴이 아팠으니, 내 나라가 남을 침략하는 것을 원치 아니한다. 우리의 부력은 우리의 생활을 풍족히 할 만하고, 우리의 강력은 남의 침략을 막을 만하면 족하다. 오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.
+\caption{`내가 원하는 우리나라(백범 김구)' 중 일부}
+\end{figure}</pre>
+<p>이 박스만 캡션에서 라벨을 빼자.</p>
+<pre class="lang:tex decode:true ">\usepackage{caption}
+...
+\begin{figure}
+나는 우리나라가 세계에서 가장 아름다운 나라가 되기를 원한다. 가장 부강한 나라가 되기를 원하는 것은 아니다. 내가 남의 침략에 가슴이 아팠으니, 내 나라가 남을 침략하는 것을 원치 아니한다. 우리의 부력은 우리의 생활을 풍족히 할 만하고, 우리의 강력은 남의 침략을 막을 만하면 족하다. 오직 한없이 가지고 싶은 것은 높은 문화의 힘이다.
+\caption*{`내가 원하는 우리나라(백범 김구)' 중 일부}
+\end{figure}</pre>
+<p>caption 패키지를 사용해서 \caption*{} 명령을 사용하자.</p>

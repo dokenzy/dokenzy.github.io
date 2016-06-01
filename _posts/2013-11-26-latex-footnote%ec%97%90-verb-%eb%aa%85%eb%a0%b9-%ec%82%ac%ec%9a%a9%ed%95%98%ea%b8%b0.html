@@ -1,0 +1,37 @@
+---
+layout: post
+title: 'LaTeX:: \footnote{}에 \verb 명령 사용하기'
+post_id: '680'
+date: 2013-11-26 17:40:49.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- bigfoot
+- fancyvrb
+- footnote
+- latex
+- verb
+- verbatimfootnotes
+- verbfootnote
+- 각주
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><span class="lang:tex decode:true  crayon-inline ">\footnote{}</span>   명령은 각주를 넣어준다. 각주에 소스코드 따위를 <span class="lang:tex decode:true  crayon-inline ">\verb|\usepackage{}|</span> 와 같이 입력해야 할 경우가 생긴다.</p>
+<p>그냥 <span class="lang:tex decode:true  crayon-inline ">\footnote{\verb|\usepackage{}|}</span> 와 같이 사용하면  이런 오류가 발생한다.</p>
+<pre class="lang:sh decode:true">! LaTeX Error: Can be used only in preamble.</pre>
+<p>해결방법:<br />
+<a href="http://tex.stackexchange.com/questions/203/how-to-obtain-verbatim-text-in-a-footnote" target="_blank">http://tex.stackexchange.com/questions/203/how-to-obtain-verbatim-text-in-a-footnote</a></p>
+<p>1. 만약 memoir 클래스를 사용한다면, <span class="lang:tex decode:true  crayon-inline ">\footnote{}</span>  명령 대신 memoir 클래스가 제공하는 <span class="lang:tex decode:true  crayon-inline ">\verbfootnote{}</span>  명령을 사용한다.</p>
+<p>2. bigfoot 패키지를 사용하거나 fancyvrb 패키지가 제공하는 <span class="lang:tex decode:true  crayon-inline ">\VerbatimFootnotes</span> 명령을 프리앰블에 선언해 준다.</p>
+<p>&nbsp;</p>

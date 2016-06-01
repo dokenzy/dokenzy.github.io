@@ -1,0 +1,67 @@
+---
+layout: post
+title: 'vim 플러그인:: nerdcommenter'
+post_id: '1427'
+date: 2014-05-02 01:08:24.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- comment
+- nerdcommenter
+- plugin
+- Vim
+- 주석
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>오늘 좋은 Vim 플러그인을 발견했다. 이름하야 NERDCommenter</p>
+<p><a href="https://github.com/scrooloose/nerdcommenter">https://github.com/scrooloose/nerdcommenter</a></p>
+<p>각 언어에 맞게 주석처리를 쉽게 할 수 있게 해준다. vimrc에 설정하지 않아도 대부분의 기능을 쉽게 사용할 수 있다.</p>
+<p>아주 유용한 플러그인이라서 배워서 쓸 겸 사용법을 한글로 옮겨봤다. 옮기지 않은 부분은 내가 이해하지 못했거나 어떻게 쓰는지 모르는 것들이다. 옮기면서 내 생각도 섞었다.</p>
+<p><a href="http://spf13.com/post/vim-plugins-nerd-commenter">http://spf13.com/post/vim-plugins-nerd-commenter</a>에서 구체적인 예를 볼 수도 있다.</p>
+<h2 style="font-weight: bold; color: #333333;">1. 사용법</h2>
+<p style="color: #333333;">이 키 맵팅은 기본으로 제공된다(메뉴로도 제공됨).</p>
+<p>아래의 대부분의 맵핑은 normal/visual 모드에서만 쓰인다. |NerdComInsertComment|맵핑은 insert 모드에서만 쓰인다.</p>
+<p><strong>[count]&lt;leader&gt;cc |NERDComComment|</strong><br />
+현재 줄이나 visual모드에서 선택된 텍스트를 주석처리</p>
+<p><strong>[count]&lt;leader&gt;cn |NERDComNestedComment|</strong><br />
+Same as &lt;leader&gt;cc but forces nesting.</p>
+<p><strong>[count]&lt;leader&gt;c |NERDComToggleComment|</strong><br />
+Toggles the comment state of the selected line(s). If the topmost selected line is commented, all selected lines are uncommented and vice versa.</p>
+<p><strong>[count]&lt;leader&gt;cm |NERDComMinimalComment|</strong><br />
+여러 줄을 주석처리할 때 주석기호를 한 번만 사용(말로 하니 이상한데, 여러 줄 선택한 상태에서 해보면 됨). 파일 타입에 따라 안되는 언어들도 있음(예: 파이썬)</p>
+<p><strong>[count]&lt;leader&gt;ci |NERDComInvertComment|</strong><br />
+각 선택한 줄의 주석 상태 토글. 여러 줄을 선택한 상태에서도 쓸 수 있음</p>
+<p><strong>[count]&lt;leader&gt;cs |NERDComSexyComment|</strong><br />
+선택한 줄을 '멋있게' 주석처리</p>
+<p><strong>[count]&lt;leader&gt;cy |NERDComYankComment|</strong><br />
+첫번째 줄이 복사(yanked)된다는 것만 빼면 &lt;leader&gt;cc와 같다.</p>
+<p><strong>&lt;leader&gt;c$ |NERDComEOLComment|</strong><br />
+현재 줄에서 커서 위치부터 줄 끝까지 주석처리</p>
+<p><strong>&lt;leader&gt;cA |NERDComAppendComment|</strong><br />
+줄 끝에 주석 기호를 추가하고 입력 상태로 바꿈</p>
+<p><strong>|NERDComInsertComment|</strong><br />
+Adds comment delimiters at the current cursor position and inserts between. Disabled by default.</p>
+<p><strong>&lt;leader&gt;ca |NERDComAltDelim|</strong><br />
+주석 기호를 다른 것으로 바꿈(vimrc에 설정이 되어있어야 한다)</p>
+<p><strong>[count]&lt;leader&gt;cl</strong><br />
+<strong>[count]&lt;leader&gt;cb |NERDComAlignedComment|<br />
+</strong>주석 기호를 정렬해주는 것만 제외하면 |NERDComComment|와 같다. cl은 왼쪽만 정렬해주고, cb는 양쪽 다 정렬해준다.</p>
+<p><strong>[count]&lt;leader&gt;cu |NERDComUncommentLine|</strong><br />
+선택한 줄 주석 해제</p>
+<h2>2. 요약</h2>
+<p>거의 모든 기능이 [count]와 함께 쓸 수 있기 때문에 인라인 주석, 블록 주석이라는 구분은 애매하다. 다만 내 기준으로 보면 이런 식으로 쓰는 게 좋은 것 같다.</p>
+<ul>
+<li>블럭 주석처리: cb, cl, cm, cs</li>
+<li>인라인 주석처리: cc, cn,</li>
+<li>주석 처리 토글: ci</li>
+</ul>

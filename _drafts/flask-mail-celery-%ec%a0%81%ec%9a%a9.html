@@ -1,0 +1,43 @@
+---
+layout: post
+title: Flask-Mail + Celery 적용
+post_id: '1979'
+date: 
+type: post
+published: false
+status: trash
+categories:
+- 일반
+tags: []
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>요즘 만들고 있는 웹 어플리케이션이 있는데, 1차 목표가 어느 정도 마무리되고 있다.</p>
+<p>이메일 인증하는 기능까지 마치고 슬슬 AWS에 올리려는 중이다.</p>
+<p>그런데 이메일 인증에다가 Celery()를 붙이려니 문제가 생겼다.</p>
+<p>main.py</p>
+<pre class="lang:default decode:true" title="main.py">from . sendmail import send_email
+
+msg = Message(
+    'subject',
+    recipients=['receiver@mail.com'],
+    html=html_template,
+    sender=app.config['MAIL_DEFAULT_SENDER']
+)
+
+send_email.delay(app, msg)</pre>
+<p>sendmail.py</p>
+<pre class="lang:python decode:true" title="sendmail.py">@celery.task
+def send_email(app, msg):
+    with app.app_context():
+        mail.send(msg)
+</pre>
+<p>send_email() 함수에서 mail.send()로 메일을 보내기 위해서는 flask_mail.Mail(app)의 인스턴</p>
+<p>Flask-Mail은 메일을 보낼 때 app_context()가 필요하다. 즉, Flask() 인스턴스가 필요하다.</p>
+<p>&nbsp;</p>

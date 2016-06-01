@@ -1,0 +1,127 @@
+---
+layout: post
+title: 'Python:: Excel 2010에 새 시트 추가하기(4) – xl/_refs/workbook.xml.rels'
+post_id: '919'
+date: 2014-02-14 12:39:26.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- excel
+- lxml
+- parsing
+- Python
+- workbook.xml.rels
+- XML
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>이번에 수정할 파일은 xl/_refs/workbook.xml.rels다.</p>
+<p>이렇게 생겨먹었다.</p>
+<pre class="wrap:true lang:xhtml decode:true">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"&gt;
+  &lt;Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/&gt;
+  &lt;Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/&gt;
+  &lt;Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/&gt;
+  &lt;Relationship Id="rId6" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/sharedStrings" Target="sharedStrings.xml"/&gt;
+  &lt;Relationship Id="rId5" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/&gt;
+  &lt;Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/theme" Target="theme/theme1.xml"/&gt;
+&lt;/Relationships&gt;</pre>
+<p>rId1, rId2, rId3이 실제로 어떤 xml파일과 매핑되었는지 알 수 있다.</p>
+<p>여기에 새 시트를 추가하는 파이썬 코드.</p>
+<pre class="wrap:true lang:python decode:true crayon-selected">def _workbook_refs(self):
+    ''' modify xl/_refs/workbook.xml.rels '''
+    RELS_NAME = 'workbook.xml.rels'
+    # get workbook.xml.rels
+    f = open(workbook_name)
+    s = f.read()
+    f.close()
+    Relationship_XML = etree.XML(bytes(s, 'utf-8'))
+
+    NS_RELS = "http://schemas.openxmlformats.org/package/2006/relationships"
+    relationships = Relationship_XML.findall('ns:Relationship', namespaces={'ns': NS_RELS})
+
+    rId_str = 'rId'
+    rId_len = len(rId_str)
+    rIds = [int(relationship.get('Id')[rId_len:]) for relationship in relationships]
+    rIds = sorted(rIds, reverse=True)
+    changeIds = list(filter(lambda rId: rId &gt;= int(self.count), rIds))
+
+    # change ID in &lt;Relationship@Id&gt; &gt;= number of sheets
+    for rId in changeIds:
+        Id = rId_str + str(rId + 1)
+        _elem = Relationship_XML.find('ns:Relationship[@Id="rId{0}"]'.format(rId),
+                                      namespaces={'ns': NS_RELS})
+        _elem.set('Id', Id)
+
+    new_rId = 'rId' + self.count
+    Type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+    Target = "worksheets/sheet{0}.xml".format(self.count)
+    new_relationship = etree.Element('Relationship', Id=new_rId, Type=Type, Target=Target)
+
+    _relationships = Relationship_XML.xpath('//ns:Relationships', namespaces={'ns': NS_RELS})[0]
+    _relationships.insert(len(relationships), new_relationship)
+
+    # save workbook.xml.rels
+    Relationship_str = etree.tostring(Relationship_XML, encoding='utf-8')
+    f = open(RELS_NAME, 'w')
+    f.write(str(Relationship_str, 'utf-8'))
+    f.close()</pre>
+<p>과정:</p>
+<ol>
+<li>etree.XML()로 workbook.xml.rels파일을 가져온다.
+<pre>    RELS_NAME = 'workbook.xml.rels'
+    # get workbook.xml.rels
+    f = open(workbook_name)
+    s = f.read()
+    f.close()
+    Relationship_XML = etree.XML(bytes(s, 'utf-8'))</pre>
+</li>
+<li> &lt;Relationship&gt;요소들을 가져온다.
+<pre>    NS_RELS = "http://schemas.openxmlformats.org/package/2006/relationships"
+    relationships = Relationship_XML.findall('ns:Relationship', namespaces={'ns': NS_RELS})</pre>
+</li>
+<li>가져온 &lt;Relationship&gt; 요소의 Id값 'rId1', 'rId2', 'rId3', ... 에서 숫자인 1, 2, 3, ... 만 가져온다.
+<pre>    rId_str = 'rId'
+    rId_len = len(rId_str)
+    rIds = [int(relationship.get('Id')[rId_len:]) for relationship in relationships]</pre>
+</li>
+<li>가져온 숫자를 정렬해서 self.count보다 큰 값들만 걸러낸다. 여기서 self.count값은 'app.xml'파일에서 &lt;lpstr&gt;요소의 개수에 1을 더한 후, 유니코드 문자열로 바꾼 값이다. 즉, 실제 시트의 개수인 3보다 1이 큰 4 이상의 값들만 changeIDs 리스트에 넣는 것이다.
+<pre>    rIds = sorted(rIds, reverse=True)
+    changeIds = list(filter(lambda rId: rId &gt;= int(self.count), rIds))</pre>
+</li>
+<li>changeIds에 있는 노드의 Id의 'rId&lt;숫자&gt;'를 하나씩 뒤로 미룬다. 즉 rId4, rId5, rId6을 각각 rId5, rId6, rId7로 변경한다. 결과적으로 현재는 rId4라는 값을 가진 Id는 없다.
+<pre>    # change ID in &lt;Relationship@Id&gt; &gt;= number of sheets
+    for rId in changeIds:
+        Id = rId_str + str(rId + 1)
+        _elem = Relationship_XML.find('ns:Relationship[@Id="rId{0}"]'.format(rId),
+                                      namespaces={'ns': NS_RELS})
+        _elem.set('Id', Id)</pre>
+</li>
+<li>새 &lt;Relationship&gt;요소를 만드는데, Id속성값으로 rId4를 준다. 이전에는 set()메소드로 속성을 추가했는데, 여기서는 새 요소를 만들 때 속성까지 추가해서 만들었다.
+<pre>    new_rId = 'rId' + self.count
+    Type = "http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet"
+    Target = "worksheets/sheet{0}.xml".format(self.count)
+    new_relationship = etree.Element('Relationship', Id=new_rId, Type=Type, Target=Target)</pre>
+</li>
+<li>새로 만든 &lt;Relationship&gt;요소를 &lt;Relationships&gt;요소에 추가한다.
+<pre>    _relationships = Relationship_XML.xpath('//ns:Relationships', namespaces={'ns': NS_RELS})[0]
+    _relationships.insert(len(relationships), new_relationship)</pre>
+</li>
+<li>workbook.xml.res파일에 저장한다.
+<pre>    # save workbook.xml.rels
+    Relationship_str = etree.tostring(Relationship_XML, encoding='utf-8')
+    f = open(RELS_NAME, 'w')
+    f.write(str(Relationship_str, 'utf-8'))
+    f.close()</pre>
+</li>
+</ol>
+<p>끝.</p>

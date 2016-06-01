@@ -1,0 +1,32 @@
+---
+layout: post
+title: bower실행할 때  command not found 오류 해결방법
+post_id: '2050'
+date: 2015-04-26 17:55:27.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- bower
+- command not found
+- npm
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>bower가 참 편하긴한데, command not found 오류가 발생하는 경우가 종종 있다. 이건 bower 문제라기 보단 npm 문제같은데, 멀쩡히 되던 것도 안되는 경우가 종종 있다. meteor도 내부적으로 node를 이용하는데, meteor는 이런 문제는 없는 것 같다.</p>
+<p>아무튼 이런 오류가 발생할 때 해결방법</p>
+<p>참고: <a href="http://stackoverflow.com/questions/12369390/bower-command-not-found">http://stackoverflow.com/questions/12369390/bower-command-not-found</a></p>
+<pre class="lang:sh decode:true">$ npm config set prefix /usr/local
+$ npm install -g bower
+
+$ which bower
+&gt;&gt; /usr/local/bin/bower</pre>
+<p>npm install 명령은 root 권한으로 실행한다.</p>

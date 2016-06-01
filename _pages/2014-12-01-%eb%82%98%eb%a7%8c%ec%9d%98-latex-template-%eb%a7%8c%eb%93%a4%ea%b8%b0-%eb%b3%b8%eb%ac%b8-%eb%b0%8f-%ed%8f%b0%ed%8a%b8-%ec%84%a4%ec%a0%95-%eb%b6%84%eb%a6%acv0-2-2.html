@@ -1,0 +1,23 @@
+---
+layout: page
+title: '나만의 LaTeX-Template 만들기: 이미지 분리(v0.2.2)'
+post_id: '1837'
+date: 2014-12-01 22:15:12.000000000 +09:00
+type: page
+published: true
+status: publish
+categories: []
+tags: []
+meta:
+  _edit_last: '1'
+  _wp_page_template: default
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>이미지만 images 폴더로 옮겼다. 그래서 \includegraphics 명령으로 삽입한 그림의 경로를 바꿔주어야 한다. graphicx 패키지는  graphicspath라는 명령을 제공하는데, 이 명령을 사용하면 이미지 폴더 경로를 미리 설정할 수 있다. 이렇게 설정하게 되면 본문에 들어간 이미지 경로를 바꾸지 않아도 된다.</p>
+<p>단, 이름만 같은 서로 다른 파일이 각각 다른 폴더에 있을 때에는 graphicspath 명령을 사용할 때 순서에 주의해야한다. graphicspath에 선언된 폴더이름부터 검색을 하는데, 첫 번째 검색된 폴더의 이미지를 그냥 사용해 버리기 때문이다. 따라서 이미지 파일 이름은 특별한 경우가 아니면 각각 다르게 하자. 잘 활용하면 꼼수를 부리기 좋은 부분이기도 하다.</p>
+<p>[gist id="6665a779d43b361f58ac"]</p>

@@ -1,0 +1,42 @@
+---
+layout: post
+title: LaTeX::caption
+post_id: '211'
+date: 2012-11-15 12:28:10.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- caption
+- captionof
+- ktug
+- latex
+- minipage
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>KTUG 위키페이지 <a href="http://faq.ktug.or.kr/faq/CaptionOfFloats">Caption Of Floats</a> 에 있는 내용 간단히 요약.</p>
+<p>LaTeX에서 이미지(Figure)나 표(Table)와 같은 떠다니는 개체에 캡션을 달아줄 때는 caption 패키지를 이용한다.</p>
+<pre class="lang:tex decode:true">\usepackage{graphicx}
+\usepackage{caption}
+\begin{figure}
+\includegraphics{sample}
+\caption{sample picture}
+\end{figure}</pre>
+<p>하지만 minipage와 같이 떠다니는 개체가 아닌 경우에도 캡션을 달아줄 때가 있다.<br />
+이 때는 caption 대신 captionof 명령을 이용하면 된다.</p>
+<pre class="lang:tex decode:true">\usepackage{graphicx}
+\usepackage{caption}
+\begin{minipage}{5cm}
+\includegraphics{sample}
+\caption{sample picture}
+\end{minipage}</pre>
+<p>captionof 명령은 minipage환경 안에서 사용해야 한다.</p>

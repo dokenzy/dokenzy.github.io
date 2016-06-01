@@ -1,0 +1,45 @@
+---
+layout: post
+title: LaTeX While 문 예제
+post_id: '1681'
+date: 2014-07-12 18:13:31.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- counter
+- ifthen
+- latex
+- whiledo
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>스택오버플로우에서 좋은 예제 코드를 찾았다.</p>
+<p><a href="http://tex.stackexchange.com/questions/45432/less-than-or-equal-comparison-within-a-whiledo">Less than or equal comparison within a whiledo</a></p>
+<h2>코드:</h2>
+<pre class="lang:tex decode:true">\documentclass{article}
+\usepackage{ifthen}    
+\newcounter{MyCounter}
+\begin{document}
+Note that 10 is not missing when comparing to MaxValue:
+
+\def\StartValue{5}
+\def\MaxValue{10}
+
+\setcounter{MyCounter}{\StartValue}
+\whiledo{\not{\value{MyCounter}&gt;\MaxValue}}{%
+    \theMyCounter
+    \stepcounter{MyCounter}
+}
+\end{document}</pre>
+<h2>결과:</h2>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2014/07/whiledo.png"><img class="aligncenter wp-image-1682" src="{{ site.baseurl }}/assets/whiledo.png" alt="whiledo" width="499" height="201" /></a></p>
+<p>&nbsp;</p>

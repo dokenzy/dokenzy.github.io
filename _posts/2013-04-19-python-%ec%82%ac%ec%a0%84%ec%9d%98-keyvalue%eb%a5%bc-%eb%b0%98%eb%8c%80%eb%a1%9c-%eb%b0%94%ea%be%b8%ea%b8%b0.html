@@ -1,0 +1,30 @@
+---
+layout: post
+title: 'Python:: 사전의 {key:value}를 반대로 바꾸기'
+post_id: '427'
+date: 2013-04-19 16:51:58.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- dictionary
+- inverse
+- key
+- Python
+- value
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>출처: <a href="http://stackoverflow.com/questions/483666/python-reverse-inverse-a-mapping" target="_blank">http://stackoverflow.com/questions/483666/python-reverse-inverse-a-mapping</a></p>
+<pre class="lang:python decode:true">map = { 'a': 1, 'b':2 }
+inv_map = {v:k for k, v in map.items()}
+print inv_map
+&gt;&gt;&gt; { 1: 'a', 2: 'b' }</pre>

@@ -1,0 +1,45 @@
+---
+layout: post
+title: 'PyQt:: setFamily()로 폰트패밀리 바꾸기'
+post_id: '1301'
+date: 2014-04-08 19:54:21.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- font book
+- pyqt
+- Python
+- setFamily
+- unichar
+- 서체관리자
+- 폰트 이름
+- 폰트패밀리
+- 함초롬돋움
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyQt로 만든 <a title="간단한 PyQt4 프로그램 unichar(v0.6.2)" href="http://blog.dokenzy.com/archives/994">unichar</a>프로그램에 유니코드 코드포인트로 한글자모값을 입력했다. 글자가 너무 작다. 그래서 폰트 패밀리는 내가 아는 폰트 중에 글리프가 제일 많은 폰트인 함초롬 돋음 LVT로 바꾸고, 폰트 크기를 큼지막하게 키웠다.</p>
+<pre class="lang:python decode:true">font = QFont()
+font.setFamily("HCRDotumLVT")
+font.setPointSize(90)
+self.lblShowGlyph.setFont(font)</pre>
+<p>글자 사이즈는 바뀌었는데(주의: setFontSize가 아니라 setPointSize다), 폰트가 바뀌지 않는다. 참고로 위에서 HCRDotumLVT라는 이름은 맥의 서체관리자(Font Book)의 ˙PostScript 이름'에서 가져왔다.</p>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2014/04/hcrfontname.png"><img class="alignnone size-full wp-image-1303" alt="hcrfontname" src="{{ site.baseurl }}/assets/hcrfontname.png" width="486" height="296" /></a></p>
+<p>시행착오 끝에 방법을 찾았다. 폰트 이름을 '서체 목록'의 것으로 해야 한다. 지금까지 경험상  파일명이나 폰트 이름 등은 영문으로 해야 문제가 없었는데, PyQt는 영문 or 한글이 문제가 아니고, 서체 목록에 있는 이름으로 해야 폰트패밀리를 적용할 수 있었다. 이제 setFamily의 인자를 다음과 같이 바꾸자.</p>
+<pre>font = QFont()
+font.setFamily("함초롬돋움 LVT")
+font.setPointSize(90)
+self.lblShowGlyph.setFont(font)</pre>
+<p>위 코드는 다음과 같이 한 줄로 할 수도 있다.</p>
+<pre>self.lblShowGlyph.setFont(QFont("함초롬돋움 LVT", 90))</pre>
+<p>근데 받침이 3개인 ᇒ 이런 글자 때문에 폰트를 함초롬돋움 LVT로 바꾸었건만, 정작 함초롬돋움도 이 캐릭터에 대한 글리프는 없네;;;</p>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2014/04/unicharfont.png"><img class="alignnone size-full wp-image-1308" alt="unicharfont" src="{{ site.baseurl }}/assets/unicharfont.png" width="316" height="416" /></a></p>

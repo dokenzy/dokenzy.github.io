@@ -1,0 +1,40 @@
+---
+layout: post
+title: 'Python:: 함수에 전달된 인수의 변수명 구하기'
+post_id: '847'
+date: 2014-02-06 16:24:14.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- built-in
+- Python
+tags:
+- currentframe
+- getframeinfo
+- inspect
+- Python
+- scrapy
+- 변수명
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>&nbsp;</p>
+<p>scrapy로 지저분한 사이트의 크롤러를 만들고 있다. 문제 3개와 답 3개를 구했는데, 이 문자열의 양옆으로 공백이 수두룩히 붙었다.</p>
+<p>정규식 하나만 써서 처리하려고 했는데, 결국 문제따로, 답 따로 후처리를 좀 해야했다. 그렇다고 함수를 두 개 만들기는 싫다. 함수 호출할 때 플래그나 파라미터를 주는 것도 싫다.</p>
+<p>변수명으로 구분하기로 했다.</p>
+<pre class="lang:python decode:true">re_whitespaces = re.compile(r'\s+.+\s+$', re.MULTILINE | re.UNICODE)
+def remove_whitespaces(node):
+    # node의 변수이름에 answer가 있으면:
+    if 'answer' in inspect.getframeinfo(inspect.currentframe().f_back)[3][0]:
+        return re_whitespaces.sub('', node.extract().split(': ')[1])
+    else:
+        return re_whitespaces.sub('', node.extract())[2:]</pre>
+<p>변수명이 answer1, answer2, answer3는 if에 해당하는 코드가 적용되고, 그렇지 않은 경우(question1, question2, question3)에는 else에  해당하는 코드가 적용된다.</p>
+<p>&nbsp;</p>

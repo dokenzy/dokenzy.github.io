@@ -1,0 +1,38 @@
+---
+layout: post
+title: 'Mac:: bash쉘에서 한글파일명 자동완성'
+post_id: '1781'
+date: 2014-10-15 00:58:47.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- bash
+- brew
+- mac
+- shell
+- 자동완성
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><strong>요세미티는 기본 bash가 4.x이므로 그냥 된다.</strong></p>
+<p>맥에서 한글폴더로 작업할 일이 많아질 것 같다. 맥의 기본 쉘인 bash는 한글파일명 자동완성을 지원하지 않는다. 버전이 무려 3.2.53이다(Mac OS X 10.9.5 기준)</p>
+<p>bash를 4.x대로 업데이트하면 한글파일명도 자동완성 해준다. 그러니 기본 bash를 과감히 버리고  brew가 제공하는 최신 버전을 쓰자.</p>
+<pre class="lang:sh decode:true">brew update
+brew install bash</pre>
+<p>이제 이 쉘을 기본 쉘로 지정하자.</p>
+<p><span class="lang:sh decode:true  crayon-inline">sudo vi /etc/shells</span>  명령으로 shells 파일을 열어서 다음을 추가하자.</p>
+<pre class="lang:default decode:true">/usr/local/bin/bash</pre>
+<p>그리고나서 다음 명령을 실행한다.</p>
+<pre class="lang:sh decode:true">chsh -s /usr/local/bin/bash</pre>
+<p>잘 되는지 버전을 확인해보자.</p>
+<pre class="lang:sh decode:true">bash --version</pre>
+<p>버전이  4.3.30으로 나오면 정상(2014년 10월 15일 기준)</p>

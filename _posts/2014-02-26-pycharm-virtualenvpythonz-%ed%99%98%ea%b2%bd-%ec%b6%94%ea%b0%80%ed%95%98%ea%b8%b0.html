@@ -1,0 +1,37 @@
+---
+layout: post
+title: 'PyCharm:: virtualenv+pythonz 환경 추가하기'
+post_id: '964'
+date: 2014-02-26 17:32:50.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- pycharm
+- Python
+- pythonz
+- virtualenv
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyCharm을 안쓰고 있다가 코드가 많아지면서 본격적으로 활용해 보기로 했다.</p>
+<p>그런데 나는 파이썬 인터프리터를 효과적으로 관리하기 위해서 <a href="http://blog.dokenzy.com/archives/765">virtualenv와 pythonz를 함께 사용</a>한다.</p>
+<p>이런 상황에서 기존에 개발하던 프로젝트를 PyCharm에서 그대로 사용하고 싶다.</p>
+<ol>
+<li>먼저 virtualenv와 pythonz로 가상 환경을 만든다. 여기서는 ~/venvs/excelpy라는 가상 환경을 만들었다.</li>
+<li>PyCharm을 실행해서 Preferences에 들어간다.</li>
+<li>Project Interprepter &gt; Python Interpreters에 들어간다.</li>
+<li>'+'버튼을 누르면 Select Interpreter Path가 나타난다. 여기서 Local...을 선택한다.</li>
+<li>virtualenv로 만들어진 디렉토리 안에 들어가서 /bin/python을 선택한다. 내 경우에는 ~/venvs/excelpy/bin/python이다.</li>
+<li>OK버튼을 누른다.</li>
+<li>그러면 자동으로 Packages 항목에 그 전에 pip로 설치했던 패키지들이 나타난다.</li>
+</ol>
+<p>끝.</p>

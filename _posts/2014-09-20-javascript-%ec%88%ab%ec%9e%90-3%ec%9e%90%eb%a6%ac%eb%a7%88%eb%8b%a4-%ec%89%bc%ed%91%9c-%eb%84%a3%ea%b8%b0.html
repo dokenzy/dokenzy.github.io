@@ -1,0 +1,30 @@
+---
+layout: post
+title: 'Javascript: 숫자 3자리마다 쉼표(,) 넣기'
+post_id: '1712'
+date: 2014-09-20 01:06:19.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- javascript
+tags:
+- javascript
+- 자바스크립트
+meta:
+  _edit_last: '1'
+  _oembed_fe54148653f8e96dd06f2441be8d2977: '{{unknown}}'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>수(integer)를 받아와서 사람들이 보기 쉽게 3자리마다 쉼표를 넣는 방법.</p>
+<p>스택오버플로우에서 찾았다(<a title="http://stackoverflow.com/questions/1990512/add-comma-to-numbers-every-three-digits-using-jquery" href="http://stackoverflow.com/questions/1990512/add-comma-to-numbers-every-three-digits-using-jquery">http://stackoverflow.com/questions/1990512/add-comma-to-numbers-every-three-digits-using-jquery</a>)</p>
+<pre class="lang:js decode:true  ">$.fn.digits = function(){ 
+    return this.each(function(){ 
+        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") ); 
+    })
+}</pre>

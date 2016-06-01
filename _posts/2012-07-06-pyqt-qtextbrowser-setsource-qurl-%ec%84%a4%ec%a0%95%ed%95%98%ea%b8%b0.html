@@ -1,0 +1,35 @@
+---
+layout: post
+title: PyQt QTextBrowser setSource QUrl 설정하기
+post_id: '37'
+date: 2012-07-06 00:58:08.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- pyqt
+- Python
+- qtextbrowser
+- qurl
+- setsource
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>'Rapid GUI Programming with Python and Qt'책에는</p>
+<pre class="lang:python decode:true crayon-selected">page = 'index.html'
+self.textBrowser = QTextBrowser()
+self.textBrowser.setSearchPaths([":help"])
+#help는 index.html파일이 있는 디렉토리 이름. http://blog.dokenzy.com/archives/20 참고.
+self.textBrowser.setSource(QUrl(page))</pre>
+<p>처럼 나와있는데, 이대로 하면 로컬에 있는 html파일을 열 수 없다.</p>
+<p>setSource메소드에 인자로 들어가는 QUrl을 다음과 같이 fromLocalFile()메소드로 처리해서 넘겨야 한다.</p>
+<pre class="lang:python decode:true">self.textBrowser.setSource(QUrl.fromLocalFile(page))</pre>
+<p>이것때문에 몇 시간을 허비했는지...</p>

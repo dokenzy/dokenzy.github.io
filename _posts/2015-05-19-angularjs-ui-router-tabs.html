@@ -1,0 +1,68 @@
+---
+layout: post
+title: 'AngularJS:: ui-router-tabs'
+post_id: '2070'
+date: 2015-05-19 02:06:54.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- angularjs
+tags:
+- angularjs
+- Tab
+- ui
+- ui-bootstrap
+- ui-router-tabs
+- 탭
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>angular ui bootstrap을 사용하면 탭 인터페이스를 비교적 간단하게(?) 구현할 수 있는데, 문제는 새로고침했을 때 마지막에 내가 보고 있던 탭이 아니라 무조건 첫번째 탭이 나오게 된다. 탭이 중요한 UI인 경우 문제가 될 수 있는데, <a href="https://github.com/rpocklin/ui-router-tabs">ui-router-tabs</a>를 사용하면 조금 더 헷갈리지만 해결할 수 있다.</p>
+<p>ui-router-tabs가 처리하는 방식은 이렇다. 각 탭마다 route값을 주고, 그 route값을 routeProvider가 처리하도록 하는 식이다.</p>
+<p>예제:</p>
+<pre class="lang:js decode:true">$scope.tabData   = [{
+  heading: 'Settings',
+  route: 'user.settings'
+}, {
+  heading: 'Accounts',
+  route: 'user.accounts',
+  disabled: true
+}];</pre>
+<p>이 route값을 routeProvider에서 이렇게 받아서 처리한다.</p>
+<pre class="lang:js decode:true">$stateProvider.state('user', {
+  url:         '',
+  controller: 'UserCtrl',
+  templateUrl: 'example.html'
+}).state('user.settings', {
+  url:         '/user/settings',
+  templateUrl: 'user/settings.html'
+}).state('user.accounts', {
+  url:         '/user/accounts',
+  templateUrl: 'user/accounts.html'
+});</pre>
+<p>그러면 각 탭마다 고유의 URL을 갖게 되어 새로고침 문제를 해결할 수 있을 뿐만 아니라,  탭마다 HTML파일로 분리해서 관리할 수 있으므로 유지보수하기도 쉽다. 덕분에 7개의 탭을 사용하는 내 프로젝트에서 아주 쓸모있는 모듈이 될 수 있었다.</p>
+<p>만약 탭 그룹(위 예제코드에서는 $scope.tabData)이 2개 이상인 경우, &lt;div ui-view="tab1"&gt;, &lt;div ui-view="tab2"&gt;와 같이 이름을 지정해 주고, routeState관련 코드를 다음과 같이 해야한다(참고: <a href="https://github.com/angular-ui/ui-router">https://github.com/angular-ui/ui-router</a>)</p>
+<pre class="lang:js decode:true">$stateProvider.state('user', {
+  url:         '',
+  controller: 'UserCtrl',
+  templateUrl: 'example.html'
+}).state('user.settings', {
+  url:         '/user/settings',
+  views: {
+    "tab1": {templateUrl: 'settings.html'}
+  }
+}).state('user.accounts', {
+  url:         '/user/accounts',
+  views: {
+    "tab2": {templateUrl: 'accounts.html'}
+  }
+});</pre>
+<p>써보니 만족스러워서 간만에 정성껏 포스팅을 하는 중 두 가지 문제를 만났다. 하나는 탭 제목에 태그를 넣을 수 없다보니, UI가 좀 떨어질 수 있다. 이건 뭐 그냥 ui-bootstrap에서도 동일한 문제이고(혹은 내가 방법을 아직 못찾은 것일 수도 있다).</p>
+<p>다른 하나는 좀 심각한데, 두 개의 &lt;ui-view&gt;를 동시에 볼 수 없다. 내 프로젝트에서는 이게 필수인데, 이게 안되니 대략 난감이다. 탭을 누를 때마다 URL이 바뀌다보니, routeProvider에서 그 탭에 해당하는 &lt;ui-view&gt;만 보여주는 것 같다. 방법이 있는지 더 찾아봐야겠다.</p>

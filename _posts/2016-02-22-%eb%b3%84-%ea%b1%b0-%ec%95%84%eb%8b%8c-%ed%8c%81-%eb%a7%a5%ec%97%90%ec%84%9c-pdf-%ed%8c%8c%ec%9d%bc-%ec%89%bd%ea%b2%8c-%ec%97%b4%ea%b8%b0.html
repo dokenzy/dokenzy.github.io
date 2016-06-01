@@ -1,0 +1,37 @@
+---
+layout: post
+title: '별 거 아닌 팁: 맥 터미널에서 pdf 파일 쉽게 열기'
+post_id: '2149'
+date: 2016-02-22 01:27:09.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- bash
+- shell
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>집에서는 Mac만 쓴다. 텍 코드를 테스트 할 때는 주로 TeXShop으로 하고, 입력할 게 많으면 MacVim으로 한다.</p>
+<p>TeXShop은 컴파일 후 바로 PDF를 보여주어서 편리하다.<br />
+MacVim으로 작성하고 컴파일 결과를 확인하려면 터미널에서 open foo.pdf 명령을 입력해야 한다. 텍을 컴파일하고 나면 aux, log, out 등 여러가지 부가파일들이 만들어지기 때문에 pdf 확장자를 매번 붙여주어야만 한다.</p>
+<p>이게 귀찮아서 .vimrc파일에 단축키를 만들어 넣었지만 안쓰게 된다. 그리고 컴파일 중 에러가 난 경우에도 불편한 점이 많다.</p>
+<p>그래도 open foo.pdf는 매번 확장자를 입력해야 해서 귀찮다.</p>
+<p>오늘 컴파일을 많이 하다보니 너무 귀찮아서 아주 간단한 쉡 스크립트를 만들었다.</p>
+<pre class="lang:sh decode:true">#!/bin/bash
+
+pdfname=$1
+ext=".pdf"
+
+open $1$ext</pre>
+<p>이걸 pdf 라는 파일로 저장하고, 실행 권한을 준 뒤(chmod +x pdf) /usr/local/bin에 복사한다.</p>
+<p>이제 터미널에서 pdf foo라고만 하면 Mac OS에 지정된 PDF 리더가 실행되면서 foo.pdf 파일이 열린다.</p>
+<p>왜 진작에 안만들었나 모르겠다.</p>

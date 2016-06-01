@@ -1,0 +1,32 @@
+---
+layout: post
+title: 'LaTeX:: pdfpages'
+post_id: '667'
+date: 2013-11-15 18:01:57.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Packages
+tags:
+- includepdf
+- latex
+- pdfpages
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>LaTeX문서에 외부의 PDF 페이지를 마치 그림처럼 넣고 싶은 경우 pdfpages 패키지를 이용한다.</p>
+<p>includegraphics명령으로 넣을 수도 있지만, 이 방법으로 하면 불러온 PDF파일의 크기가 지금 작성하는 문서와 맞지 않을 수 있기 때문에 Overfull 경고가 발생할 수 있다.</p>
+<p>간단한 사용법:</p>
+<pre class="lang:tex decode:true ">\usepackage{pdfpages}
+% embed.pdf 파일의 3, 4페이지만 가져오고 싶다면
+\includepdf[pages={3,4}]{embed.pdf}</pre>
+<p>그 외 많은 옵션들을 제공한다. 매뉴얼을 보자.</p>
+<pre class="lang:sh decode:true ">texdoc pdfpages</pre>
+<p>&nbsp;</p>

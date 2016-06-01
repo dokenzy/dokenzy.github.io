@@ -1,0 +1,78 @@
+---
+layout: post
+title: 'Python:: PyQt Menu Dummy Example'
+post_id: '497'
+date: 2013-06-09 20:52:38.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- pyqt
+- qaction
+- qmenu
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyQt로 간단한 앱을 만들고 있는데, 맥에서 실행하니 메뉴가 안뜬다. 메뉴바에 메인메뉴까지 보이는 경우도 있긴 한데, 실제 메뉴가 보이지는 않는다.</p>
+<p>예를 들면 File까지는 보이는데, File메뉴 밑에 Open메뉴는 보이지 않는 것 같은 경우이다.</p>
+<p>리눅스에서는 아무 문제가 없는 코드이다.</p>
+<p>엄청난 구글링 끝에 stackoverflow에서 이런 <a href="http://stackoverflow.com/questions/10368947/how-to-make-qmenu-item-checkable-pyqt4-python" target="_blank">답글</a>을 찾았다.</p>
+<pre class="lang:python decode:true">from PyQt4 import QtGui
+
+app = QtGui.QApplication([])
+
+w = QtGui.QMainWindow()
+menu = QtGui.QMenu("menu", w)
+
+menu.addAction(QtGui.QAction('50%', menu, checkable=True))
+menu.addAction(QtGui.QAction('100%', menu, checkable=True))
+menu.addAction(QtGui.QAction('200%', menu, checkable=True))
+menu.addAction(QtGui.QAction('300%', menu, checkable=True))
+menu.addAction(QtGui.QAction('400%', menu, checkable=True))
+
+w.menuBar().addMenu(menu)
+w.show()
+app.exec_()</pre>
+<p>이 코드는 맥 OS X에서 모든 메뉴가 아무 문제없이 잘 동작한다.</p>
+<p>나중에 또 까먹을까봐 샘플로 만들어두었다.</p>
+<pre class="lang:python decode:true">class MainWindow(QMainWindow):
+	'''
+	PyQt4 Window
+	'''
+	def __init__(self):
+		super(MainWindow, self).__init__()
+		self.initUi()
+
+	def createActions(self):
+		self.fileOpen = QAction('Open', self)
+		self.fileRecent = QAction('Recent', self)
+
+		self.fileConnect = QAction('Connect', self)
+		self.fileConnect.setStatusTip('Connect Sqlite DB')
+		#self.fileConnect.triggered.connect(qApp.quit)
+
+		self.fileClose = QAction('Close', self)
+		self.fileClose.setStatusTip('Close')
+		self.connect(self.fileClose, SIGNAL('triggered()'), self, SLOT('close()'))
+
+	def initUi(self):
+		self.createActions()
+		menuFile = QMenu("File", self)
+
+		menuFile.addAction(self.fileOpen)
+		menuFile.addAction(self.fileRecent)
+		menuFile.addAction(self.fileConnect)
+		menuFile.addAction(self.fileClose)
+
+		self.menuBar().addMenu(menuFile)
+		self.statusBar().showMessage('Ready')
+		self.show()</pre>
+<p>이것때문에 주말 날렸다;;;</p>

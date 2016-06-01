@@ -1,0 +1,134 @@
+---
+layout: post
+title: 'Python:: Excel 2010에 새 시트 추가하기(2) – app.xml'
+post_id: '904'
+date: 2014-02-12 16:20:07.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- app.xml
+- etree
+- excel
+- lxml
+- parsing
+- Python
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>계속 엑셀 2010에 새 시트 추가하기.</p>
+<p>이전: <a href="http://blog.dokenzy.com/archives/894">[Content_Types].xml 수정하기</a></p>
+<p>&nbsp;</p>
+<p>이번에 수정할 파일은 docProps/app.xml이다. 이름에서 알 수 있듯이 엑셀파일의 속성에 대한 정보가 들어있다.</p>
+<p>이 파일은 이렇게 생겼다.</p>
+<pre class="lang:xhtml decode:true">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;Properties xmlns="http://schemas.openxmlformats.org/officeDocument/2006/extended-properties" xmlns:vt="http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"&gt;
+  &lt;Application&gt;Microsoft Excel&lt;/Application&gt;
+  &lt;DocSecurity&gt;0&lt;/DocSecurity&gt;
+  &lt;ScaleCrop&gt;false&lt;/ScaleCrop&gt;
+  &lt;HeadingPairs&gt;
+    &lt;vt:vector size="2" baseType="variant"&gt;
+      &lt;vt:variant&gt;
+        &lt;vt:lpstr&gt;Worksheets&lt;/vt:lpstr&gt;
+      &lt;/vt:variant&gt;
+      &lt;vt:variant&gt;
+        &lt;vt:i4&gt;3&lt;/vt:i4&gt;
+      &lt;/vt:variant&gt;
+    &lt;/vt:vector&gt;
+  &lt;/HeadingPairs&gt;
+  &lt;TitlesOfParts&gt;
+    &lt;vt:vector size="3" baseType="lpstr"&gt;
+      &lt;vt:lpstr&gt;Slayers&lt;/vt:lpstr&gt;
+      &lt;vt:lpstr&gt;Sheet2&lt;/vt:lpstr&gt;
+      &lt;vt:lpstr&gt;Sheet3&lt;/vt:lpstr&gt;
+    &lt;/vt:vector&gt;
+  &lt;/TitlesOfParts&gt;
+  &lt;LinksUpToDate&gt;false&lt;/LinksUpToDate&gt;
+  &lt;SharedDoc&gt;false&lt;/SharedDoc&gt;
+  &lt;HyperlinksChanged&gt;false&lt;/HyperlinksChanged&gt;
+  &lt;AppVersion&gt;14.0300&lt;/AppVersion&gt;
+&lt;/Properties&gt;</pre>
+<p>쉽게 알 수 있듯이, <span class="lang:xhtml decode:true  crayon-inline ">&lt;TitleOfParts&gt;</span> 라는 노드 밑에 <span class="lang:python decode:true  crayon-inline ">&lt;vt&gt;</span> 라는 노드 밑에 시트에 대한 노드들이 들어있다. <span class="lang:xhtml decode:true  crayon-inline ">&lt;vt:vector size="3"</span> 에서 3은 시트의 갯수를 뜻한다. 그리고 <span class="lang:xhtml decode:true  crayon-inline">&lt;vt:i4&gt;3&lt;/vt:i4&gt;</span> 에 있는 3도 시트의 갯수다.</p>
+<p>즉, docProps/app.xml파일에서 처리할 일은 새 시트 노드를 추가하고, 시트의 갯수를 1 추가하는 것이다.</p>
+<p>이걸 하는 코드다.</p>
+<pre class="lang:python decode:true">def _modApp(self, sheetname, delete=False):
+    ''' modify docProps/app.xml '''
+    APP_NAME = 'app.xml'
+    # get app.xml
+    f = open('docProps/app.xml')
+    s = f.read()
+    f.close()
+    app_XML = etree.XML(bytes(s, 'utf-8'))
+
+    NS_PROPERTIES = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
+    NS_DOC_PROPS_VTYPES = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
+    TitleOfParts = app_XML.find('./ns:TitlesOfParts', namespaces={'ns': NS_PROPERTIES})
+    TitleOfPartsVector = TitleOfParts.find('./vt:vector', namespaces={'vt': NS_DOC_PROPS_VTYPES})
+    i4 = app_XML.xpath('//vt:i4', namespaces={'vt': NS_DOC_PROPS_VTYPES})[0]
+    lpstrs = TitleOfPartsVector.findall('ns:lpstr', namespaces={'ns': NS_DOC_PROPS_VTYPES})
+
+    count = len(lpstrs) # current sheets 
+    count += 1 
+    self.count = str(count) 
+    # change i4 value 
+    i4.text = self.count
+    # change vector size 
+    new_vector_size = self.count
+    TitleOfPartsVector.set('size', new_vector_size)
+    # add new sheet element 
+    new_sheet_elem = etree.Element('{%s}lpstr' % NSMAP['vt'], nsmap=NSMAP)
+    new_sheet_elem.text = sheetname
+    TitleOfPartsVector.insert(len(lpstrs), new_sheet_elem) 
+    # save app.xml 
+    app_str = etree.tostring(app_XML, encoding='utf-8') 
+    with open('app.xml', w') as f:
+        f.write(str(app_str, 'utf-8'))</pre>
+<p>과정은 이렇다.</p>
+<ol>
+<li>etree.XML()로 app.xml파일을 가져온다.
+<pre>APP_NAME = 'app.xml'
+# get app.xml
+f = open('docProps/app.xml')
+s = f.read()
+f.close()
+app_XML = etree.XML(bytes(s, 'utf-8'))</pre>
+</li>
+<li>&lt;vt:lpstr&gt;의 개수를 구한다.
+<pre>NS_PROPERTIES = "http://schemas.openxmlformats.org/officeDocument/2006/extended-properties"
+NS_DOC_PROPS_VTYPES = "http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes"
+TitleOfParts = app_XML.find('./ns:TitlesOfParts', namespaces={'ns': NS_PROPERTIES})
+TitleOfPartsVector = TitleOfParts.find('./vt:vector', namespaces={'vt': NS_DOC_PROPS_VTYPES})
+i4 = app_XML.xpath('//vt:i4', namespaces={'vt': NS_DOC_PROPS_VTYPES})[0]
+lpstrs = TitleOfPartsVector.findall('ns:lpstr', namespaces={'ns': NS_DOC_PROPS_VTYPES})</pre>
+</li>
+<li>&lt;vt:i4&gt;노드의 값을 &lt;vt:lpstr&gt;에 1을 더한 값으로 설정한다.
+<pre class="crayon-selected">count = len(lpstrs) # current sheets 
+count += 1 
+self.count = str(count)
+i4.text = self.count</pre>
+</li>
+<li>새 &lt;vt:lpstr&gt;노드를 만들고, text속성을 새 시트이름으로 설정한다.
+<pre>new_vector_size = self.count
+TitleOfPartsVector.set('size', new_vector_size)
+# add new sheet element 
+new_sheet_elem = etree.Element('{%s}lpstr' % NSMAP['vt'], nsmap=NSMAP)
+new_sheet_elem.text = sheetname</pre>
+</li>
+<li>&lt;TitleOfParts&gt;&lt;vt:vector&gt; 밑에 새로 만든 노드를 추가한다.
+<pre>TitleOfPartsVector.insert(len(lpstrs), new_sheet_elem)</pre>
+</li>
+<li>etree.XML노드를 문자열로 바꾼 후, app.xml파일에 저장한다.
+<pre class="crayon-selected">app_str = etree.tostring(app_XML, encoding='utf-8') 
+with open('app.xml', w') as f:
+    f.write(str(app_str, 'utf-8'))</pre>
+</li>
+</ol>
+<p>끝.</p>

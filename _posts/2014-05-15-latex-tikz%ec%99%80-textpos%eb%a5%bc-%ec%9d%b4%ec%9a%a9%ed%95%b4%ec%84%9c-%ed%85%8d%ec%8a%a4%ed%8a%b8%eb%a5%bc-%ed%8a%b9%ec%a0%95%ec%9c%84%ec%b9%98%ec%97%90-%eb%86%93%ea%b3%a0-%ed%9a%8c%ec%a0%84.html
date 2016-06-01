@@ -1,0 +1,83 @@
+---
+layout: post
+title: 'LaTeX:: tikz와 textpos를 이용해서 텍스트를 특정위치에 놓고 회전시키기'
+post_id: '1480'
+date: 2014-05-15 02:12:04.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- latex
+- parbox
+- textpos
+- tikz
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>1. 요구사항.</h2>
+<ul>
+<li>배경그림에 맞추어 글자가 특정 위치에 나타나야 한다.</li>
+<li>글자가 배경에 맞게 회전해야 한다.</li>
+<li>글자 너비가 긴 경우 줄바꿈이 되어야 한다.</li>
+</ul>
+<h2>2. textpos로 특정 위치에 배치하기</h2>
+<pre class="lang:tex decode:true">\begin{textblock*}{20cm}(4.3cm, 2.1cm)
+텍스트
+\end{textblock*}</pre>
+<p>사용법은 texdoc textpos 참고</p>
+<h2>3. tikz로 회전시키기</h2>
+<pre class="lang:tex decode:true">\usepackage{tikz}
+\usetikzlibrary{positioning}
+\begin{tikzpicture}[transform shape, rotate=22]
+\node [] at (current page.south east){
+텍스트
+\end{tikzpicture}</pre>
+<h2>4. 줄바꿈하기</h2>
+<p>tikz 안에 있는 텍스트에 대해 너비 지정이 가능하고, 줄바꿈도 가능한 박스를 만들어야 한다.</p>
+<pre class="lang:tex decode:true">\begin{minipage}[t!]{\textwidth}
+\LARGE \minibox{{\huge 보내는 사람}\%
+\parbox[t]{0.5\textwidth}{주소}
+{이름}}
+\end{minipage}};</pre>
+<h2> 5. 전체 코드</h2>
+<p>위 코드들을 조합하여 완성하자.</p>
+<pre class="lang:tex decode:true">\documentclass[nanumtype1]{oblivoir}
+
+\usepackage{minibox}
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage[absolute]{textpos}
+
+\newcommand\addressSend[2]{
+\rotatebox{75}{\LARGE \minibox{{\huge 보내는 사람}\
+#1\
+#2}}}
+
+\newcommand{\sendAddrName}[2]{
+\begin{textblock*}{20cm}(4.3cm, 2.1cm)
+\begin{tikzpicture}[transform shape, rotate=22]
+\node [] at (current page.south east){
+\begin{minipage}[t!]{\textwidth}
+\LARGE \minibox{{\huge 보내는 사람}\%
+\parbox[t]{0.5\textwidth}{#1}\%주소
+{#2}}%이름
+\end{minipage}};
+\end{tikzpicture}
+\end{textblock*}
+}
+
+\begin{document}
+
+\sendAddrName{경상북도 울릉군 울릉읍 독도리\동경 백삼십이 북위 삼십칠}{안용복}
+
+\end{document}</pre>
+<p>LaTeX으로 컴파일한다.</p>
+<p>끝.</p>

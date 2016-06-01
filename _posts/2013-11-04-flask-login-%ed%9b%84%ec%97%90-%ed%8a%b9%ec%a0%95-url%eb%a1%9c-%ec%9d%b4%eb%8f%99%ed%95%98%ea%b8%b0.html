@@ -1,0 +1,45 @@
+---
+layout: post
+title: 'flask:: login 후에 특정 URL로 이동하기'
+post_id: '651'
+date: 2013-11-04 20:59:35.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Flask
+- Python
+tags:
+- flask
+- login
+- redirect
+- URL
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>시나리오:</p>
+<p>사용자가 로그인 하지 않은 상태에서 특정 URL에 접근했다. 자동으로 로그인 페이지로 이동해서 로그인을 하면 홈페이지로 이동하지 않고, 원래 가려고 했던 특정 URL로 가도록 하고 싶다.</p>
+<p>forms.py</p>
+<pre class="lang:python decode:true">from flask.ext.wtf import Form, TextField, PasswordField, Required, HiddenField
+
+class LoginForm(Form):
+    username = TextField(u'username', validators=[Required()])
+    password = PasswordField(u'password', validators=[Required()])
+    next_url = HiddenField(u'next_url')</pre>
+<p>views.py</p>
+<pre class="lang:python decode:true">def login_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if not ('username' in session) or session['username'] is None:
+            next_url = request.url
+            login_url = url_for('login') + u'?next_url={}'.format(next_url)
+            return redirect(login_url)
+        return f(*args, **kwargs)
+    return decorated_function</pre>
+<p>&nbsp;</p>

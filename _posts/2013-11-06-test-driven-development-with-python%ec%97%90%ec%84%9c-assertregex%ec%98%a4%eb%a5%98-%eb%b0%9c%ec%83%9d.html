@@ -1,0 +1,43 @@
+---
+layout: post
+title: Test Driven Development with Python에서 assertRegex()오류 발생
+post_id: '661'
+date: 2013-11-06 17:11:15.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- assertRegex
+- assertRegexpMatches
+- django
+- Python
+- TDD
+- Test Driven Web Development
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Test Driven Development with Python 책을 공부중이다.</p>
+<p>6장. Getting to the minimum viable site 예제를 따라하다 아래와 같은 에러를 만났다.</p>
+<pre class="lang:python decode:true crayon-selected">E
+======================================================================
+ERROR: test_can_start_a_list_and_retrieve_it_later (functional_tests.tests.NewVisitorTest)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/tdd/functional_tests/tests.py", line 47, in test_can_start_a_list_and_retrieve_it_later
+    self.assertRegex(edith_list_url, '/lists/.+')
+AttributeError: 'NewVisitorTest' object has no attribute 'assertRegex'</pre>
+<p>스택오버플로우에서 답을 찾았다.(<a href="http://stackoverflow.com/questions/18281731/tdd-with-python-book-functional-test-doesnt-find-assertregex" target="_blank">링크</a>)</p>
+<p>답을 인용하면:</p>
+<blockquote><p>I'm assuming you are on python 2 - then use assertRegexpMatches instead of assertRegex.</p>
+<p>assertRegex was introduced in python 3:<br />
+Changed in version 3.2: The method assertRegexpMatches() has been renamed to assertRegex().</p></blockquote>
+<p>이 책에서는 Python3를 기준으로 하고 있는데, 나는 Python 2.7.5에서 작업하고 있다. Python 2.7.5에서는 assertRegex()함수의 이름은 assertRegexpMatchs()이다.</p>
+<p><a href="http://docs.python.org/2.7/library/unittest.html#unittest.TestCase" target="_blank">http://docs.python.org/2.7/library/unittest.html#unittest.TestCase</a></p>

@@ -1,0 +1,32 @@
+---
+layout: post
+title: pyenv
+post_id: '756'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- 일반
+tags: []
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>pyenv는 여러 파이썬 버전을 쉽게 골라쓸 수 있게 해준다. rbenv와 ruby-build에서 fork해서 Python용으로 바꿨다.</p>
+<h3>pyenv가 하는 일:</h3>
+<ul>
+<li>사용자마다 global 파이썬 버전을 설정할 수 있다.</li>
+<li>프로젝트별 파이썬 버전 지원</li>
+<li>환경변수로 파이썬 버전을 오버라이드하는 것 지원</li>
+<li>여러 파이썬 버전의 명령들을 동시에 찾기. tox(<a href="https://testrun.org/tox/latest/" target="_blank">https://testrun.org/tox/latest/</a>)로 파이썬 버전들을 전부 테스트할 때 좋다.</li>
+</ul>
+<p>pythonbrew와 pythonz에 비해 pyenv가 지원하지 않는 것:</p>
+<p>Depend on Python itself. pyenv was made from pure shell scripts. There is no bootstrap problem of Python.<br />
+Need to be loaded into your shell. Instead, pyenv's shim approach works by adding a directory to your $PATH.<br />
+Manage virtualenv. Of course, you can create virtualenv yourself, or pyenv-virtualenv to automate the process.</p>

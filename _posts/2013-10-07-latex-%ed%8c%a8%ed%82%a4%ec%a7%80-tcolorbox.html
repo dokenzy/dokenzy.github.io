@@ -1,0 +1,36 @@
+---
+layout: post
+title: 'LaTeX:: 패키지 tcolorbox'
+post_id: '574'
+date: 2013-10-07 16:45:42.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- latex
+- mdframed
+- tcolorbox
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a href="http://www.ctan.org/tex-archive/macros/latex/contrib/tcolorbox" target="_blank">http://www.ctan.org/tex-archive/macros/latex/contrib/tcolorbox</a></p>
+<p>소개: The pack­age pro­vides an en­vi­ron­ment for coloured and framed text boxes with a head­ing line. Op­tion­ally, such a box can be split in an up­per and a lower part; thus the pack­age may be used for the set­ting of LATEX ex­am­ples where one part of the box dis­plays the source code and the other part shows the out­put. Another com­mon use case is the set­ting of the­o­rems. The pack­age sup­ports sav­ing and reuse of source code and text parts.</p>
+<p>박스가 그려진 텍스트 상자를 만들 때 사용한다. mdframed가 좀 더 체계적이고 많은 기능을 제공하기는 하지만, tcolorbox는 좀 더 간단한 텍스트 상자를 그릴 때 사용하면 좋다. 특히 mdframed는 인라인 형식을 지원한다.</p>
+<p>인라인 형식으로 tcolorbox를 사용하는 예제 코드.</p>
+<pre class="lang:tex decode:true crayon-selected">\usepackage{tcolorbox}
+\tcbset{colback=OysterGray, nobeforeafter, tcbox raise base, 
+        boxrule=0pt, boxsep=0pt, left=4pt, right=4pt, top=2pt, 
+        bottom=2pt, before upper={\rule[-0.5ex]{0pt}{0.5\baselineskip}}}
+\newcommand{\inlinecode}[1]{\raisebox{0.25ex}{\tcbox{#1}}}</pre>
+<p>raisebox를 이용하지 않을 거라면, 굳이<span class="lang:tex decode:true  crayon-inline ">inlinecode</span> 라는 명령을 만들 필요는 없다.</p>
+<p>생각보다 많은 기능을 제공한다. 자세한 건</p>
+<pre class="lang:sh decode:true">texdoc tcolorbox</pre>

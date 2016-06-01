@@ -1,0 +1,40 @@
+---
+layout: post
+title: 'Python:: PIL로 jpg 저장할 때 IOError: decoder jpeg not available 에러'
+post_id: '214'
+date: 2012-11-16 16:06:01.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- brew
+- jpg
+- libjpeg
+- PIL
+- Python
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Mac에서 Python으로 <a href="http://www.pythonware.com/products/pil/" target="_blank">PIL(Python Imaging Library)</a>을 이용해서 이미지 리사이징 스크립트를 만들고 있다.</p>
+<p>리사이징을 하고 저장을 하는데 에러가 생긴다.</p>
+<pre class="lang:sh decode:true">IOError: decoder jpeg not available</pre>
+<p>뭥미?</p>
+<p>다음과 같이 한다.</p>
+<p>먼저 PIL이 깔려있다면 삭제부터 해주고, libjpeg을 설치한 다음, PIL을 다시 설치한다.</p>
+<pre class="lang:python decode:true">sudo pip uninstall PIL
+brew install libjpeg
+sudo pip install PIL</pre>
+<p>맥 OS를 매버릭스로 올리고 나니, <span class="lang:sh decode:true  crayon-inline ">brew install libjpeg</span>  실행하니 /usr/local/lib에 link 할 수 없다는 오류가 발생한다. 이럴 때는 <span class="lang:sh decode:true  crayon-inline ">sudo chmod myid /usr/local/lib</span>  명령을 먼저 실행한 후,</p>
+<pre class="lang:sh decode:true ">brew uninstall libjpeg
+brew install libjpeg
+sudo pip install pil</pre>
+<p>을 실행한다.</p>
+<p>끝.</p>

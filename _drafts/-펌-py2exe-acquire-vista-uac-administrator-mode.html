@@ -1,0 +1,61 @@
+---
+layout: post
+title: '[펌]py2exe & acquire vista uac administrator mode'
+post_id: '58'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- Python
+tags:
+- py2exe
+- Python
+- uac
+- 관리자 권한
+meta:
+  _edit_last: '1'
+  _oembed_dda094e48bed4af521e0392cce7039ad: '{{unknown}}'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>http://blog.naver.com/ships95/120046341062</p>
+<p>다른 분들이 사용하시는 방법과 크게 차이는 없지만, 그렇다고 따로 어디에<br />
+적혀 있는 내용을 본 적이 없어서 적습니다.</p>
+<p>setup.py 안에 manifest xml 리소스를 포함시키는데 여기에 이 프로그램이<br />
+관리자 권한으로 실행되어야 함을 명시해주면 됩니다. C/C++에서 사용하던<br />
+방법이 있고 같은 manifest xml을 사용하기 때문에 되지 않을까 추측 후<br />
+테스트 해보았는데 잘 되는군요.</p>
+<p>다른 분들이 번거롭게 테스트 해보지 않아도 되도록 한번 올려봅니다.</p>
+<pre class="lang:python decode:true" title="manifest.xml">&lt;trustinfo xmlns="urn:schemas-microsoft-com:asm.v3"&gt; 
+    &lt;security&gt; 
+        &lt;requestedPrivileges&gt; 
+            &lt;requestedExecutionLevel 
+                level="requireAdministrator" 
+                uiAccess="false"/&gt; 
+        &lt;/requestedPrivileges&gt; 
+    &lt;/security&gt; 
+&lt;/trustinfo&gt;</pre>
+<p>위 tag를 기존 manifest 안에 삽입하시면 비스타에서 방패 아이콘이 생기고<br />
+어플리케이션이 시작될 때 권한 상승 이벤트가 발생합니다.</p>
+<p>Visual Studio 2005 버전부터 manifest를 사용하도록 변경되어 Visual Studio 2008을 사용하는 python 2.6 버전에서는<br />
+위와 같은 방법으로 관리자 권한을 주도록 하면 방패 아이콘은 나오지만 MSVC90.DLL을 찾을 수 없다는 둥 하면서<br />
+실행이 되지 않게 됩니다.</p>
+<p>py2exe 0.6.9 버전에서는 uac_info를 사용해서 쉽게 관리자 권한 방패를 띄울 수 있습니다.</p>
+<pre class="lang:python decode:true" title="setup.py">setup (zipfile = None,
+           options = options,
+           name="BlahBlah Server",
+           version="1.0.0.0",
+           description="BlahBlah Server",
+           console=[
+                         {
+                             "script" : "BlahBlah.py",
+                             "icon_resources" : [(0, "BlahBlah.ico")],
+                             "uac_info" : "requireAdministrator",
+                         }
+           ],
+)</pre>

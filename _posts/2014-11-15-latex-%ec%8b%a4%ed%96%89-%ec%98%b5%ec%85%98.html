@@ -1,0 +1,36 @@
+---
+layout: post
+title: latex 실행 옵션
+post_id: '1800'
+date: 2014-11-15 10:53:39.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- errorstopmode
+- halt-on-error
+- interaction
+- latex
+- nonstopmode
+- scrollmode
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>latex으로 텍 문서를 컴파일 하다가 오류가 생겼을 때 사용자에게 물어보지 않고 바로 종료시키는 옵션</p>
+<p>1. -halt-on-error: 처음 에러가 발생하면 바로 종료시킨다.</p>
+<p>2. interaction=nonstopmode: 오류를 무시하고 계속 컴파일한다. 오류가 있으면 오류 메시지를 보여준다.</p>
+<p>interaction에는 nonstopmode 외에도 errorstopmode, batchmode, scrollmode가 있다.</p>
+<ul>
+<li><strong>errorstopmode</strong>는 interaction의 기본값으로, 에러가 발생하면 멈추고 사용자에게 프롬프트를 띄운다.</li>
+<li><strong>batchmode</strong>는 에러가 발생해도 사용자에게 묻지 않고 계속 컴파일을 한다.</li>
+<li><strong>notstopmode</strong>는 에러 갯수가 100개가 될 때까지 계속 컴파일을 한다.</li>
+<li><strong>scrollmode</strong>는 에러가 발생해도 계속 컴파일을 시도하되, file &lt;something&gt; not found 에러가 발생하면 사용자에게 프롬프트를 띄운다.</li>
+</ul>

@@ -1,0 +1,130 @@
+---
+layout: post
+title: 'Python:: Excel 2010에 새 시트 추가하기(1) - [Content_Types].xml'
+post_id: '894'
+date: 2014-02-12 15:27:10.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- etree
+- excel
+- lxml
+- parsing
+- Python
+- '[Content_Types].xml'
+- 파싱
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Excel 2010에 새 시트를 추가하는 기능에 대한 글이다.</p>
+<p>다음은 xlsx파일을 구성하는 전체 파일 구조다. 새 시트 하나를 추가하려면 많은 파일들을 수정해야 한다. 하나라도 잘 안되면, 파일을 열 때 경고 또는 오류가 뜬다. 이 글에 모두 설명하기에는 내용이 너무 많다. 이 글에서는 [Content_Types].xml파일만을 다룬다.</p>
+<p>코드는 Python 3.3.3 기준</p>
+<pre class="lang:default decode:true">├── [Content_Types].xml
+├── _rels
+├── docProps
+│   ├── app.xml
+│   └── core.xml
+└── xl
+    ├── _rels
+    │   └── workbook.xml.rels
+    ├── sharedStrings.xml
+    ├── styles.xml
+    ├── theme
+    │   └── theme1.xml
+    ├── workbook.xml
+    └── worksheets
+        ├── sheet1.xml
+        ├── sheet2.xml
+        └── sheet3.xml</pre>
+<p>위에서 보듯이 각 시트별 파일은 xl/worksheets/sheet1.xml, sheet2.xml, sheet3.xml, ... 등에 있다. 이 파일들의 이름은 [Content_Types].xml 파일에 등록되어야 한다.</p>
+<p>시트가 3개인 xlsx파일의 [Content_Types].xml파일은 이렇게 생겼다.</p>
+<pre class="lang:xhtml decode:true">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"&gt;
+  &lt;Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/&gt;
+  &lt;Default Extension="xml" ContentType="application/xml"/&gt;
+  &lt;Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/&gt;
+  &lt;Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/&gt;
+  &lt;Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/&gt;
+  &lt;Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/&gt;
+  &lt;Override PartName="/xl/theme/theme1.xml" ContentType="application/vnd.openxmlformats-officedocument.theme+xml"/&gt;
+  &lt;Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/&gt;
+  &lt;Override PartName="/xl/sharedStrings.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sharedStrings+xml"/&gt;
+  &lt;Override PartName="/docProps/core.xml" ContentType="application/vnd.openxmlformats-package.core-properties+xml"/&gt;
+  &lt;Override PartName="/docProps/app.xml" ContentType="application/vnd.openxmlformats-officedocument.extended-properties+xml"/&gt;
+&lt;/Types&gt;</pre>
+<p>이 파일에는 시트가 3개이므로</p>
+<p><span class="lang:xhtml decode:true crayon-inline">&lt;Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/&gt;</span></p>
+<p>이런 노드가 3개 있다. 새 시트를 추가하려면 위와 같은 노드에서 파일명만 sheet4.xml인 노드를 추가해야 한다.</p>
+<pre class="lang:python decode:true">def _modContentTypes(self):
+    Content_Types_Name = '[Content_Types].xml'
+    content_type = None
+
+    # get [Content_Types].xml
+    Content_Types_XML = self._getEtree(os.path.join(self.target_dir, Content_Types_Name))
+    overrides = Content_Types_XML.xpath('//ns:Override', namespaces={'ns': NS_CONTENT_TYPES})
+    for override in overrides:
+     if 'worksheets' in override.get('PartName'):
+            last_worksheet = override.get('PartName').rsplit('/', 1)[1]
+            content_type = override.get('ContentType')
+    last_worksheet_num = last_worksheet[5:-4]  # sheet[NUMBER].xml
+
+    new_worksheet_num = int(last_worksheet_num) + 1
+    new_worksheet = 'sheet' + str(new_worksheet_num) + '.xml'
+    new_override = etree.Element('Override')
+    new_override.set('PartName', os.path.join('xl', 'worksheets', new_worksheet))
+    new_override.set('ContentType', content_type)
+    Content_Types_XML.insert(len(overrides), new_override)
+    Content_Types_XML.insert(len(overrides), new_override) 
+    # save [Content_Types].xml
+    Content_Types_str = etree.tostring(Content_Types_XML, encoding='utf-8')
+    with open('[Content_Types].xml', 'w') as f:
+        f.write(str(soup, 'utf-8'))</pre>
+<p>과정은 이렇다.</p>
+<ol>
+<li>[Content_Types].xml파일을 lxml.etree로 가져온다.
+<pre class="lang:python decode:true">f = open('[Content_Types].xml') # with로 하면 들여쓰기 바꿔야해서 여기서는 그냥 편하게.
+s = f.read()
+f.close()
+Content_Types_XML = etree.XML(bytes(s, 'utf-8'))</pre>
+</li>
+<li>&lt;Override&gt; 노드를 찾는다.
+<pre class="lang:python decode:true">NS_CONTENT_TYPES = 'http://schemas.openxmlformats.org/package/2006/content-types'
+overrides = Content_Types_XML.xpath('//ns:Override', namespaces={'ns': NS_CONTENT_TYPES})</pre>
+</li>
+<li>&lt;Override&gt;노드 중 마지막 시트 번호를 구한다. ex) sheet3.xml의 3.
+<pre class="lang:python decode:true"># 나쁜 코드지만 일단 넘어간다.
+for override in overrides:
+    if 'worksheets' in override.get('PartName'):
+        last_worksheet = override.get('PartName').rsplit('/', 1)[1]
+        content_type = override.get('ContentType')
+last_worksheet_num = last_worksheet[5:-4]  # sheet[NUMBER].xml</pre>
+</li>
+<li>마지막 시트번호에 1을 더한 값으로 새 시트의 xml파일 이름을 만든다.
+<pre class="lang:python decode:true ">new_worksheet_num = int(last_worksheet_num) + 1
+new_worksheet = 'sheet' + str(new_worksheet_num) + '.xml'</pre>
+</li>
+<li>lxml.etree.Element()로 새 노드를 만들고, PartName과 ContentType 속성을 추가한다.
+<pre class="lang:python decode:true">new_override = etree.Element('Override')
+new_override.set('PartName', os.path.join('xl', 'worksheets', new_worksheet))
+new_override.set('ContentType', content_type)</pre>
+</li>
+<li>Content_Types_XML노드 마지막에 새로 만든 노드를 추가한다(사실 순서는 상관없다).
+<pre class="lang:python decode:true ">Content_Types_XML.insert(len(overrides), new_override)</pre>
+</li>
+<li>이것을 문자열로 만들어서 [Content_Types].xml파일에 저장한다.
+<pre class="lang:python decode:true">Content_Types_str = etree.tostring(Content_Types_XML, encoding='utf-8')
+with open('[Content_Types].xml', 'w') as f:
+    f.write(str(soup, 'utf-8'))</pre>
+</li>
+</ol>
+<p>끝.</p>
+<p>다음 할 일: <a href="http://blog.dokenzy.com/archives/904">docProps/app.xml 수정하기</a></p>

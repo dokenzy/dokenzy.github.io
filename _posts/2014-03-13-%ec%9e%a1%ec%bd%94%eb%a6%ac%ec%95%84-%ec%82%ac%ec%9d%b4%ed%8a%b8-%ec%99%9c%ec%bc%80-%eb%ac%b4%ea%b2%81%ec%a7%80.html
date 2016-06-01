@@ -1,0 +1,49 @@
+---
+layout: post
+title: 잡코리아 사이트 왜케 무겁지?
+post_id: '1104'
+date: 2014-03-13 02:05:13.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- pingdom
+- 분석
+- 잡코리아
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>먹고 살려고 잡코리아 뒤지는 중이다.</p>
+<p>결색 결과를 모두 새 탭으로 연다.</p>
+<p>구글 크롬에서 잡코리아 구인공고 대여섯개를 새 탭으로 열면 종종 브라우저가 뻗을랑말랑 한다. 크롬이 무거워진다. 결국 페이지 응답없음 경고가 뜬다.</p>
+<h3>구글 크롬으로 간단하게 검사한 결과,</h3>
+<ol>
+<li>요청: 211, 전송받은 파일: 1.7MB, 로딩속도: 약 8초 걸림</li>
+<li>없는 파일 요청: http://fileco.jobkorea.co.kr/jkwlg.js 404 에러.</li>
+<li>DCSgeneric_main.js 파일 로딩하는 데 약 2.8초 걸림. 뭐하는 건가 봤더니 <a href="http://scorecardresearch.com">http://scorecardresearch.com</a>를 통해 방문자 정보를 분석하기 위한 스크립트로 보임. 벌써 2초 초과</li>
+<li>conversion.js 로딩하는데 약 0.8초 걸림.</li>
+<li>네이버지도 가져오는 데 2.16 초 걸림. 이 파일을 전부 가져오네...(<a href="http://openapi.map.naver.com/openapi/naverMap.naver?ver=2.0&amp;key=a99e6702e093cb12802ed5fb5f78eb49" target="_blank">링크</a>), 그 외 부수파일들도...</li>
+<li>jquery를 이것저것 다 가져옴. 대충 확인한 것만 5개. 뭐 외부 API 사용하다보면 그럴 수도 있겠다 싶다.
+<ol>
+<li>GIB_Read.asp: jquery-1.8.3.js</li>
+<li>Oneshot_Search_Main.asp: jquery-1.6.2.min.js</li>
+<li>GI_Map_View.asp: jquery-1.6.2.min.js</li>
+<li>GI_Read_Powerlink.asp: jquery-1.8.3.min.js</li>
+<li>Read_Gi_Kkatalk.asp: jquery-1.8.2.min.js</li>
+</ol>
+</li>
+</ol>
+<p>​파일 경로 적고 나니 너무 귀찮다. 괜히 했나 싶다...;;;</p>
+<p>일단 http://fileco.jobkorea.co.kr/jkwlg.js 요거 404 오류만이라도 해결하는 게... 계속 요청하네... ;;;</p>
+<p>이 글 적는 동안 계속 페이지 응답없음 경고가 계속 뜬다. 뭔가 더 있을 것 같지만 이 정도로 끝내련다. 내가 고칠 수도 없는 노릇이고... 내 공부 하기도 바쁨.</p>
+<h3><a title="http://tools.pingdom.com" href="http://tools.pingdom.com">http://tools.pingdom.com</a>로 테스트한 결과</h3>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2014/03/jobkoreatest.png"><img class="alignnone size-full wp-image-1337" alt="jobkoreatest" src="{{ site.baseurl }}/assets/jobkoreatest.png" width="660" height="459" /></a></p>
+<p>크기가 무려 5.2MB에 리퀘스트 횟가 557이다. ㄷㄷㄷ</p>

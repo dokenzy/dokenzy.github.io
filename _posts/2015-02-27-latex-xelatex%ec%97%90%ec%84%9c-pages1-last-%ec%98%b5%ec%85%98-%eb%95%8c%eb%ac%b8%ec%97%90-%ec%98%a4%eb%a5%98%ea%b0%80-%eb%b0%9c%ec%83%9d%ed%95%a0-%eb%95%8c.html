@@ -1,0 +1,31 @@
+---
+layout: post
+title: 'LaTeX:: xelatex에서 pages=1-last 옵션 때문에 오류가 발생할 때'
+post_id: '1933'
+date: 2015-02-27 04:46:52.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- pdflatex
+- pdfpages
+- xelatex
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PDFLaTeX으로는 문제 없는 코드가 XeLaTeX으로 컴파일할 때만 문제가 발생한다. 다음과 같은 코드에서</p>
+<pre class="lang:tex decode:true">\usepackage{pdfpages}
+\includepdf[pages=1-last]{pdffile}</pre>
+<p>위와 같이 <span class="lang:tex decode:true  crayon-inline ">[pages=1-last]</span>  옵션이 있는 경우, pdfLaTeX으로는 잘 컴파일이 되는데, XeLaTeX으로 컴파일하면 <span class="lang:sh decode:true  crayon-inline ">"! Package pdfpages Error: Cannot find file `1-last'."</span>   오류가 발생한다.</p>
+<p class="p1">원인은 모르겠지만 해결법은 간단하다. 옵션을 다음과 같이 바꾼다.</p>
+<pre class="lang:tex decode:true ">[pages=1-]</pre>
+<p class="p1"> pages 옵션은 {m}-{n}형식으로 페이지 수를 지정할 수 있는데, 생략하게되면 m=1, n=last가 된다.</p>
+<p class="p1">결국은 last가 주어지는 건데, 왜 XeTeX에서만 저런 문제가 발생하는 것인지는 모르겠다.</p>

@@ -1,0 +1,29 @@
+---
+layout: post
+title: 'PyQt:: QLabel 정렬하기'
+post_id: '108'
+date: 2012-09-26 00:57:51.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- align
+- pyqt
+- QLabel
+- Qt.AlignRight
+- setAlignment
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyQt에서는 라벨을 넣을 때 QLabel()을 사용한다. 이 때 QLabel()에 쓰인 텍스트를 왼쪽, 오른쪽, 가운데로 정렬을 할 수 있다.</p>
+<pre class="lang:python decode:true">self.lblUniName = QLabel()
+self.lblUniName.setAlignment(Qt.AlignRight)</pre>
+<p>위와 같이 QLabel 객체에 setAlignment메소드를 사용하면 되는데, Qt.AlignRight를 인자로 넣으면 오른쪽 정렬이 된다.</p>

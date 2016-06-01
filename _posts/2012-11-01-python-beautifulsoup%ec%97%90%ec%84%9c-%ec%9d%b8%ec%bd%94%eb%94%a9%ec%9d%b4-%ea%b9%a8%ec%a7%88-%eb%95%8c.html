@@ -1,0 +1,32 @@
+---
+layout: post
+title: 'Python:: BeautifulSoup에서 인코딩이 깨질 때'
+post_id: '181'
+date: 2012-11-01 00:10:43.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- beautifulsoup
+- cx_freeze
+- py2exe
+- Python
+- 파이썬
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>BeautifulSoup를 이용한 프로그램을 만들었는데, 문제가 생겼다.</p>
+<p>HTML에서 특정 클래스를 갖는 &lt;span&gt;태그에 텍스트를 넣는 것인데, 아스키가 아닌 문자들이 모두 깨졌다.</p>
+<p>특이한 건 .py파일을 실행하면 이런 문제가 생기지 않는데, py2exe나 cx_freeze로 패키징을 하면 이런 문제가 생기는 것이다.</p>
+<p>저장할 때 인코딩 문제가 생기는 줄 알았는데, BeautifulSoup 객체를 만들 때 기본 인코딩이 utf-8이 아니어서 생긴 문제다. 왜 utf-8이 기본이 아닌지 모르겠다.</p>
+<pre class="lang:python decode:true">soup = BeautifulSoup(html, from_encoding="utf-8")</pre>
+<p>BeautifulSoup 객체를 만들 때, HTML파일의 인코딩을 위처럼 지정해 주면 된다.</p>
+<p>이것때문에 몇 시간을 헤맸다.</p>

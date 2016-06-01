@@ -1,0 +1,32 @@
+---
+layout: post
+title: 'jQuery:: 숫자인지 확인할 때 쓰는 isNumeric()'
+post_id: '307'
+date: 2013-02-03 23:51:02.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- jQuery
+tags:
+- isNumeric()
+- jquery
+- 숫자
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>웹서비스를 만드는데, 자바스크립트로 JSON 데이터를 만들어서 파이썬으로 보내야 한다.</p>
+<p>JSON데이타 중에 숫자와 문자를 구분해야 하는데, slickgrid를 이용하니 전부 문자열로 처리해 버린다.</p>
+<p>사용자가 입력한 값이 숫자인 경우, 강제로 숫자로 변환시켜야 한다. 이게 좀 골치아픈 게 많은데, jQuery가 해결해 준다. 이 사람들, 천재다.</p>
+<pre class="lang:js decode:true  crayon-selected">$.isNumeric('6');
+&gt; true //이게 중요하다. '6'은 문자열이지만 숫자로 이해해야 한다.
+$.isNumeric('a');
+&gt; false</pre>
+<p>보다 많은 샘플은 <a href="http://api.jquery.com/jQuery.isNumeric/" target="_blank">http://api.jquery.com/jQuery.isNumeric/</a></p>
+<p>&nbsp;</p>

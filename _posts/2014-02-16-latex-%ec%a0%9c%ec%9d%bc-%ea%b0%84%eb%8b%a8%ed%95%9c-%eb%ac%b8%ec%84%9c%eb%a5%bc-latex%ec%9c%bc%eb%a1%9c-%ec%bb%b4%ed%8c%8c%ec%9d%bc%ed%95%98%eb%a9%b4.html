@@ -1,0 +1,69 @@
+---
+layout: post
+title: 'LaTeX:: 제일 간단한 문서를 latex으로 컴파일하면?'
+post_id: '931'
+date: 2014-02-16 13:19:56.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- latex
+- minimal
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>평소 해보고 싶던 게 있었다. 제일 간단한 문서를 만든 후, 컴파일 과정을 추적해 보는 것이다. 이래저래 미루다가 오늘 해보기로 했다.</p>
+<p>다음은 a.tex 파일이다.</p>
+<pre class="lang:tex decode:true" title="a.tex">\documentclass{minimal}
+\begin{document}
+a
+\end{document}</pre>
+<p>minimal은 내가 알고 있는 클래스 중에 제일 간단한 LaTeX 클래스이다.</p>
+<p>다음은 이 문서를 MacTeX 2013에서 latex으로 컴파일하면 a.log, a.aux, a.pdf파일이 생긴다.</p>
+<p>a.aux 파일</p>
+<pre class="lang:tex decode:true" title="a.aux">\relax</pre>
+<p>a.log 파일</p>
+<pre class="lang:default decode:true crayon-selected" title="a.log">This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=latex 2013.12.14)  16 FEB 2014 12:32
+entering extended mode
+ restricted \write18 enabled.
+ %&amp;-line parsing enabled.
+**a
+(./a.tex
+LaTeX2e &lt;2011/06/27&gt;
+Babel &lt;3.9h&gt; and hyphenation patterns for 78 languages loaded.
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/minimal.cls
+Document Class: minimal 2001/05/25 Standard LaTeX minimal class
+) (./a.aux)
+\openout1 = `a.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 2.
+LaTeX Font Info:    ... okay on input line 2.
+ [1] (./a.aux) ) 
+Here is how much of TeX's memory you used:
+ 18 strings out of 493309
+ 314 string characters out of 6137841
+ 52416 words of memory out of 5000000
+ 3568 multiletter control sequences out of 15000+600000
+ 3640 words of font info for 14 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 14i,4n,10p,117b,92s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+Output written on a.dvi (1 page, 200 bytes).</pre>

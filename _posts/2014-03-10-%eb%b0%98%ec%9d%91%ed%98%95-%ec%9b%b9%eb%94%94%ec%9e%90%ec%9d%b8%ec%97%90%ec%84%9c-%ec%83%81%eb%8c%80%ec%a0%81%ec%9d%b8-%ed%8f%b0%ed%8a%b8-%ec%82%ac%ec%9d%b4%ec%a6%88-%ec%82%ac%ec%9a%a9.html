@@ -1,0 +1,55 @@
+---
+layout: post
+title: 반응형 웹디자인을 위해 더 편한 상대크기 단위 REM 사용하기
+post_id: '1044'
+date: 2014-03-10 00:25:00.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- CSS
+tags:
+- css3
+- em
+- rem
+- 상대크기
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>반응형 웹디자인을 만들 때 CSS에서 크기를 잡아줄 때 em이나 %같은 단위를 사용한다.</p>
+<p>em과 %는 부모요소로부터의 상대 크기라는 점에서 논리적인 접근을 할 수 있다는 장점이 있다.</p>
+<p>예컨데 다음과 같은 마크업이 있다고 하자.</p>
+<pre class="lang:xhtml decode:true">&lt;p&gt;
+    &lt;span class="asdf"&gt;얼씨구&lt;/span&gt;
+&lt;/p&gt;</pre>
+<p>이 때 asdf클래스의 폰트 사이즈를 부모의 폰트 사이즈보다 25%작게 하고 싶다면 CSS를 다음과 같이 작성하면 된다.</p>
+<pre class="lang:css decode:true">p {font-size: 100%; }
+p span.asdf {font-size: 75%}</pre>
+<p>이제 항상 부모의 폰트 사이즈보다 25%작게 나오니 원하는 대로 됐다! 만쉐~</p>
+<p>정말 그럴까?</p>
+<p>위에서는 부모 요소가 달랑 &lt;p&gt; 하나였다. 그런데 저런 코드는 싸구려 책의 예제에서만 볼 수 있다. 실제로는 저 위에 부모 요소가 수두룩하다.  그럼 실제 span.asdf가 나타나는 크기는 어떻게 알 수 있는가? 하나씩 따지고 올라가면 계산이야 할 수 있겠지만, 언제 이 노릇을 한단 말인가! 게다가 만약 중간에 어떤 조상 노드의 크기가 바뀐다면? 이럴 때는 상대크기라도 별 수 없다.</p>
+<p>나처럼 이런 거를 싫어하는 사람들을 위해 CSS3에는 또 다른 상대크기 단위가 생겼다.</p>
+<p>바로 <strong>rem</strong>.</p>
+<p>root em이란 뜻으로 루트 요소, 즉 &lt;html&gt;요소의 폰트사이즈를 기준으로 한 상대 크기다.</p>
+<p>이것의 장점은 분명하다. 기준이 딱 하나라는 것이다. 루트 요소인 &lt;html&gt;의 폰트 사이즈를 기준으로 하니, 계산하기가 쉽다.</p>
+<p>문제는 역시 브라우저 호환성. <a href="http://caniuse.com/rem">http://caniuse.com/rem</a>의 표에 의하면 구글 크롬, 사파리, 파이어폭스 최신 버전등은 모두 지원하고 있고, IE는 9 이상부터 지원한다. 애매한 게 IE 8인데, 이런 식으로 간단히 해결할 수 있다.</p>
+<pre class="lang:python decode:true">p span.asdf {font-size: 13px; font-size: 0.75rem; }</pre>
+<p>rem을 처리할 수 있는 웹 브라우저는 나중에 선언된 0.75rem을 적용할 것이고, 그렇지 못한 웹 브라우저는 13px로 처리할 것이다.</p>
+<p><a href="http://j.eremy.net/confused-about-rem-and-em/">Confused About REM and EM?</a>라는 글을 쓴 저자는 본문에서 em과 rem 그리고 px를 다음과 같은 용도로 사용한다고 한다.</p>
+<ul>
+<li>em: 대부분</li>
+<li>rem: margin, padding</li>
+<li>px: border</li>
+</ul>
+<p>괜찮은 생각이다. 특히 border에는 px을 쓰는 게 여러 면에서 좋겠다. 하지만 나는 폰트 사이즈에만 em을 쓰고 그 외에는 rem을 쓸 생각이다.</p>
+<p>관련링크:</p>
+<ul>
+<li><a title="CSS Values and Units Module Level 3" href="http://www.w3.org/TR/css3-values/#font-relative-lengths">CSS Values and Units Module Level 3</a></li>
+<li><a href="http://demosthenes.info/blog/775/Which-CSS-Measurements-To-Use-When">Which CSS Measurements To Use When</a></li>
+</ul>

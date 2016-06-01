@@ -1,0 +1,55 @@
+---
+layout: post
+title: 'LaTeX:: Mac용 LaTeX 에디터로 Sublime Text 2 사용하기'
+post_id: '190'
+date: 2012-11-09 04:29:57.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- latex
+- mactex
+- sublime text 2
+- texlive
+- texshop
+- 에디터
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>요근래 Sublime Text 2 사용자가 많이 늘고 있다. 가볍고 빠르고 이쁘다. 기능도 많다.<br />
+게다가 상용이지만 (아직까지는) 기능 제한없이 계속 사용할 수 있다. 구입하지 않으면 파일을 저장할 때 구입안내창이 뜬다. 매번 뜨는 게 아니니 돈 안내고 쓰려면 이 정도는 감수하자.<br />
+얼마나 강력한지는 Sublime Text 홈페이지에 올라온 동영상만 봐도 알 수 있다.<br />
+<a href="http://www.sublimetext.com/blog/articles/sublime-text-2-0-released" target="_blank">http://www.sublimetext.com/blog/articles/sublime-text-2-0-released</a></p>
+<p>Mac용  LaTeX 에디터로 주로 TeXShop이나 MacVim을 썼는데, Sublime Text 2를 사용해 보려고 설정을 했다.</p>
+<ol>
+<li>준비물: <a href="http://www.tug.org/mactex/" target="_blank">MacTeX</a> 2010 이상, <a href="http://skim-app.sourceforge.net/" target="_blank">Skim</a>(Mac OS용 PDF 뷰어). 이 두 개의 프로그램을 다운받아서 설치한다.</li>
+<li><a href="http://www.sublimetext.com/2" target="_blank">Sublime Text 2</a> 를 다운받아서 설치한다.</li>
+<li><a href="https://github.com/SublimeText/LaTeXTools" target="_blank">SublimeText / LaTeXTools</a> 을 다운받는다. zip파일을 풀면 LaTeXTools-Master 따위의 이름으로 된 폴더가 나오는데, 적당히 'LaTeXTools' 정도로 바꾼다. <strong>절대 'LaTeX'이라는 이름으로 바꾸면 안된다!</strong></li>
+<li>Sublime Text 2를 실행시킨다. 메뉴에서 Preferences | Browse Packages 를 선택한다.</li>
+<li>파인더가 실행되면서 Packages라는 폴더가 열릴 것이다. Sublime Text 2에서 지원하는 언어들이 각 폴더로 구분되어 있다. 엄청 많다. 이 중에 'LaTeX'폴더도 있다. 위 2번에서 'LaTeX'이라는 이름을 왜 쓰면 안되는지 이해할 수 있을 것이다.</li>
+<li>Packages 폴더에 'LaTeXTools'라는 폴더를 넣어준다.  이제 Sublime Text 2에서 할 일은 끝났다. Sublime Text 2를 재시작할 필요도 없다.</li>
+</ol>
+<p>이제 inverse search를 하기 위해 Skim을 설정한다.</p>
+<p>Skim을 실행해서 Preferences를 열면 Sync탭이 보인다. Sync탭에서 각 항목을 아래와 같이 설정한다.</p>
+<ul>
+<li>Check for file changes: <strong>체크하지 않는다.</strong></li>
+<li>Preset: <strong>Custom</strong></li>
+<li>Command: <strong>/Applications/Sublime text.app/Contents/SharedSupport/bin/subl</strong></li>
+<li>Arguments: <strong>"%file":%line</strong></li>
+</ul>
+<div><span style="font-size: medium;"><span style="line-height: 24px;">설정은 끝.</span></span></div>
+<div>
+<p>Sublime Text 2에서 LaTeX 문서를 작성한 후, 단축키 Cmd + B를 누르면 컴파일이 되고, 바로 Skim에서 PDF를 보여준다. 이 때, Sublime Text 2의 커서 위치에 해당하는 부분이 Skim에서 하이라이팅된다.</p>
+<p><img class="alignnone" title="sublime text 2" src="{{ site.baseurl }}/assets/%25E1%2584%2589%25E1%2585%25B3%25E1%2584%258F%25E1%2585%25B3%25E1%2584%2585%25E1%2585%25B5%25E1%2586%25AB%25E1%2584%2589%25E1%2585%25A3%25E1%2586%25BA%25202012-11-09%2520%25E1%2584%258B%25E1%2585%25A9%25E1%2584%258C%25E1%2585%25A5%25E1%2586%25AB%25204.18.06.png" alt="" width="743" height="444" /></p>
+<p>&nbsp;</p>
+<p>다른 단축키는 <a href="https://github.com/SublimeText/LaTeXTools" target="_blank">https://github.com/SublimeText/LaTeXTools</a>를 참고.</p>
+<p>&nbsp;</p>
+</div>

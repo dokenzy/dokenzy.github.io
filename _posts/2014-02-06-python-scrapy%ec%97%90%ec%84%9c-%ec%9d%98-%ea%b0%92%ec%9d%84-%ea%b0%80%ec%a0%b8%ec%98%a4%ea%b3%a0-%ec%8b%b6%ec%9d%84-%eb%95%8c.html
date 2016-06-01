@@ -1,0 +1,30 @@
+---
+layout: post
+title: 'Python:: Scrapy에서 input의 값을 가져오고 싶을 때'
+post_id: '849'
+date: 2014-02-06 19:11:31.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- Python
+- scrapy
+- 속성
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>HTML 문서에 다음과 같은 코드가 있다. Scrapy로 &lt;input&gt;요소의 값을 가져오고 싶다.</p>
+<pre class="lang:xhtml decode:true">&lt;input type="hidden" name="idx" value="1117"&gt;</pre>
+<p>이 노드를 찾아서 1117이라는 값을 가져오고 싶다.</p>
+<pre class="lang:python decode:true">sel = Selector(response)
+idx = sel.xpath('//input[@name="idx"]/@value')[0].extract()
+# idx = 1117</pre>
+<p>노드가 하나 밖에 없다면 이렇게 리스트로 가져오지 않는 방법도 있지만...</p>

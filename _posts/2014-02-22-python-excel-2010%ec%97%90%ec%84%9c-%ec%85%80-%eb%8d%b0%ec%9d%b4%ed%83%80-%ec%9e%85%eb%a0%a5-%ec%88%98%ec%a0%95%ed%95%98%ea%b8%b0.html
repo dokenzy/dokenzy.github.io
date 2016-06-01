@@ -1,0 +1,91 @@
+---
+layout: post
+title: 'Python:: Excel 2010에서 셀 데이타 입력(수정)하기 - 숫자값'
+post_id: '945'
+date: 2014-02-22 11:58:19.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- excel
+- libreoffice
+- lxml
+- Python
+- XML
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>조건: 셀 데이타값은 유니코드 문자열과 정수만 된다. 실수도 되는 것 같은데 테스트를 많이 해보지는 않았다. 다른 타입은 고려하지 않았다.</p>
+<p>그리고 셀 데이타를 삽입하거나 수정하는 것은 코드가 너무 길다. 요약정도만 남기기로 한다.</p>
+<p>먼저 수정하는 방법을 설명하기 전에 엑셀 데이타가 있는 xml 파일이 어떻게 생겼는지 보이겠다.</p>
+<pre class="lang:python decode:true">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" mc:Ignorable="x14ac"&gt;
+  &lt;dimension ref="A1:D7"/&gt;
+  &lt;sheetViews&gt;
+    &lt;sheetView tabSelected="1" workbookViewId="0"&gt;
+      &lt;selection activeCell="D17" sqref="D17"/&gt;
+    &lt;/sheetView&gt;
+  &lt;/sheetViews&gt;
+  &lt;sheetFormatPr defaultRowHeight="15"/&gt;
+  &lt;sheetData&gt;
+    &lt;row r="1" spans="1:4"&gt;
+      &lt;c r="A1" t="s"&gt;
+        &lt;v&gt;6&lt;/v&gt;
+      &lt;/c&gt;
+      &lt;c r="B1" t="s"&gt;
+        &lt;v&gt;0&lt;/v&gt;
+      &lt;/c&gt;
+      &lt;c r="C1" t="s"&gt;
+        &lt;v&gt;1&lt;/v&gt;
+      &lt;/c&gt;
+      &lt;c r="D1" t="s"&gt;
+        &lt;v&gt;2&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+    ... 중략 ...
+    &lt;row r="7" spans="1:4"&gt;
+      &lt;c r="A7" t="n"&gt;
+        &lt;v&gt;60000&lt;/v&gt;
+      &lt;/c&gt;
+      &lt;c r="B7" t="s"&gt;
+        &lt;v&gt;23&lt;/v&gt;
+      &lt;/c&gt;
+      &lt;c r="C7" t="s"&gt;
+        &lt;v&gt;22&lt;/v&gt;
+      &lt;/c&gt;
+      &lt;c r="D7" t="s"&gt;
+        &lt;v&gt;24&lt;/v&gt;
+      &lt;/c&gt;
+    &lt;/row&gt;
+  &lt;/sheetData&gt;
+  &lt;pageMargins left="0.7" right="0.7" top="0.75" bottom="0.75" header="0.3" footer="0.3"/&gt;
+&lt;/worksheet&gt;</pre>
+<p>대충 감이 올 것이다. 값은 &lt;sheetData&gt;라는 셀 안에 들어있는데, 먼저 '행(&lt;row r="1"&gt;)'으로 접근한다는 사실을 알 수 있다. 그리고 각 &lt;row&gt; 안에 &lt;c r="C1" t="s"&gt;와 같은 형식의 요소가 있다. r속성은 당연히 셀번호 C1이고, t는 type이다. t="s"란 이 셀의 값이 문자열이라는 뜻이다. 만약 t="n"이라면 셀 값이 숫자라는 뜻이다. t 속성값에 어떤 것들이 있는지는 <a href="http://officeopenxml.com/SScontentOverview.php">Spreadsheet Content Overview</a>라는 문서를 참조한다.</p>
+<p>일단 sheet&lt;n&gt;.xml 파일은 이렇게 생겼다는 것만 알고, 진행하기로 한다.</p>
+<p>1. 엑셀 데이타를 수정(입력과 수정)하기 위해서는 먼저 3가지 정보가 필요하다. 1) 시트 이름, 2) 셀번호(B24같은...), 3) 값(유니코드 문자열 또는 정수). 이 글에서는 설명의 편의를 위해 임의의 셀을 다음과 같이 정하기로 한다.</p>
+<p>시트이름: mySheet<br />
+셀 번호   : B24<br />
+셀 값       : 333</p>
+<p>2. 실제 시트는 sheet1.xml, sheet2.xml, sheet3.xml 등의 파일로 되어있기 때문에, 시트 이름을 가지고 sheet&lt;n&gt;.xml 파일을 찾는다.  이 글에서는 임의로 sheet4.xml이라고 하기로 한다.</p>
+<p>3. 시트파일 sheet4.xml 파일을 <span class="lang:python decode:true  crayon-inline">etree.parse('sheet&lt;n&gt;.xml').getroot()</span> 로 노드를 가져온다.</p>
+<p>4. 셀 번호에 해당하는 노드를 아래와 같이 구한다.</p>
+<pre class="lang:python decode:true">cell = self.sheetXML.find('.//ns:c[@r="{0}"]'.format(_cell), namespaces={'ns': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'})</pre>
+<p>5. cell이 None이라면 기존에 빈 셀이었다는 뜻이다. 그런데 이 때 두 가지 경우가 있다.</p>
+<p>B24에는 값이 없지만, A24나 C24에는 값이 있을 수 있다. 이 때는 이미 &lt;row r="24&gt;라는 노드가 있다. 하지만 24행 전체가 비어있을 수도 있다. 이 때는 &lt;row r="24"&gt;라는 노드부터 만들어야 한다(새 노드 만드는 건 <a title="Python:: Excel 2010에 새 시트 추가하기(3) – workbook.xml" href="http://blog.dokenzy.com/archives/914">Python:: Excel 2010에 새 시트 추가하기(3) – workbook.xml</a>를 참고바람).</p>
+<p>6. 이제 &lt;row r="24"&gt;에 아래와 같은 노드를 추가해야 한다.</p>
+<pre class="lang:python decode:true">&lt;c r="B24" t="n"&gt;
+    &lt;v&gt;333&lt;/v&gt;
+&lt;/c&gt;</pre>
+<p>먼저 &lt;c&gt;노드를 만들고, 다시 &lt;v&gt;노드를 만든다. &lt;v&gt;노드에 값을 입력하는 방법은 다음과 같다.</p>
+<pre class="lang:python decode:true">new_v.text = str(333)</pre>
+<p>그리고나서 &lt;v&gt;를 &lt;c&gt;에 추가하고, 다시 &lt;c&gt;를 &lt;row r="24&gt;에 추가한다.</p>
+<p>7. 마지막으로 완성된 etree.Element를 문자열로 변환한 후 원래 파일인 sheet4.xml에 저장하면 된다.</p>
+<p>숫자는 비교적 간단하다. 왜냐면 sheet&lt;n&gt;.xml에 직접 넣으면 끝이기 때문이다. 입력할 값이 문자열일 경우에는 조금 더 복잡하다. 이건 '<a title="Python:: Excel 2010에서 셀 데이타 입력(수정)하기 – 문자열" href="http://blog.dokenzy.com/archives/949">문자열 수정하기</a>'에서 설명하기로 한다.</p>

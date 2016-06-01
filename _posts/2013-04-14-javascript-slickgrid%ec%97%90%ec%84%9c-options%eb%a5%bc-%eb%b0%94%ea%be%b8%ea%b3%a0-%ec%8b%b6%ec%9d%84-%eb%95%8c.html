@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'Javascript:: Slickgrid에서 Options를 바꾸고 싶을 때'
+post_id: '421'
+date: 2013-04-14 19:55:24.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- javascript
+tags:
+- javascript
+- setoptions
+- slickgrid
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>SlickGrid를 사용할 때 필요한 옵션들을 미리 선언해 주면 편하다.</p>
+<pre class="lang:js decode:true">var options = {
+    enableAddRow: false,
+    enableCellNavigation: true,
+    asyncEditorLoading: false,
+	autoEdit: false,
+	cellHighlightCssClass: "err-highlight",
+  };
+
+grid = new Slick.Grid("#myGrid", data, columns, options);</pre>
+<p>그런데 이 옵션을 동적으로 바꾸고 싶은 경우가 있다. 예를 들어 <span class="lang:js decode:true  crayon-inline ">&lt;span id="edit"&gt;edit&lt;/span&gt;</span>  과 같이 'edit'버튼을 만든 후, 이 버튼을 클릭하면, 편집할 수 있는 옵션을 추가하는 인터페이스를 만들고 싶은 경우가 있다.</p>
+<p>간단하다.</p>
+<pre class="lang:js decode:true">grid.setOptions({
+    editable: true,
+});</pre>
+<p>SlickGrid의 각 옵션에 대한 설명은 <a href="https://github.com/mleibman/SlickGrid/wiki/Grid-Options" target="_blank">https://github.com/mleibman/SlickGrid/wiki/Grid-Options</a> 에서 볼 수 있다.</p>

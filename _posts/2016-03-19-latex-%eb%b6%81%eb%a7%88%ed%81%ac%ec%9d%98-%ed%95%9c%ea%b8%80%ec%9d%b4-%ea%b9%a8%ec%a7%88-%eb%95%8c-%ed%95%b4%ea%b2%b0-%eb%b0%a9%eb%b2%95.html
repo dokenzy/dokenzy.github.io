@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'LaTeX:: 북마크의 한글이 깨질 때 해결 방법'
+post_id: '2188'
+date: 2016-03-19 20:32:57.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- acrobat reader
+- bookmark
+- hyperref
+- latex
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>회사에서 다른 팀의 요청으로 간단한 튜토리얼을 만들어 주었다. 스크린샷 위주의 튜토리얼이라 Beamer로 만들기로 했고, 테마는 Metropolis를 사용하였다.</p>
+<p>20페이지가 안되는 분량이지만 책갈피도 만들어 주었고, 요즘은 특별한 이유가 없는 한 LuaLaTeX으로만 작성하고 있다(사실 LuaTeX으로만 할 수 있는 특별한 뭔가를 만드는 것도 아니지만...).</p>
+<p>그 문서를 전달해 준 뒤 몇 주가 지났는데, 그 팀의 한 분이 설치가 잘 안된다며 나에게 도와달라고 하셨다. 그 분의 PC를 살펴보다가 아크로뱃 리더에 내가 만든 매뉴얼이 열려있었다. 그런데 책갈피의 한글이 와장창 깨졌다. 20명이 넘는 팀으로 알고 있는데 왜 아무도 나에게 피드백을 안해주었는지 모르겠지만...</p>
+<p>아무튼 설치 문제를 해결해 주고, 내 PC(윈도 7, 64비트)에서 열어보았다. Sumatra PDF는 아무 문제가 없는데, Acrobat Reader DC에서는 동일한 문제가 있었다.</p>
+<p>KTUG 게시판에서 이 문제에 대해 질문이 올라왔던 것 같았지만, 일단 구글링을 했다.</p>
+<p>SO에 누군가 다음과 같은 답변을 올렸다. 따라해 봤다. 잘 된다.</p>
+<pre class="lang:tex decode:true ">\PassOptionsToPackage{unicode}{hyperref}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

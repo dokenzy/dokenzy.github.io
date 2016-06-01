@@ -1,0 +1,37 @@
+---
+layout: post
+title: 'Python:: 한양대학교 식단 가져오기'
+post_id: '1725'
+date: 2014-09-24 01:07:21.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- beautifulsoup
+- lxml
+- requests
+- Yuna
+- 식단
+- 파싱
+- 파이썬
+- 한양대학교
+meta:
+  _edit_last: '1'
+  _oembed_d0c2529cfdc30fcfaf5cd3c7a4df5ed7: '{{unknown}}'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>몇 주 전에 급 생각나서 끄적거리다가 꼭 써보고 싶은 기능이 있어 일단 여기까지 마무리.</p>
+<p><a href="https://github.com/dokenzy/hanyang">https://github.com/dokenzy/hanyang</a></p>
+<p>필요한 거: Python 3.4.1, beautifulsoup4, lxml, requests</p>
+<p><del>버그: 주말이 되면 오류가 발생해서 안된다. 교직원식당 외에 다른 식당에서는 오류가 발생할 수 있다.</del></p>
+<p>사실 맥에서 say 명령으로 오늘 식단을 Yuna 목소리로 듣고 싶어서 만들었음;;;</p>
+<p>사용 예: print(getMenu()['dinner2']['menu']) 코드가 들어가 있는데,</p>
+<pre class="lang:python decode:true">$ python hanyang.py | say</pre>
+<p>위 명령을 실행하면 오늘 저녁 메뉴2를 Yuna가 읽어줌;;; 이거 때문에 만들었음;;;</p>

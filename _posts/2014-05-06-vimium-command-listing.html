@@ -1,0 +1,79 @@
+---
+layout: post
+title: 구글 크롬 확장프로그램 Vimium 명령어 목록
+post_id: '1434'
+date: 2014-05-06 02:28:24.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- google chrome
+- Vimium
+- 명령어
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Vim을 많이 쓰다보니 웹브라우저에서도 Vim 플러그인을 쓴다. 크롬에서는 <a href="https://chrome.google.com/webstore/detail/vimium/dbepggeogbaibhgnhhndojpepiihcmeb">Vimium</a>이라는 확장프로그램을 쓰는데, 지원하는 기능이 많아 정리해 보기로 했다. 번역하지 않은 명령은 어떻게 쓰는 건지 모르는 명령이다. 정리하길 잘했다. 이렇게 많은 기능을 제공하는지 몰랐다.</p>
+<h2>Vimium 명령어 목록</h2>
+<h3>페이지 이동</h3>
+<p>j, &lt;c-e&gt;: 아래로 스크롤<br />
+k, &lt;c-y&gt;: 위로 스크롤<br />
+h: 왼쪽으로 스크롤<br />
+l: 오른쪽으로 스크롤<br />
+gg: 맨 위로 스크롤<br />
+G: 맨 아래로 스크롤<br />
+zH: Scroll all the way to the left (scrollToLeft)<br />
+zL: Scroll all the way to the right (scrollToRight)<br />
+d: 한 페이지 아래로 스크롤<br />
+u: 한 페이지 위로 스크롤<br />
+r: 새로고침<br />
+gs: 소스보기<br />
+yy: 현재 URL을 클립보드에 복사<br />
+yf: 특정 링크의 URL을 클립보드로 복사<br />
+p: 클립보드에 있는 URL을 현재 탭에서 열기<br />
+P: 클립보드에 있는 URL을 새탭에서 열기<br />
+gu: 현재 URL의 상위 단계로 가기<br />
+gU: 현재 URL의 최상위 단계로 가기<br />
+i: Enter insert mode (enterInsertMode)<br />
+gi: 현재 페이지의 첫번째 입력상자에 포커스 주기<br />
+f: 현재 탭에서 링크 열기<br />
+F: 새 탭에서 링크 열기<br />
+&lt;a-f&gt; : Open multiple links in a new tab (LinkHints.activateModeWithQueue)<br />
+o: URL, 북마크, 히스토리 열기<br />
+O: 새 탭에서 URL, 북마크, 히스토리 열기<br />
+T: 열어놓는 모든 탭에서 찾기(Search through your open tabs). 검색한 단어가 있으면 해당 탭으로 이롱하고 그렇지 않으면 구글 검색으로 이동한다.<br />
+b: 북마크한 페이지 열기<br />
+B: 새 탭에서 북마크한 페이지 열기<br />
+[[ : previous나 &lt;로 쓰여진 링크로 이동. previous에 대한 패턴은 옵션에 설정되어 있다. 원한다면 수정할 수 있다.<br />
+]] : next나 &gt;로 쓰여진 링크로 이동. next에 대한 패턴은 옵션에 설정되어 있다. 원한다면 수정할 수 있다.<br />
+gf : 페이지의 다음 프레임으로 이동<br />
+m : 마킹<br />
+` : 마킹한 위치로 이동</p>
+<h3>찾기</h3>
+<p>/ : 찾기 모드로 전환<br />
+n : 다음 찾기<br />
+N : 이전 찾기</p>
+<h3>히스토리</h3>
+<p>H : 이전 페이지로 이동<br />
+L : 다음 페이지로 이동</p>
+<h3>탭 다루기</h3>
+<p>K, gt : 오른쪽 탭으로 이동<br />
+J, gT : 왼쪽 탭으로 이동<br />
+g0 : 첫번째 탭으로 이동<br />
+g$ : 마지막 탭으로 이동<br />
+t : 새 탭 만들기<br />
+yt : 현재탭을 복사<br />
+x : 현재탭 닫기<br />
+X : 닫은 탭 복구<br />
+W : 현재 탭을 새 창으로 이동</p>
+<h3>기타</h3>
+<p>? : 도움말. 이 글에 있는 모든 단축키에 대한 설명을 보여준다. 근데 글자가 작아서 읽기가 힘들다. 내가 이 설명을 굳이 번역한 이유 중 하나다.</p>
+<p>&nbsp;</p>

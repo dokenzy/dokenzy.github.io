@@ -1,0 +1,46 @@
+---
+layout: post
+title: virtualenv+pythonz 같이  사용하기
+post_id: '765'
+date: 2013-12-17 17:22:34.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- Python
+- pythonz
+- virtualenv
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<ol>
+<li>virtualenv 설치</li>
+<li><a href="https://github.com/saghul/pythonz">pythonz</a> 설치(<a href="https://github.com/saghul/pythonz">https://github.com/saghul/pythonz</a>)
+<pre class="toolbar:2 marking:false nums:false lang:sh decode:true">$ pythonz install 3.3.3</pre>
+</li>
+<li>virtualenv로 가상환경 만들기
+<pre class="toolbar:2 marking:false nums:false lang:sh decode:true">$ virtualenv --python=.pythonz/pythons/CPython-3.3.3/bin/python --no-site-packages mypython3</pre>
+</li>
+<li>
+<pre class="toolbar:2 nums:false lang:sh decode:true">$ source mypython3/bin/activate</pre>
+</li>
+<li>
+<pre class="toolbar:2 nums:false lang:sh decode:true">(mypython3)$</pre>
+</li>
+</ol>
+<p>3번에서 가상환경 만들 때 주의할 점이 있다. pythonz의 경로를 이런 식으로 지정하면 안된다.</p>
+<pre class="toolbar:2 nums:false lang:sh decode:true">$ virtualenv --python=~/.pythonz/pythons/CPython-3.3.3/bin/python --no-site-packages mypython3</pre>
+<p>만약 위와 같이 경로를 지정하면 이런 오류가 발생한다.</p>
+<pre class="nums:false lang:sh decode:true ">The executable ~/.pythonz/pythons/CPython-2.7.6/bin/python (from --python=~/.pythonz/pythons/CPython-2.7.6/bin/python) does not exist</pre>
+<p>Python 3.3 이상에서는 다음과 같이 하면 된다. pythonz로 설치한 python 파일이 있는 경로까지 들어가서 pyenv 명령을 실행한다. pyenv 명령에 대해서는 <a href="https://docs.python.org/3/library/venv.html">https://docs.python.org/3/library/venv.html</a>를 참고한다.</p>
+<pre class="lang:sh decode:true ">cd .pythonz/pythons/CPython-3.4.3/bin
+pyvenv ~/myvenv</pre>
+<p>Python 2.X는 내 알 바가 아니므로 여기에는 요약조차 하지 않는다.</p>

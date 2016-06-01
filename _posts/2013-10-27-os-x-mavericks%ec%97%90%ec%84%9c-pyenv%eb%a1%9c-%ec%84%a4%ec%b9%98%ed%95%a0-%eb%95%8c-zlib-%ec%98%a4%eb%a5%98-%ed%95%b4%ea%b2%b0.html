@@ -1,0 +1,32 @@
+---
+layout: post
+title: OS X Mavericks+brew+pyenv zlib extension was not compiled 오류 해결
+post_id: '627'
+date: 2013-10-27 12:17:27.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- brew
+- mavericks
+- Python
+- xcode
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>맥 OS를 OS X Mavericks로 클린 설치했다. Xcode와 brew를 설치한 후, brew로 pyenv를 설치했다.</p>
+<p>Mavericks의 파이썬 기본 버전은 2.7.5다. 하지만 pyenv로 관리하고 싶어서 pyenv로 2.7.5를 설치했다.</p>
+<p>그런데 zlib 모듈을 찾을 수 없다며 <span class="lang:sh decode:true  crayon-inline ">zlib extension was not compiled</span>  오류가 발생한다. 커맨드 라인 툴을 설치하면 된다.</p>
+<pre class="lang:sh decode:true">xcode-select --install</pre>
+<p>&nbsp;</p>
+<p>그래도 안된다면 <span class="lang:sh decode:true  crayon-inline ">brew install apple-gcc42</span> 를 한 번 해보자.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

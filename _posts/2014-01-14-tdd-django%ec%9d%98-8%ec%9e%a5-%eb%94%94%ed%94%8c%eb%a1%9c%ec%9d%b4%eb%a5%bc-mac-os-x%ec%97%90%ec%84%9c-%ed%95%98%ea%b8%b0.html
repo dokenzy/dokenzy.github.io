@@ -1,0 +1,45 @@
+---
+layout: post
+title: TDD Django의 8장 디플로이를 Mac OS X에서 하기
+post_id: '796'
+date: 2014-01-14 17:14:34.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Django
+- Python
+tags:
+- django
+- gunicorn
+- mac os x
+- nginx
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>요즘 <a href="http://chimera.labs.oreilly.com/books/1234000000754" target="_blank">Test-Driven Development with Python</a>라는 책을 공부하고 있다.</p>
+<p>8장부터는 디플로이에 대한 내용이 나온다. 개인적으로 운영하는 데비안 서버에 적용하려고 했는데 pysqlite2 모듈이 없다는 오류가 발생한다. 해결하는 걸 포기하고 그냥 작업중이던 맥에서 디플로이 테스트를 하기로 했다.</p>
+<p>1. nginx 설치: brew install nginx</p>
+<p>2. nginx 설정: /usr/local/etc/nginx/nginx.conf</p>
+<pre class="lang:default decode:true">    server {
+        listen       80;
+        server_name  localhost;
+	location /static {
+		alias /Users/myid/site/localhost/static;
+	}
+
+        location / {
+		proxy_set_header Host $host;
+		proxy_pass http://unix:/tmp/superlists.socket;
+		root /Users/myid/site/localhost/source;			
+		index index.html;
+        }</pre>
+<p>3. gunicorn 설치: pip install gunicorn</p>
+<p>4. nginx 다시 실행하기: sudo nginx -s reload</p>
+<p>5. gunicorn 실행하기: gunicorn --bind unix:/tmp/superlists.socket superlists.wsgi:application</p>

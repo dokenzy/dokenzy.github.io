@@ -1,0 +1,35 @@
+---
+layout: post
+title: 'Python:: 문자열로 된 날짜를 Datetime객체로 만들기'
+post_id: '845'
+date: 2014-02-06 14:57:39.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- built-in
+- Python
+tags:
+- datetime
+- Python
+- strptime
+- 날짜
+- 파이썬
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>"2014-02-06"이라는 문자열을 구했다. 이 문자열로 Datetime객체를 만들고 싶다.</p>
+<pre class="lang:python decode:true">import datetime
+reg_date = datetime.datetime.strptime("2014-02-06", "%Y-%m-%d").date()</pre>
+<p>끝.</p>
+<p>만약 문자열이 "20140206" 이런 형식이라면</p>
+<pre class="lang:python decode:true crayon-selected">import datetime
+reg_date = datetime.datetime.strptime("20140206", "%Y%m%d").date()</pre>
+<p>끝.</p>
+<p>참고: <a href="http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior" target="_blank">http://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior</a></p>

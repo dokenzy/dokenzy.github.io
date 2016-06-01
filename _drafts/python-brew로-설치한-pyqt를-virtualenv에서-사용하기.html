@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Python: brew로 설치한 pyqt를 virtualenv에서 사용하기'
+post_id: '1705'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- PyQt
+tags:
+- brew
+- mac
+- pip
+- pyqt
+- virtualenv
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>참고: http://stackoverflow.com/questions/1961997/is-it-possible-to-add-pyqt4-pyside-packages-on-a-virtualenv-sandbox</p>
+<p>1. pip install qt</p>
+<p>2. pip install sip --with-python3</p>
+<p>3. pip install pyqt --with-python3</p>
+<p>4. 링크에서는 PyQt4/*.*로 심볼릭 링크를 걸라고 하는데, No such file or directory 오류가 발생한다. /*.* 빼야 한다.</p>
+<pre class="lang:default decode:true ">$ ln -s /usr/local/Cellar/sip/4.15.5/lib/python3.4/site-packages/*.* ~/{VIRTUALENVHOME}/{VIRTUALENVNAME}/lib/python3.4/site-packages/
+$ ln -s /usr/local/Cellar/pyqt/4.10.4/lib/python3.4/site-packages/PyQt4 ~/{VIRTUALENVHOME}/{VIRTUALENVNAME}/lib/python3.4/site-packages/PyQt4</pre>
+<p>&nbsp;</p>

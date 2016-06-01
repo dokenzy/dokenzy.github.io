@@ -1,0 +1,133 @@
+---
+layout: post
+title: 'Python:: Scrapy를 이용한 YBM e4u 크롤러 만들기'
+post_id: '860'
+date: 2014-02-07 19:47:49.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- crawler
+- Python
+- scrapy
+- xpath
+- ybme4u
+- ybmsisa
+- 크롤러
+- 파이썬
+meta:
+  _oembed_9cd286becb12590c2c7418d816751a76: '{{unknown}}'
+  _edit_last: '1'
+  _oembed_e2b8465dce30da9efa432db32e5d4bf2: '{{unknown}}'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>http://e4u.ybmsisa.com/EngPlaza/engClass.asp 크롤러.</p>
+<p>저 링크에는 11개의 문제에 대한 링크가 있다. 문제의 링크는 다음과 같은 형태다.</p>
+<p>http://e4u.ybmsisa.com/EngPlaza/engClass.asp?idx=1110&amp;numIdx=1071</p>
+<p>그런데 위 링크에서는 문제에 대한 정답과 설명을 구할 수 없다. "정답 및 해설 강의 보기"라는 이미지 버튼을 누르면, http://e4u.ybmsisa.com/EngPlaza/engClass_answer.asp 으로 넘어가게 된다. 이 때 자바스크립트를 통해 frmEngClass라는 폼에 idx라는 속성에 idx값을 담아 POST로 전송한다. formdata를 이용해서 idx를 보낼 수도 있지만, 쉽게 http://e4u.ybmsisa.com/EngPlaza/engClass_answer.asp?idx=1100 을 직접 요청하면, idx값을 전달한다.</p>
+<p>따라서 실제로 문제, 보기, 정답, 해설까지 구하기 위해서는 http://e4u.ybmsisa.com/EngPlaza/engClass_answer.asp?idx=1100에 대한 응답을 파싱해야 한다.</p>
+<p>전체 소스: <a href="https://github.com/dokenzy/ybme4u/" target="_blank">https://github.com/dokenzy/ybme4u/</a></p>
+<p>여기서는 11개의 idx에 대한 정보를 추출한 후, CSV로 저장하는 방법을 소개한다.</p>
+<p>1. 먼저 scrapy를 설치한다.</p>
+<pre class="lang:sh decode:true">pip install scrapy</pre>
+<p>2. 프로젝트를 만든다.</p>
+<pre class="lang:sh decode:true">scrapy startproject ybme4u</pre>
+<p>3. ybme4u/items.py에 저장할 정보들을 설정한다. DB의 컬럼과 비슷한데, 아주 단순한 방식이다.</p>
+<pre class="lang:python decode:true" title="items.py">from scrapy.item import Item, Field
+class QuestionItem(Item):
+    idx = Field()
+    free_title = Field()
+    reg_date = Field()
+    answer1 = Field()
+    question1 = Field()
+    cases1 = Field()
+    description1 = Field()
+    answer2 = Field()
+    question2 = Field()
+    cases2 = Field()
+    description2 = Field()
+    answer3 = Field()
+    question3 = Field()
+    cases3 = Field()
+    description3 = Field()</pre>
+<p>4. 실제 크롤러를 만든다. ybme4u/spiders폴더에 ybme4u_spider.py라는 파일을 만들어 다음처럼 입력한다.</p>
+<pre class="lang:python decode:true" title="ybme4u_spider.py"># -*- coding: utf-8 -*-
+
+import re
+import datetime
+
+from scrapy.contrib.spiders import CrawlSpider
+from scrapy.selector import Selector
+from scrapy.http import FormRequest
+
+from ybme4u.items import QuestionItem
+
+re_whitespaces = re.compile(r'\s+.+\s+$', re.MULTILINE | re.UNICODE)
+re_idx = re.compile(r'engClass\.asp\?idx=(\d+)&amp;numIdx=\d+&amp;page=\d+', re.UNICODE)
+answer_url = u'http://e4u.ybmsisa.com/EngPlaza/engClass_answer.asp?idx='
+
+class YBME4USpider(CrawlSpider):
+    name = 'ybme4u'
+    allowed_domains = ['e4u.ybmsisa.com']
+    start_urls = ['http://e4u.ybmsisa.com/EngPlaza/engClass.asp']
+
+    # start point
+    def parse(self, response):
+        sel = Selector(response)
+        links = sel.xpath('//iframe/following-sibling::table[3]/tr/td/a/@href').extract()
+        idxs = [re_idx.findall(link)[0] for link in links]
+
+        for idx in idxs:
+            yield FormRequest(
+                answer_url + idx,
+                formdata={},
+                callback=self.get_answers
+            )
+    def get_answers(self, response):
+        sel = Selector(response)
+        self.node_map = sel.xpath('//map[@name="Map"]')[0]
+        idx = int(sel.xpath('//input[@name="idx"]/@value')[0].extract())
+        # subject
+        node_title = self.node_map.xpath('./following-sibling::tr[3]/td[2]/text()')[0]
+        free_title = node_title.extract()
+        # date
+        node_reg_date = self.node_map.xpath('./following-sibling::tr[5]/td[5]/text()')[0]
+        reg_date = node_reg_date.extract().split(' | ')[1]
+        reg_date = datetime.datetime.strptime(reg_date, "%Y-%m-%d").date()
+        answers = self.get_answer()
+        questions = self.get_question()
+        cases = self.get_cases()
+        descriptions = self.get_description()
+
+        question = QuestionItem()
+        question['idx'] = idx
+        ... 중략 ...
+        question['description3'] = next(descriptions)
+
+        return question</pre>
+<p>여기서는 핵심 코드만 보이기로 한다.</p>
+<ol>
+<li>CrawlSpider를 상속받는 클래스를 만든다.</li>
+<li>name에는 유일한 값을 넣는다. 나중에 scrapy crawl &lt;spider_name&gt; 여기에 쓰이는 이름이다.</li>
+<li>allowed_domains를 정의한다. 허용할 도메인인데, 리스트 형태라는 것에 주의하자.</li>
+<li>start_urls를 정의한다. 이것도 리스트다. 크롤러가 처음 접근할 주소다.</li>
+<li>parse()함수를 정의한다. CrawlSpider클래스에서 이 함수를 특별하게 다룬다.</li>
+<li>여기서는 FormRequest()를 사용했는데, 폼을 전송할 일이 없다면, Request()로 해도 된다.</li>
+<li>FormRequest()에 callback에는 요청에 대한 응답을 처리할 함수이름을 넣어준다.</li>
+<li>callback함수(get_answers)를 정의한다. Selector(response)로 응답에 대한 선택자를 정의한 후, 이것을 가지고 접근한다.</li>
+<li>sel.xpath()로 원하는 노드에 접근하여 값을 가져온 후, items.py에서 정의한 아이템에 입력한다.</li>
+<li>터미널에서 <span class="lang:sh decode:true crayon-inline">scrapy crawl ybme4u -o result.csv -t csv</span>를 실행한다.</li>
+</ol>
+<ul>
+<li>실제 동작하는 코드는 <a href="https://github.com/dokenzy/ybme4u/" target="_blank">github 저장소</a>를 참고한다.</li>
+<li>xpath는 이 글에서는 다루지 않는다.</li>
+<li>scrapy에서 제공하는 Rule과 SgmlLinkExtractor를 이용하여 링크 주소를 가져올 수 있지만, 어떻게 쓰는지 몰라서 idx만 추출해서 URL을 만드는 식으로 구현했다.</li>
+<li>주워듣기로, http://e4u.ybmsisa.com/EngPlaza 이 강의가 2월 말까지만 운영되고 종료된다고 한다. YBM에서 이 강의를 아예 내리면, 그 이후에는 이 크롤러가 동작하지 않을 수 있다.</li>
+</ul>

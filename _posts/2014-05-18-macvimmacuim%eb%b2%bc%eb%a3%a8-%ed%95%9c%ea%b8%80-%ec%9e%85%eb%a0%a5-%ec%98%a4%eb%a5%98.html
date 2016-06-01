@@ -1,0 +1,37 @@
+---
+layout: post
+title: MacVim 한글 입력 오류
+post_id: '1506'
+date: 2014-05-18 17:37:28.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+- 개발도구
+tags:
+- macuim
+- macvim
+- 벼루
+- 세벌식390
+- 한글입력
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>내가 쓰고 있는 맥 OS는 OS X Mavericks(10.9)다.</p>
+<p>그런데 한글 입력에 문제가 생겼다. 한글입력방향이 반대다.</p>
+<p>예를 들면,</p>
+<p style="padding-left: 30px;">감자에 싹이나서</p>
+<p>를 입력하면</p>
+<p style="padding-left: 30px;">ㅅㅓㄴㅏㅇㅣㄱ싸 에자ㅁ가</p>
+<p>뭐 이딴 식으로 입력된다;;; 첫 번째로 받침글자가 오는 순간 입력이 개판이 되버린다.</p>
+<p>문제는 vimrc파일의 아래 설정때문이었다.</p>
+<pre class="lang:vim decode:true">set noimd</pre>
+<p>이 옵션을 없애주면 한글입력이 잘 된다.</p>
+<p>위 옵션은 "<strong>no imdisable 이라는 의미로 한글입력기 등을 사용하게 하는 설정</strong>"이라고 한다(출처: <a href="http://seorenn.blogspot.kr/2011/04/vim-vim-esc.html">[Vim] Vim에서 ESC를 눌렀을 때 영문 상태로 전환하기</a>)</p>

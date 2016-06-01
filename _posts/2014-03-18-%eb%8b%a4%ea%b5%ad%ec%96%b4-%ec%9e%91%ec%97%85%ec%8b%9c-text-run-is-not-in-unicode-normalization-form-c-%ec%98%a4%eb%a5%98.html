@@ -1,0 +1,52 @@
+---
+layout: post
+title: Text run is not in Unicode Normalization Form C. 오류
+post_id: '1127'
+date: 2014-03-18 22:42:22.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- html
+tags:
+- decomposed
+- precomposed
+- Text run is not in Unicode Normalization Form C
+- unichar
+- validator
+- w3c
+- 예음
+- 움라우트
+- 유니코드
+- 정규화
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>모 커뮤니티에 올라온 질문이다.</p>
+<p>한자가 들어간  html5 문서를 validator로 검사했더니 "Text run is not in Unicode Normalization Form C."라는 오류가 발생한다고.</p>
+<p>일단 저 오류는 주어진 문자열이 C라는 유니코드 정규화 형식이 아니라는 뜻인데...</p>
+<p>여기서 C라 함은 pre-composed라는 뜻이다. 다음 그림과 같이 어떤 문자는 두 가지 문자를 조합해서 나타내는 경우가 있다.</p>
+<p><img alt="" src="{{ site.baseurl }}/assets/vilag.png" />(그림출처: <a href="http://www.w3.org/International/questions/qa-html-css-normalization">w3c</a>)</p>
+<p>위 그림은 헝가리 단어인데, a위에 점(예음)이 붙었다(움라우트도 마찮가지). 이건 U+00E1 라는 하나의 유니코드 캐릭터다.</p>
+<p>반면 오른쪽에 있는 글자도 실제 웹브라우저에서 볼 때는 왼쪽과 같이 보인다. 하지만 a와 예음이 별개의 캐릭터다. 오른쪽에 있는 유니코드 캐릭터는 각각 U+0061(a), U+0301(예음)이다. 이를 가리켜 decomposed 형식(form)이라고 한다.</p>
+<p>대게는 웹브라우저가 알아서 제대로 렌더링을 해주지만, 웹브라우저에 따라 제대로 되지 않을 수 있다. 예전에 모 스마트폰용 HTML 문서를 만든 적이 있다(참고로 모바일 사파리에서는 아무 문제 없었다). 이 문서를 태국어로도 작업했는데 자바스크립트로 어떤 효과를 주었을 때, 태국어에서만 일부 페이지에서 문제가 생겼다. 바로 이것 때문이었다.</p>
+<p>나는 이 문제를 어떻게 해결했냐면...</p>
+<ol>
+<li>저런 문제가 있는 문자 조합을 찾는다.</li>
+<li>그에 해당하는 하나의 유니코드 캐릭터 코드를 찾는다.</li>
+<li>1번의 문자조합을 일일이 2번에서 찾은 HTML엔티티로 바꿔준다;;;</li>
+</ol>
+<p>참고로 태국어 문자는 아랍 문자만큼 꼬불꼬불하게 생겼다.</p>
+<p>따라서 당연히 왼쪽 방법이 더 좋은 방법이라 할 수 있다. "Text run is not in Unicode Normalization Form C." 오류는 precomposed 형식(C)으로 정규화해서 하나의 문자로 처리하라는 뜻이다.</p>
+<p>정규화 방법에는 C 외에 K와 D도 있다.</p>
+<p>자세한 건 <a href="http://www.w3.org/International/questions/qa-html-css-normalization">Normalization in HTML and CSS</a>에 잘 설명되어 있다.</p>
+<p>저 링크의 글을 보니 드림위버는 환경설정에서 고르기만 하면 이걸 자동으로 해주는 기능이 있나보다.</p>
+<p>참고로 이런 거 확인할 때 좋은 게 내가 만들었던 <a title="간단한 PyQt4 프로그램 unichar" href="http://blog.dokenzy.com/archives/994">unichar</a> 프로그램. 다음과 같이 쉽게 확인할 수 있다. 심지어 보이지 않는 제어문자도 코드를 알아낼 수 있다.</p>
+<p><img class="alignnone size-full wp-image-1128" alt="unichar_a" src="{{ site.baseurl }}/assets/unichar_a.png" width="269" height="188" /> <img class="alignnone size-full wp-image-1129" alt="unichar_a2" src="{{ site.baseurl }}/assets/unichar_a2.png" width="269" height="188" /></p>
+<p>&nbsp;</p>

@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'Python:: PyCrypto를 이용한 AES 암호화(업데이트)'
+post_id: '1997'
+date: 2015-04-08 23:31:18.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- aes
+- encryption
+- pycrypto
+- Python
+- 보안
+- 암호화
+meta:
+  _edit_last: '1'
+  _wp_old_slug: aes-encryption-in-python
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><strong>오류 수정</strong></p>
+<p>작년 연말부터 진행하던 개인 프로젝트의 1단계 작업을 마무리지으려고 한다.</p>
+<p>Flask서버와 AngularJS간 Rest API로 JSON을 주고받는데, 암호화가 안되어있다. SSL은 프로젝트 2단계나 3단계에 도입할 생각이라 다른 방법을 찾아봐야 했다.</p>
+<p>보안은 잘 모르지만 주워듣기로 AES가 가장 안전하다고 해서 이것만 알아봤다.</p>
+<p>자바스크립트 쪽은 <a href="http://www.imcore.net/encrypt-decrypt-aes256-c-objective-ios-iphone-ipad-php-java-android-perl-javascript/">대칭키 AES256 = C# + Objective C(ios) + PHP + JAVA(Android) + Perl + Javascript</a>를 참고하면 된다.</p>
+<p>위 링크에서는 다양한 언어별로 코드가 있는데, 아쉽게도 파이썬은 없어서 직접 만들었다. AES 자체를 잘 몰라서 꽤 헤맸다. DES는 학부때 해봤지만 10년이 지나 기억날리가... 게다가 네트워크 수업은 열심히 듣지도 않았고... 보안은 관심도 없었고... 아무튼 고생끝에 구현한 코드.</p>
+<p>[gist id="7b64238424175742a8a1" file="aes_example_in_python.py"]</p>
+<p>테스트는 파이썬 3.4버전에서만 진행했다. 파이썬 2에서는 문자열 처리 방식 때문에 조금 수정해야 할 것이다.</p>
+<p>암호화할 문자열이 한글인 경우,</p>
+<pre class="lang:python decode:true">ValueError: Input strings must be a multiple of 16 in length</pre>
+<p>오류가 발생하기 때문에, 위 코드처럼 encode() 메소드를 이용해 바이트 문자열로 바꿔야 한다.</p>
+<p>참고로 AES 공부하는 데 가장 큰 도움이 된 자료는 <a href="http://www.di-mgt.com.au/cryptopad.html">http://www.di-mgt.com.au/cryptopad.html</a>이다. 글을 쉽게 잘 쓰는 사람인 것 같다.</p>

@@ -1,0 +1,45 @@
+---
+layout: post
+title: 'Python:: PyPI에 등록하기 위한 설정 .pypirc'
+post_id: '1743'
+date: 2014-10-09 17:52:42.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- pypi
+- pypirc
+- Python
+- setup.py
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>홈디렉토리에 .pypirc 파일을 만들고 다음과 같이 입력한다.</p>
+<pre class="lang:default decode:true">[distutils]
+index-servers =
+    pypi
+    test
+
+[pypi]
+repository = https://pypi.python.org/pypi
+username:dokenzy
+password = 
+
+[test]
+repository = https://testpypi.python.org/pypi
+username = dokenzy
+password =</pre>
+<p>이제 pypi에 register하거나 upload하기 전에 아래 명령으로 테스트를 해볼 수 있다.</p>
+<pre class="lang:sh decode:true ">$ python setup.py register -r test</pre>
+<p>실제 pypi에 하려면 repository 이름을 pypi로 지정하면 된다.</p>
+<pre class="lang:sh decode:true">$ python setup.py register -r pypi</pre>
+<p>username과 password 둘 다 입력하거나 둘 다 비워둔다. 입력하지 않으면 명령 실행시 인증을 해야한다.</p>
+<p>끝.</p>

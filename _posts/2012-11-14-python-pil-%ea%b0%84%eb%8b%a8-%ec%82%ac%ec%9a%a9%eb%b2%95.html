@@ -1,0 +1,32 @@
+---
+layout: post
+title: 'Python: PIL 간단 사용법'
+post_id: '204'
+date: 2012-11-14 01:44:06.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- PIL
+- Python
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>인터페이스가 쉽고 이미 많은 튜토리얼이 있으니 간단한 사용법만 남긴다.</p>
+<pre class="lang:python decode:true crayon-selected">from PIL import Image
+img = Image.open('s.png')
+_xsize, _ysize = img.size
+xsize = int(_xsize * 0.5)
+ysize = int(_ysize * 0.5)
+
+img2 = img.resize((xsize, ysize))#resize의 결과로 새로운 Image 객체를 반환한다.
+img2.save('s2.png')#새로운 Image 객체인 img2를 저장한다.</pre>
+<p>좀 성의없지만 어차피 API 쓰는 거라서 공식 문서보면 된다. ㅌㅌㅌ</p>

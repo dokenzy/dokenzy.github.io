@@ -1,0 +1,34 @@
+---
+layout: post
+title: 'Meteor:: fs.writeFile() 경로'
+post_id: '1875'
+date: 2014-12-24 02:50:08.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- meteor
+tags:
+- meteor
+- path
+- writeFIle()
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Meteor를 공부하고 있다. 파일을 저장해서 처리하기 위해 다음과 같이 했다.</p>
+<pre class="lang:js decode:true ">var fs = Npm.require('fs');
+fs.writeFile(path, param1, param2, ..., callback);</pre>
+<p>이 때, path를 절대 경로가 아닌 현재 폴더, 즉 'foo.txt' 처럼 하면 어디에 저장되는지 알고 싶었다.</p>
+<pre class="lang:js decode:true">Npm.require('path').dirname(process.mainModule.filename);
+</pre>
+<p>위 코드를 실행하면 '현재 meteor app경로/.meteor/local/build/'까지만 알 수 있다.</p>
+<p>개발모드일 때 실제 경로는 다음과 같다.</p>
+<p>'현재 meteor app경로/.meteor/local/build/programs/server'</p>
+<p>Meteor 0.6.5 버전부터 이 경로로 지정되었다고 한다.</p>
+<p>stackoverflow: <a href="http://stackoverflow.com/questions/18378809/find-absolute-base-path-of-the-project-directory-after-meteor-0-6-5">Find absolute base path of the project directory (after Meteor 0.6.5)</a> 참고</p>

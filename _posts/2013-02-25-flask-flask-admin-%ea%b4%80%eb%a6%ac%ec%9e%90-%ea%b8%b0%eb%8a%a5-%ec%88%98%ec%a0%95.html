@@ -1,0 +1,62 @@
+---
+layout: post
+title: 'flask:: flask-admin 관리자 기능 수정'
+post_id: '341'
+date: 2013-02-25 14:00:44.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Flask
+tags:
+- flask
+- flask_admin
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>flask는 django처럼 뛰어난 관리자 기능을 제공하지 않는다. <a href="http://flask-admin.readthedocs.org/en/latest/" target="_blank">flask-admin</a> 정도의 확장 프로그램을 제공하는 정도인데, 막상 써보니 내가 정의한 모델로부터 데이터를 수정하거나 지우는 것은 되는데,  create하면 에러가 발생한다.</p>
+<p>원인은 /site-packages/flask_admin/contrib/sqlamodel/view.py에 있었다. 이 파일의 660번쯤 줄을 보면 아래와 같은 코드가 있다.</p>
+<pre class="lang:python decode:true">try:
+	model = self.model()
+	form.populate_obj(model)
+	self.session.add(model)
+	self.on_model_change(form, model)
+	self.session.commit()
+	return True
+except Exception, ex:
+	flash(gettext('Failed to create model. %(error)s', error=str(ex)), 'error')
+	logging.exception('Failed to create model')
+	self.session.rollback()
+	return False</pre>
+<p>여기서 이 부분이 문제다.</p>
+<pre>model = self.model()</pre>
+<p>self.model()은 내가 정의한 모델 클래스를 가리키는데, 예를 들어 class User(name, level)이 될 수도 있고,  class Post(author, subject, content, post_date)가 될 수도 있다.</p>
+<p>즉, model이 어느 것을 가리키느냐에 따라 인자가 동적으로 들어가야 하는데, self.model()과 같이 호출해 버리면 인자가 없기 때문에 다음과 같은 에러가 발생한다.</p>
+<pre class="lang:python decode:true">Failed to create model. __init__() takes exactly 2 arguments (1 given)</pre>
+<p>그래서 self.model()에 인자를 전달해 주어야 한다.</p>
+<p>아래는 내가 수정한 부분이다.</p>
+<pre class="lang:python decode:true">values = {}
+
+for k in form.data.iterkeys():
+	try:
+		value = unicode(form.data[k])
+	except:
+		value = form.data[k]
+	values[k] = value
+
+try:
+	model = self.model(**values)  #'create' menu can make new record.
+
+이하 생략</pre>
+<p>form.data는 사전형 데이터이다.</p>
+<p><del>이 사전을 self.model(*values)와 같이 전달하면 된다.</del></p>
+<p>ps)</p>
+<p>근데 다른 사람들은 flask-admin을 안쓰는 것인지, 아무 문제를 겪지 못하는 것인지 궁금하다. 혹시 나만 안되는 건가....?</p>
+<p>&lt;추가. 2013. 7. 14&gt;</p>
+<p>이런 문제를 겪지 않으려면 모델 클래스의 __init__()에 들어가는 파라미터에 기본값을 넣어주면 된다. 하지만 이런 경우 일반 사용자가 적절하지 않은 요청을 해도 기본값이 있기 때문에 에러가 발생하지 않는 문제가 있다.  선택은 열려있다.</p>

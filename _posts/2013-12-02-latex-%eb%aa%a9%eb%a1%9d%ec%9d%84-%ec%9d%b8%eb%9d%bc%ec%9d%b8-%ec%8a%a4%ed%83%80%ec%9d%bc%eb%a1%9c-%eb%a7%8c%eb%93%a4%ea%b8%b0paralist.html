@@ -1,0 +1,53 @@
+---
+layout: post
+title: 'LaTeX:: 목록을 인라인 스타일로 만들기(paralist)'
+post_id: '694'
+date: 2013-12-02 00:26:52.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Packages
+tags:
+- latex
+- paralist
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>LaTeX에서는 enumerate 환경을 이용하면 자동으로 번호가 매겨지는 목록을 만들 수 있다.</p>
+<pre class="lang:tex decode:true">\begin{enumerate}
+\item Hello,
+\item I am
+\item a boy.
+\end{enumerate}</pre>
+<p>결과는 다음과 같다.</p>
+<blockquote><p>1. Hello</p>
+<p>2. I am</p>
+<p>3. a boy.</p></blockquote>
+<p>그런데 이 방법은 각 항목(item)을 한 줄씩 나누어 만든다. 만약 이 항목들을 한 줄(inline)로 만들고 싶다면?</p>
+<p>몇 가지 방법이 많겠지만 제일 속편한 방법은 <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/paralist/" target="_blank">paralist</a> 패키지를 이용하는 것이다.</p>
+<pre>\usepackage{paralist}
+...
+\begin{enumerate}
+\item Hello,
+\item I am
+\item a boy.
+\end{enumerate}</pre>
+<p>이렇게 해주면,</p>
+<blockquote><p>1. Hello, 2. I am 3. a boy.</p></blockquote>
+<p>와 같이 나타난다. 만약 번호를 다르게 하고 싶다면?</p>
+<pre>\usepackage{paralist}
+...
+\begin{enumerate}[a)]
+\item Hello,
+\item I am
+\item a boy.
+\end{enumerate}</pre>
+<p>옵션을 a) 로 주었으니, 위 결과는 다음과 같다.</p>
+<blockquote><p>a) Hello, b) I am c) a boy.</p></blockquote>

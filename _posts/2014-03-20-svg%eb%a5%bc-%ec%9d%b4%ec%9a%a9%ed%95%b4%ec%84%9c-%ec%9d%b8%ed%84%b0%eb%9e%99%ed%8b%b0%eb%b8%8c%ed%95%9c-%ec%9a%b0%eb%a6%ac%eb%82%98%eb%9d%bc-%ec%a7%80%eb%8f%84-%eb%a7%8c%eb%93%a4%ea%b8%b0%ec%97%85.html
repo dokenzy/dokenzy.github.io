@@ -1,0 +1,70 @@
+---
+layout: post
+title: svg를 이용해서 인터랙티브한 우리나라 지도 만들기(업데이트)
+post_id: '1143'
+date: 2014-03-20 22:54:07.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- SVG
+- Web
+tags:
+- d3.js
+- jquery
+- svg
+- 대한민국 지도
+- 행정구역
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a title="svg를 이용해서 인터랙티브한 우리나라 지도 만들기(특정 지역 하이라이트)" href="http://blog.dokenzy.com/archives/1071">이전에 만든 거</a> 업데이트.</p>
+<p>전에 포스팅했던 것과 달라진 점은 행정구역명까지 나타낼 수 있다는 것. 눈으로 볼 때는 똑같지만, 자바스크립트로 마우스가 올라간 노드의 시(도), 구(군) 명을 가져온다. 마우스를 올리면 행정구역명까지 툴팁 형식으로 보이게 하려다가 귀찮아서 그냥 콘솔로 출력하도록 했다.</p>
+<p>데모: <a href="https://jsfiddle.net/dokenzy/va3n4Ljb/1/embedded/result/">https://jsfiddle.net/dokenzy/va3n4Ljb/1/embedded/result/</a></p>
+<p>소스: <a href="https://jsfiddle.net/dokenzy/va3n4Ljb/1/">https://jsfiddle.net/dokenzy/va3n4Ljb/1/</a></p>
+<h2>1. 지도파일 구하기</h2>
+<p>위키피디아에 행정구역 명까지 들어있는 svg파일이 있다. 그냥 다운받아 쓰면 된다;;;</p>
+<p><a href="http://upload.wikimedia.org/wikipedia/commons/7/77/Administrative_divisions_map_of_South_Korea.svg">svg 파일 다운로드</a></p>
+<h2>2. jQuery와 d3.js를 이용해 인터랙티브한 효과 주기</h2>
+<p>svg파일을 구했으니 HTML과 자바스크립트로 코딩할 일만 남았다. 나는 마우스를 가져가면(mouseover) 특정 지역이 하이라이팅되고, 다시 마우스가 나가면(mouseout) 원래 색으로 바뀌게 하려고 한다.</p>
+<p>jQuery와 d3.js를 사용하자.</p>
+<pre class="lang:xhtml decode:true " title="SVG를 이용한 인터랙티브 지도">&lt;!doctype html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"&gt;&lt;/script&gt;
+		&lt;script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"&gt;&lt;/script&gt;
+
+	&lt;/head&gt;
+	&lt;body&gt;
+      &lt;h1&gt;svg를 이용해서 인터랙티브한 우리나라 지도 만들기&lt;/h1&gt;
+      &lt;p&gt;http://blog.dokenzy.com/archives/1071&lt;/p&gt;
+&lt;svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="509px" height="716.105px" viewBox="0 0 509 716.105" enable-background="new 0 0 509 716.105" xml:space="preserve"&gt;
+... 생략 ...
+&lt;/svg&gt;
+
+	&lt;script&gt;
+		$("g").mouseover(function(event) {
+			var _path = event.target;
+			var city_name = _path.id;
+			var new_p = document.createElement('p');
+
+			var province = $(_path).parent()[0].id;
+			d3.select(_path).style("fill", "red");
+			console.log(province, city_name);
+		}).mouseout(function(event) {
+			var _path = event.target;
+			d3.select(_path).style("fill", "#B9B9B9");
+		});
+	&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>위 코드의 마지막 스크립트와 같이 jQuery로 마우스가 올라간 &lt;path&gt; 요소를 찾아서 스타일을 주고, 마우스가 나가면 다시 원래 색으로 바꾸면 된다.</p>
+<p>&nbsp;</p>
+<p>끝.</p>

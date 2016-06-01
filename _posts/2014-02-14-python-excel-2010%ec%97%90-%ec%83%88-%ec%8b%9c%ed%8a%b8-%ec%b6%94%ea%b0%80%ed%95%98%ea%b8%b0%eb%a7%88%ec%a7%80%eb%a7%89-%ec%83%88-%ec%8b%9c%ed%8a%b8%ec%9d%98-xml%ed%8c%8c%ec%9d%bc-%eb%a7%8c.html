@@ -1,0 +1,61 @@
+---
+layout: post
+title: 'Python:: Excel 2010에 새 시트 추가하기(마지막) - 새 시트의 xml파일 만들기'
+post_id: '921'
+date: 2014-02-14 12:52:47.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- excel
+- lxml
+- parsing
+- Python
+- XML
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>드디어 새 시트의 실제 xml파일을 만들 시간이다. 끝이다. ㅜㅜ</p>
+<p>먼저 템플릿 파일을 준비한다.</p>
+<p>templates/xl/worksheets라는 곳에 sheet.xml이란 파일을 준비하자. 다음 코드는 엑셀 2010에서 오류없이 인식할 수 있는 최소한의 xml파일이다. 아마 몇 가지 속성을 빼도 오류가 없겠지만 더 파고들고 싶지 않다;;; 이 정도면 템플릿으로 충분하다고 생각한다;;;</p>
+<pre class="lang:xhtml decode:true  crayon-selected">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x14ac="http://schemas.microsoft.com/office/spreadsheetml/2009/9/ac" mc:Ignorable="x14ac"&gt;
+  &lt;sheetViews&gt;
+    &lt;sheetView tabSelected="1" workbookViewId="0"&gt;
+    &lt;/sheetView&gt;
+  &lt;/sheetViews&gt;
+  &lt;sheetFormatPr baseColWidth="10" defaultColWidth="8.83203125" defaultRowHeight="14" x14ac:dyDescent="0"/&gt;
+  &lt;sheetData&gt;
+  &lt;/sheetData&gt;
+&lt;/worksheet&gt;</pre>
+<p>만드는 방법은 간단하다.</p>
+<pre class="lang:python decode:true ">def _makeSheet(self):
+    template = os.path.join(os.path.dirname(__file__), 'templates', 'xl', 'worksheets', 'sheet.xml')
+    new_sheet_file_name = 'sheet' + self.count + '.xml'
+    target = os.path.join(self.target_dir, 'xl', 'worksheets', new_sheet_file_name)
+    shutil.copy2(template, target)</pre>
+<p>이 템플릿 파일을 xl/worksheets/sheet4.xml에 복사하는 것이다.</p>
+<p>마지막으로 할 일은 처음에 압축풀었던 폴더를 다시 zip으로 압축한 후, 확장자를 xlsx로 변경하는 것이다.</p>
+<pre class="lang:python decode:true ">def makeXlsx(self):
+    ''' make xlsx '''
+    shutil.make_archive(self.target_dir, 'zip', self.target_dir)
+    os.rename(self.dst, self.xlsx)</pre>
+<p>이렇게 하면 파이썬3로 엑셀 2010에 새 시트를 추가하는 작업이 끝난다. 시트를 삭제하거나 복사하는 방법도 이와 비슷하다. 힘들어서 생략;;;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

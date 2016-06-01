@@ -1,0 +1,63 @@
+---
+layout: post
+title: 'vim plugin:: easymotion'
+post_id: '1425'
+date: 2014-06-13 21:48:00.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+- 일반
+tags:
+- easymotion
+- plugin
+- Vim
+- 플러그인
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>easymotion(<a href="https://github.com/Lokaltog/vim-easymotion">https://github.com/Lokaltog/vim-easymotion</a>)은 Vim에서 특정 위치로 커서를 쉽게 옮길 수 있게 해주는 플러그인이다.</p>
+<p><img src="{{ site.baseurl }}/assets/68747470733a2f2f662e636c6f75642e6769746875622e636f6d2f6173736574732f333739373036322f323033393631322f37636166636563382d383961352d313165332d386632632d3566323661366238336566642e676966" alt="" /></p>
+<p>보다시피 줄 단위로만 움직이는 게 아니라 현재 화면상의 특정 위치로 커서를 바로 옮길 수 있다. 위 링크에 가보면 더 많은 이미지가 있다.</p>
+<h2>1. 설치</h2>
+<p>설치는 pathogen이나 bundle로 쉽게 할 수 있다.</p>
+<pre class="lang:sh decode:true">git clone https://github.com/Lokaltog/vim-easymotion ~/.vim/bundle/vim-easymotion</pre>
+<pre class="lang:sh decode:true">Bundle 'Lokaltog/vim-easymotion'</pre>
+<h2>2. 사용법</h2>
+<p>따로 설정하지 않아도 대부분의 기능을 쉽게 사용할 수 있다.</p>
+<p>이 플러그인은 &lt;Leader&gt;키를 사용하는데, Vim의 기본 &lt;Leader&gt;키는 \(백슬래쉬)이다. 기본키를 바꾸고 싶으면, ~/.vimrc 파일을 열어서 다음을 추가한다.</p>
+<pre class="lang:vim decode:true">let mapleader=','</pre>
+<p>위 설정은 ,(쉼표)를 &lt;Leader&gt;키로 만든다.</p>
+<p>또 하나 알아두어야 할 것은 매뉴얼을 보는 방법이다. Vim에서 <span class="lang:vim decode:true  crayon-inline ">:h easymotion.txt</span> 를 실행하면 easymotion의 매뉴얼을 볼 수 있다. 예컨데 다음과 같이 설명되어 있다.</p>
+<p>&lt;Leader&gt;f{char}</p>
+<p>위 키처럼 &lt;Leader&gt;키를 누르고 f키를 누르면 아무 변화가 없다. 비록 매뉴얼상 저렇게 되어있어도 &lt;Leader&gt;키를 두 번 입력해야 한다. 즉,</p>
+<p>&lt;Leader&gt;&lt;Leader&gt;f 키를 눌러야 한다. 그러면 Vim에서 "Search for 1 character: " 라고 물어본다. 이 때 이동하고자 하는 위치의 문자를 입력한다. 여기까지 해보면 더 이상 설명이 필요없다.</p>
+<p>다음은 easymotion이 기본적으로 설정한 키 맵핑이다.</p>
+<ul>
+<li>&lt;Leader&gt;f{char}: 현재 커서의 오른쪽으로 {char}를 찾는다.</li>
+<li>&lt;Leader&gt;F{char}: 현재 커서의 왼쪽으로 {char}를 찾는다.</li>
+<li>&lt;Leader&gt;t{char}: 현재 커서의 오른쪽으로 {char} 바로 앞</li>
+<li>&lt;Leader&gt;T{char}: 현재 커서의 왼쪽으로 {char}바로 앞</li>
+<li>&lt;Leader&gt;w: 현재 커서의 오른쪽으로 단어의 시작(Beginning of word forward)</li>
+<li>&lt;Leader&gt;W: 현재 커서의 오른쪽으로 단어의 시작(Beginning of WORD forward). 'w'랑 살짝 다르다.</li>
+<li>&lt;Leader&gt;b: 현재 커서의 왼쪽으로 단어의 시작(Beginning of word backward)</li>
+<li>&lt;Leader&gt;B: 현재 커서의 왼쪽으로 단어의 시작(Beginning of WORD backward)</li>
+<li>&lt;Leader&gt;e: 현재 커서의 오른쪽으로 단어의 끝(End of word forward)</li>
+<li>&lt;Leader&gt;E: 현재 커서의 오른쪽으로 단어의 끝(End of WORD forward)</li>
+<li>&lt;Leader&gt;ge: 현재 커서의 왼쪽으로 단어의 끝(End of word backward)</li>
+<li>&lt;Leader&gt;gE: 현재 커서의 왼쪽으로 단어의 끝(End of WORD backward)</li>
+<li>&lt;Leader&gt;j : 아래로 각 줄의 첫번째</li>
+<li>&lt;Leader&gt;k: 위로 각 줄의 첫번째</li>
+<li> &lt;Leader&gt;s{char}: 현재 화면에서 {char}를 찾는다. f, F를 합쳤다고 볼 수 있다.</li>
+</ul>
+<p>위의 목록은 기본(default) 키 맵핑이라 별도의 설정을 하지 않아도 된다. 하지만 그 외의 명령은 키 맵핑을 해주어야 하는데, 사실 저것만 써도 충분하다고 생각한다. 지금은 easymotion은 이 정도만 알아도 불편함이 없기 때문에 나는 여기까지만 공부해 둔다.</p>
+<p>끝.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

@@ -1,0 +1,30 @@
+---
+layout: post
+title: 'LaTeX:: abstract 제목 바꾸기'
+post_id: '706'
+date: 2013-12-05 18:19:32.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- abstract
+- latex
+- memoir
+- oblivoir
+- 요약문
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>memoir클래스나 이를 응용한 oblivoir 클래스는 abstract 환경을 지원한다.</p>
+<p>abstract환경은 문서 시작부분에 문서에 대한 요약문을 넣는 환경으로, oblivoir 클래스에서는 abstract 대신 '요 약'으로 나온다.</p>
+<p>이걸 '경고'로 바꾸고 싶다. 다음과 같이 하자.</p>
+<pre class="lang:tex decode:true">\renewcommand{\abstractname}{경고}</pre>
+<p>&nbsp;</p>

@@ -1,0 +1,45 @@
+---
+layout: post
+title: 맥용 CURL GUI 프론트엔드
+post_id: '999'
+date: 2014-03-07 16:09:02.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 개발도구
+tags:
+- advanced rest client
+- client
+- curl
+- dev http client
+- frontend
+- http
+- postman
+- rest
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h3>Flask로 Restful API 서버를 만들려고 한다. 무언가 만들 때 에디터만큼 중요한 게 디버깅 도구.</h3>
+<p>이런 도구들은 대체로 유닉스 계열이 편한데, GUI를 제공하는 프로그램은 윈도우즈용인 <a href="http://www.telerik.com/fiddler" target="_blank">Fiddler</a>가 제일 나은 듯 하다. 이걸 mono로 리눅스나 맥용으로도 개발하나본데, 개인적으로 mono 프로젝트에 대해 회의적이다.</p>
+<p>아무튼 몇 가지 알아본 맥용 cURL GUI 클라이언트</p>
+<h3>rest-client:</h3>
+<ul>
+<li>2007년부터 개발되고 있음</li>
+<li>Java 기반</li>
+<li><a href="https://code.google.com/p/rest-client/" target="_blank">https://code.google.com/p/rest-client/</a></li>
+</ul>
+<h3>구글 크롬 확장:</h3>
+<ol>
+<li><a href="https://chrome.google.com/webstore/detail/dev-http-client/aejoelaoggembcahagimdiliamlcdmfm?utm_source=plus" target="_blank">Dev HTTP Client</a>: 이 3개 중에 제일 별로. 유니코드 문자열을 raw 형식으로 보여준다. 이렇게 \uc774\ub984...;;; 그리고 응답받은 JSON 데이타를 파일로 저장하는 기능을 제공하는데, 확장자를 안붙여준다. 편집기로 열 때 불편하다.</li>
+<li><a href="https://chrome.google.com/webstore/detail/postman-rest-client/fdmmgilgnpjigdojojpjoooidkmcomcm?utm_source=plus" target="_blank">Postman - REST Client</a>: UI가 깔끔하다. 이쁘게 보이기, raw로 보이기 옵션이 있다. 내가 못찾은 건지 모르겠지만, 파일로 저장하는 기능이 없다. 그런데 줄바꿈을 안하고 보여준다. 이게 나한테는 큰 단점이다. 히스토리 기능은 마음에 든다.</li>
+<li><a href="https://chrome.google.com/webstore/detail/advanced-rest-client/hgmloofddffdnphfgcellkdfbfbjeloo?utm_source=plus" target="_blank">Advanced REST client</a>: 3개 중에 가장 좋다. 일단 이쁘게 보여준다. raw 포맷을 사람이 눈으로 보면서 분석하기 힘들다. 이런 정책이 마음에 든다. 줄바꿈까지 해서 보여준다. raw데이타가 필요하면 파일로 저장하면 된다. 확장자 '.json'을 붙여주기 때문에 편하다.<br />
+또 HTTP 메소드를 선택하는 방식이 라디오 버튼 방식이라, 클릭 한 번이면 선택할 수 있다. Dev HTTP Client나 Postman은 SelectBox 형식이라 두 번 클릭해야 한다.</li>
+</ol>
+<p>그래서 나는 Advanced REST client를 쓰기로 결정. Firefox 확장프로그램은 고려하지 않았다. 내가 Firefox를 거의 안쓰기 때문에...</p>

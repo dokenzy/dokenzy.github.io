@@ -1,0 +1,44 @@
+---
+layout: post
+title: ionic framework 개발환경 설정
+post_id: '1754'
+date: 2014-10-10 19:22:42.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- ionic
+tags:
+- android
+- ant
+- cordova
+- ionic
+- sdk
+- xcode
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>1. cordova와 ionic 설치</h2>
+<pre class="lang:sh decode:true">npm install -g cordova ionic</pre>
+<h2>2.  SDK 설치</h2>
+<h3>1) iOS</h3>
+<p>(1) XCode 설치</p>
+<p>(2) ios-sim 설치</p>
+<pre class="lang:sh decode:true">npm install -g ios-sim</pre>
+<h3>2) Android</h3>
+<p>(1) Android SDK 설치</p>
+<p>(2) .bash_profile에 다음 추가</p>
+<pre class="lang:sh decode:true ">export JAVA_HOME=$(/usr/libexec/java_home)
+export PATH=${PATH}:/Android SDK 압축 푼 경로/sdk/platform-tools
+export PATH=${PATH}:/Android SDK 압축 푼 경로/sdk/tools</pre>
+<p>(3) ant 설치</p>
+<pre class="lang:sh decode:true ">brew install ant</pre>
+<p>(4) Android Virtual Device 생성</p>
+<p>&nbsp;</p>
+<p>끝.</p>

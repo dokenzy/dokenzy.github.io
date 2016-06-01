@@ -1,0 +1,146 @@
+---
+layout: post
+title: 'Python:: Scrapy at a glance'
+post_id: '812'
+date: 2014-01-28 16:28:28.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- crawler
+- Python
+- scrapy
+- 크롤러
+- 파이썬
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>유명한 파이썬 프레임워크 중 하나인 Scrapy의 매뉴얼 중 <a href="http://doc.scrapy.org/en/latest/intro/overview.html" target="_blank">Scrapy at a glance</a> 번역</p>
+<p><span style="color: #ff0000;">(주의: 내 영어 실력 형편없음. 토익 500점도 안됨)</span></p>
+<p>Scrapy는 웹사이트를 크롤링하거나 데이타마이닝, 정보 처리 또는 historical archival같은 분야에 널리 쓰이는 구조화된 데이타를 추출하는 프레임워크다.</p>
+<p>원래는 <a href="http://en.wikipedia.org/wiki/Screen_scraping#Screen_scraping" target="_blank">스크린 스크랩</a>(좀 더 정확히 말하면 <a href="http://en.wikipedia.org/wiki/Web_scraping" target="_blank">웹 스크랩</a>) 때문에 만들어졌지만, <a href="http://aws.amazon.com/associates/" target="_blank">Amazon Associates Web Services</a>처럼 API를 사용하여 데이타를 추출하는 데 쓰일 수 있고, 범용적인 웹 크롤러로 쓰이기도 한다.</p>
+<p>이 문서의 목적은 Scrapy에 숨겨진 개념을 소개하는 것이다. 그래서 어떻게 동작하는지를 여러분이 이해하고, Scrapy를 사용할 것인지 결정할 수 있을 것이다.</p>
+<p>프로젝트를 시작할 준비가 되면, <a href="http://doc.scrapy.org/en/latest/intro/tutorial.html#intro-tutorial" target="_blank">튜토리얼을 따라서</a> 할 수 있다.</p>
+<h2>웹 사이트 고르기</h2>
+<p>자, 웹사이트에서 몇 가지 정보를 추출해야 한다. 그런데 웹사이트에서는 정보에 접근할 수 있는 API나 방법을 아무 것도 제공하지 않는다. Scrapy는 여러분이 정보를 가져올 수 있게 해준다.</p>
+<p><a href="http://www.mininova.org/" target="_blank">Minonova</a> 사이트에 오늘 올라는 모든 토렌트 파일의 URL, 이름, 설명, 크기를 가져오고 싶다고 하자.</p>
+<p>오늘 추가된 모든 토렌트 파일의 리스트는 이 페이지에 있다.</p>
+<p><a href="http://www.mininova.org/today">http://www.mininova.org/today</a></p>
+<h2>스크랩할 데이타 정의하기</h2>
+<p>첫 번째 할 일은 스크랩할 데이타를 정의하는 것이다. Scrapy에서 Items를 통해서 할 수 있다(이 경우에는 토렌트 파일).</p>
+<p>Item은 이렇게 생겼다.</p>
+<pre class="lang:python decode:true">from scrapy.item import Item, Field
+
+class TorrentItem(Item):
+    url = Field()
+    name = Field()
+    description = Field()
+    size = Field()</pre>
+<h2>데이타를 추출하기 위한 스파이더 만들기</h2>
+<p>다음 할 일은 스파이더를 만드는 것이다. 스파이더란 시작할 URL(http://www.mininova.org/today)과 규칙들을 정의하는 것이다. 규칙에는 페이지에서 데이타를 추출하는 규칙과 추적할 링크를 위한 규칙이 있다.</p>
+<p>페이지를 보면 모든 토렌트의 URL이 http://www.mininova.org/tor/NUMBER 이런 식으로 되었다는 것을 알 수 있다. NUMBER는 정수다. 이것을 이용해서 추척할 링크를 위한 정규표현식을 만들 수 있다.  <span class="lang:python decode:true  crayon-inline">/tor/\d+</span></p>
+<p>XPath를 사용해서 웹페이지의 HTML소스에서 데이타를 골라오자. 토렌트 페이지 중에 하나를 보자.</p>
+<p><a href="http://www.mininova.org/tor/2676093" target="_blank">http://www.mininova.org/tor/2676093</a></p>
+<p>이 페이지의 HTML소스를 보고 토렌트파일의 이름, 설명, 크기를 가져올 수 있도록 XPath를 만들자.</p>
+<p>HTML 소스를 보면 파일 이름이 <span class="lang:xhtml decode:true  crayon-inline ">&lt;h1&gt;</span> 태그에 들어있다는 것을 알 수 있다.</p>
+<pre class="lang:xhtml decode:true">&lt;h1&gt;Darwin - The Evolution Of An Exhibition&lt;/h1&gt;</pre>
+<p>이름을 가져오기 위한 XPath 표현식은 이런 식으로 할 수 있다.</p>
+<pre class="lang:scheme decode:true">//h1/text()</pre>
+<p>그리고 설명은 id가 "description"인 &lt;div&gt;태그 안에 있다.</p>
+<pre class="lang:xhtml decode:true">&lt;h2&gt;Description:&lt;/h2&gt;
+
+&lt;div id="description"&gt;
+Short documentary made for Plymouth City Museum and Art Gallery regarding the setup of an exhibit about Charles Darwin in conjunction with the 200th anniversary of his birth.
+
+...</pre>
+<p>설명을 가져오기 위한 XPath 표현식은 이렇게 할 수 있다.</p>
+<pre class="lang:default decode:true">//div[@id='description']</pre>
+<p>마지막으로, 파일 크기는 id가 "specifications"인 &lt;div&gt;태그 안의 두 번째 &lt;p&gt;태그 안에 들어있다.</p>
+<pre class="lang:xhtml decode:true">&lt;div id="specifications"&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Category:&lt;/strong&gt;
+&lt;a href="/cat/4"&gt;Movies&lt;/a&gt; &amp;gt; &lt;a href="/sub/35"&gt;Documentary&lt;/a&gt;
+&lt;/p&gt;
+
+&lt;p&gt;
+&lt;strong&gt;Total size:&lt;/strong&gt;
+150.62&amp;nbsp;megabyte&lt;/p&gt;</pre>
+<p>크기를 가져오기 위한 XPath 표현식은 이렇게 생겼다.</p>
+<pre class="lang:default decode:true">//div[@id='specifications']/p[2]/text()[2]</pre>
+<p>XPath에 대한 자세한 정보는 <a href="http://www.w3.org/TR/xpath" target="_blank">XPath 레퍼런스</a>를 참조하라.</p>
+<p>마지막으로 스파이더 코드(역주: 자동 생성된 템플릿 파일이 없다. spider 폴더 안에 새 파일을 만들면 된다).</p>
+<pre class="lang:python decode:true">from scrapy.contrib.spiders import CrawlSpider, Rule
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.selector import Selector
+
+class MininovaSpider(CrawlSpider):
+
+name = 'mininova'
+allowed_domains = ['mininova.org']
+start_urls = ['http://www.mininova.org/today']
+rules = [Rule(SgmlLinkExtractor(allow=['/tor/\d+']), 'parse_torrent')]
+
+def parse_torrent(self, response):
+sel = Selector(response)
+torrent = TorrentItem()
+torrent['url'] = response.url
+torrent['name'] = sel.xpath("//h1/text()").extract()
+torrent['description'] = sel.xpath("//div[@id='description']").extract()
+torrent['size'] = sel.xpath("//div[@id='info-left']/p[2]/text()[2]").extract()
+return torrent</pre>
+<p>TorrentItem 클래스는 아까 위에서 정의했다.</p>
+<h2>데이타를 추출하기 위해 스파이더 실행하기</h2>
+<p>마지막으로, 스파이더를 실행하면 JSON 포맷으로 된 scraped_data.json 파일이 만들어 지도록 할 것이다.</p>
+<pre class="lang:sh decode:true">scrapy crawl mininova -o scraped_data.json -t json</pre>
+<p>이것은 JSON 파일을 만들기 위해 <a href="http://doc.scrapy.org/en/latest/topics/feed-exports.html#topics-feed-exports" target="_blank">feed exports</a>를 이용한다. 출력 포맷(예를 들면 XML, CSV)이나 (FTP나 <a href="http://aws.amazon.com/s3/" target="_blank">아마존 S3</a>같은) 스토리지 백엔드는 쉽게 바꿀 수 있다.</p>
+<p><a href="http://doc.scrapy.org/en/latest/topics/item-pipeline.html#topics-item-pipeline" target="_blank">item pipeline</a>을 만들어서 데이타베이스에 저장할 수도 있다. 아주 쉽다.</p>
+<h2>스크랩한 데이타 리뷰</h2>
+<p>처리가 된 후 scraped_data.json파일을 보면, 스크랩된 아이템을 볼 수 있다.</p>
+<pre class="lang:python decode:true">[{"url": "http://www.mininova.org/tor/2676093", "name": ["Darwin - The Evolution Of An Exhibition"], "description": ["Short documentary made for Plymouth ..."], "size": ["150.62 megabyte"]},
+# ... other items ...
+]</pre>
+<p>URL을 제외한 모든 필드값이 사실은 리스트라는 것을 알 수 있다.  선택자가 리스트를 반환하기 때문이다. 하나의 값만 저장하고 싶을 지도 모르겠다. 또는 값을 가지고 파싱이나 클렌징(cleansing)같은 부가적인 일을 하고 싶을 수도 있다. 이럴 때 쓰라고 <a href="http://doc.scrapy.org/en/latest/topics/loaders.html#topics-loaders" target="_blank">Item Loader</a>라는 게 있다.</p>
+<h2>그 밖에</h2>
+<p>Scrapy를 사용해서 웹 사이트에서 아이템을 저장하고 추출하는 방법을 살펴보았다. 하지만 이건 아주 표면적인 것 뿐이다. Scrapy는 스크랩을 쉽고 편하게 할 수 있도록 엄청난 기능들을 많이 제공하고 있다. 예를 들면,</p>
+<ul>
+<li>HTML과 XML 소스에서 데이타를 <a href="http://doc.scrapy.org/en/latest/topics/selectors.html#topics-selectors" target="_blank">선택하고 추출</a>하는 기능 내장</li>
+<li>모든 스파이더끼리 공유할 수 있는 재사용할 수 있는 필더 집합(<a href="http://doc.scrapy.org/en/latest/topics/loaders.html#topics-loaders" target="_blank">Item Loader</a>라고 함)을 사용해서 스크랩한 데이타를 깨끗하게 하는 기능 내장</li>
+<li>다양한 포맷(JSON, CSV, XML)으로 내보내기(<a href="http://doc.scrapy.org/en/latest/topics/feed-exports.html#topics-feed-exports" target="_blank">generating feed exports</a>)하고, 여러 백엔드(FTP, S3, 로컬 파일시스템)에 저장할 수 있는 기능 내장</li>
+<li>스크랩 아이템과 관련있는 <a href="http://doc.scrapy.org/en/latest/topics/images.html#topics-images" target="_blank">이미지 자동 다운로드</a>(또는 다른 미디어)할 수 있는 미디어 파이프라인</li>
+<li>직접 만든 함수를 Scrapy에 붙여서 <a href="http://doc.scrapy.org/en/latest/index.html#extending-scrapy" target="_blank">기능 확장하기</a> --- <a href="http://doc.scrapy.org/en/latest/topics/signals.html#topics-signals" target="_blank">시그널</a>과 잘 만들어진 API(미들웨어, <a href="http://doc.scrapy.org/en/latest/topics/extensions.html#topics-extensions" target="_blank">확장기능</a> 그리고 <a href="http://doc.scrapy.org/en/latest/topics/item-pipeline.html#topics-item-pipeline" target="_blank">파이프라인</a>)를 사용</li>
+<li>이것저것 할 수 있는 내장 미들웨어와 확장기능
+<ul>
+<li>쿠키와 세션 처리</li>
+<li>HTTP 압축</li>
+<li>HTTP 인증</li>
+<li>HTTP 캐쉬</li>
+<li>User-Agent 속이기</li>
+<li>robots.txt</li>
+<li>깊이 제한 크롤링</li>
+<li>기타 등등</li>
+</ul>
+</li>
+<li>외국어, 비표준, 인코딩 선언 오류 처리를 위한 풍부한(Robust) 인코딩 지원과 자동 검출 기능</li>
+<li>스파이더를 더 빨리 만들 수 있도록, 또 대형 프로젝트에서 더 일관적인 코드를 만들 수 있도록 템플릿을 기반으로 스파이더 만드는 기능. 자세한 건 <a href="http://doc.scrapy.org/en/latest/topics/commands.html#std:command-genspider">genspider</a> 명령 참조</li>
+<li>여러 스파이더 메트릭스를 위해 확장 가능한 stats collection. 스파이더의 성능을 모니터링하거나 고장났을 때 찾을 때 좋다.</li>
+<li>XPath 테스트를 위한 인터랙티브 쉘 콘손. 스파이더 만들고 디버깅할 때 아주 좋음</li>
+<li>현업에서 스파이더를 디플로이하고 실행하기 좋도록 설계된 시스템 서비스</li>
+<li>봇을 모니터링하고 제어하기 위한 내장 웹 서비스</li>
+<li>크롤러를 검토하거나 디버깅하기 위해 Scrapy 프로세스 내부에서 실행되는 파이썬 콘솔을 후킹하기 위한 텔넷 콘솔.</li>
+<li>스크랩할 때 에러를 잡기 위해 후크할 수 있는 로깅 기능</li>
+<li><a href="http://www.sitemaps.org/" target="_blank">Sitemaps</a>로 찾은 URL을 가지고 크롤링하는 기능 지원</li>
+<li>DNS 리졸버 캐쉬</li>
+</ul>
+<h2>다음 할 일은?</h2>
+<p>다음 할 일은 당연히 Scrapy를 <a href="http://scrapy.org/download/" target="_blank">다운로드</a>해서 <a href="http://doc.scrapy.org/en/latest/intro/tutorial.html#intro-tutorial" target="_blank">튜토리얼</a>을 읽고<a href="http://scrapy.org/community/" target="_blank"> 커뮤니티</a>에 참여하는 것이다. 읽어줘서 고마워요~</p>
+<h2>예제 참고</h2>
+<p><a title="Python:: Scrapy를 이용한 YBM e4u 크롤러 만들기" href="http://blog.dokenzy.com/archives/860">Python:: Scrapy를 이용한 YBM e4u 크롤러 만들기</a></p>

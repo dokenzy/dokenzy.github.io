@@ -1,0 +1,31 @@
+---
+layout: post
+title: 'LaTeX:: tabu'
+post_id: '689'
+date: 2013-11-29 18:24:43.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- latex
+- tabu
+- verb
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>tabu는 표를 만드는 강력하고 편리한 패키지이다.</p>
+<p>tabu에 <span class="lang:tex decode:true  crayon-inline ">\verb</span> 같은 명령을 사용하는 것은 제한이 되어있다. 만약 tabu 표 안에 \verb 명령을 사용하고 싶다면 다음과 같이 사용하자.</p>
+<pre class="lang:tex decode:true ">\begin{tabu*}{X}
+\verb|\begin{tabu}|로 하면 에러가 발생\
+\verb|\begin{tabu*}|로 하면 잘 됨\
+\end{tabu*}</pre>
+<p>끝.</p>

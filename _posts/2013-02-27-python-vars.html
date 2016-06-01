@@ -1,0 +1,35 @@
+---
+layout: post
+title: 'python:: vars()'
+post_id: '346'
+date: 2013-02-27 20:09:41.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- built-in
+tags:
+- Python
+- vars
+- 내장함수
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>vars() 설명: <a href="http://docs.python.org/2/library/functions.html#vars" target="_blank">http://docs.python.org/2/library/functions.html#vars</a></p>
+<p>활용: <a href="http://stackoverflow.com/questions/109087/python-get-instance-variables" target="_blank">http://stackoverflow.com/questions/109087/python-get-instance-variables</a></p>
+<p>모듈이나 클래스 처럼__dict__ 속성을 갖고 있는 객체의 __dict__ 속성들을 리턴해 준다.</p>
+<pre class="wrap:true lang:python decode:true">class objA(object):
+	a = 3
+	b = 7
+
+print vars(objA)</pre>
+<p>결과:</p>
+<pre class="lang:python decode:true">{'a': 3, '__module__': '__main__', 'b': 7, '__dict__': &lt;attribute '__dict__' of 'objA' objects&gt;, '__weakref__': &lt;attribute '__weakref__' of 'objA' objects&gt;, '__doc__': None}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

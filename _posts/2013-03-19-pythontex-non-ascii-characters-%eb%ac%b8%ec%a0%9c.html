@@ -1,0 +1,55 @@
+---
+layout: post
+title: 'pythontex:: non-ascii characters 문제'
+post_id: '389'
+date: 2013-03-19 16:49:15.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Python
+tags:
+- latex
+- Python
+- pythontex
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>먼저 포스팅한 <a title="PythonTeX:: LaTeX + Python Code" href="http://blog.dokenzy.com/archives/383">PythonTeX:: LaTeX + Python Code</a>에 이어...</p>
+<p>pythontex에 들어가는 파이썬 코드에 아래처럼 한글을 넣어봤다.</p>
+<pre class="lang:tex decode:true">\documentclass{article}
+\usepackage{fontspec}
+\usepackage{pythontex}
+\begin{document}
+hello
+\begin{pyconsole}
+print("안녕 Python")
+\end{pyconsole}
+\end{document}</pre>
+<p>이렇게 하면 pythontex에서 오류를 뱉는다.</p>
+<pre class="lang:sh decode:true">Non-ascii characters are not allowed in console environments under Python 2</pre>
+<p>파이썬 2의 콘솔에서 non-ascii를 허용하지 않는다는데, 진짜인지 모르겠다.</p>
+<p>위 에러와 관련된 코드는 다음과 같다.</p>
+<pre class="lang:python decode:true">    for key in consoledict:
+        # Python 2 doesn't support non-ASCII in console environment,
+        # so do a quick check for this by trying to encode in ASCII
+        #// Python 2
+        try:
+            ''.join(consoledict[key]).encode('ascii')
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            inputline = consoledict[key][0].rsplit('#', 2)[1]
+            messages.append('* PythonTeX error')
+            messages.append('    Non-ascii character(s) near line ' + inputline)
+            messages.append('    Non-ascii characters are not allowed in console environments under Python 2')
+            errors[key] += 1
+            continue</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

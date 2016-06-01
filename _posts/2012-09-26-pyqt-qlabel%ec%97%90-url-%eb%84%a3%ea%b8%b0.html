@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'PyQt:: QLabel에 URL 넣기'
+post_id: '114'
+date: 2012-09-26 19:15:39.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- pyqt
+- QLabel
+- setOpenExternalLinks
+- URL
+- 링크
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyQt에서 QLabel에 URL을 넣어 링크를 거는 방법. 당연히 클릭하면 웹브라우저가 실행되면서 링크 주소로 이동한다.</p>
+<pre class="lang:python decode:true">self.lblFileFormat = QLabel("More Info")
+self.lblFileFormat.setOpenExternalLinks(True)
+self.lblFileFormat.setText("&lt;a href='http://blog.dokenzy.com/'&gt;my blog&lt;/a&gt;")</pre>
+<p>간단하다.<br />
+1. QLabel 객체를 만든 후,</p>
+<p>2. setOpenExternalLinks를 True로 설정해 준다.</p>
+<p>3. 그리고 나서 setText()메소드를 이용해서 링크를 걸어준다. 링크를 거는 방법은 HTML과 동일하다.</p>

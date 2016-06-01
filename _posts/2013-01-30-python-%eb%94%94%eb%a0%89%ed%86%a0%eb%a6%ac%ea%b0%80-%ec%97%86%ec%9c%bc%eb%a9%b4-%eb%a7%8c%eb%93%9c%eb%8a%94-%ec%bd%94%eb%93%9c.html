@@ -1,0 +1,29 @@
+---
+layout: post
+title: 'python:: 디렉토리가 없으면 만드는 코드'
+post_id: '297'
+date: 2013-01-30 15:09:29.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- os.makedirs
+- os.path.exists
+- Python
+- 디렉토리
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>stackoverflow에서 가져옴: <a href="http://stackoverflow.com/questions/273192/python-best-way-to-create-directory-if-it-doesnt-exist-for-file-write" target="_blank">http://stackoverflow.com/questions/273192/python-best-way-to-create-directory-if-it-doesnt-exist-for-file-write</a></p>
+<p>디렉토리가 없으면 만드는 코드</p>
+<pre class="lang:python decode:true">if not os.path.exists(directory):
+    os.makedirs(directory)</pre>
+<p>&nbsp;</p>

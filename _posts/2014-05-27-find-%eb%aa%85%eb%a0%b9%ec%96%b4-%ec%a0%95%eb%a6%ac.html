@@ -1,0 +1,30 @@
+---
+layout: post
+title: find 명령어 정리
+post_id: '1571'
+date: 2014-05-27 23:04:03.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- find
+- 명령어
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>정리 중...</p>
+<ul>
+<li>find ./ -type f -name 'abc.pdf' 현재 디렉토리(하위 디렉토리 포함) 밑에서 abc.pdf 파일 찾기</li>
+<li>find ./ -type f -iname 위와 동일한데, 대소문자 구분하지 않음.</li>
+<li>find ./ -type d -name 'documents' 현재 디렉토리에서 documents 디렉토리 찾기</li>
+<li>find ./ -type d -iname 'documents' 위와 동일한데, 대소문자 구분하지 않음.</li>
+<li>find ./ -type f -name '*.html' | xargs grep 'angular.js' 현재 디렉토리에서 angular.js라는 텍스트가 있는 html 파일 찾기</li>
+</ul>

@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'flask:: wtform에 select폼을 만들 때 model을 이용하기'
+post_id: '380'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- Flask
+tags:
+- flask
+- model
+- option
+- queryselectfield
+- select
+- selected
+- wtform
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>1. form의 select태그에 들어갈 &lt;option&gt; 항목값들을 모델에서 가져오기</p>
+<p><a href="http://wtforms.simplecodes.com/docs/0.6.2/ext.html#module-wtforms.ext.sqlalchemy" target="_blank">http://wtforms.simplecodes.com/docs/0.6.2/ext.html#module-wtforms.ext.sqlalchemy</a></p>
+<p>2. form의 &lt;select&gt;&lt;option&gt; 만들 때 기본 선택된 상태로 만들기</p>
+<p><a href="http://stackoverflow.com/questions/5519729/wtforms-how-to-select-options-in-selectmultiplefield" target="_blank">http://stackoverflow.com/questions/5519729/wtforms-how-to-select-options-in-selectmultiplefield</a></p>
+<pre class="lang:python decode:true ">form = ProfileForm(username=edited_user.username, group=edited_user.dslevel_level)</pre>
+<p>&nbsp;</p>

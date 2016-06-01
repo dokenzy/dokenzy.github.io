@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Python:: tempfile과 atexit로 임시폴더 관리하기'
+post_id: '2103'
+date: 2015-08-29 22:56:51.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- atexit
+- mkdtemp
+- Python
+- tempfile
+- __del__
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>tempfile.mkdtemp()를 하면 임시폴더를 만들어 준다.</p>
+<p>내가 만들고 있는 프로그램은 이 임시폴더에 이미지를 동적으로 생성하고 캐쉬해둔다.</p>
+<p>프로그램이 종료되면 자동으로 임시폴더를 삭제하고 싶다.</p>
+<p>이럴 때는 클래스에서 def __del__()을 정의하는 것보다 <a href="https://docs.python.org/3/library/atexit.html">atexit</a> 모듈을 사용하는 것이 좋다.</p>
+<pre class="lang:python decode:true ">import shutil, tempfile, atexit
+tmp_dir = tempfile.mkdtemp()
+atexit.register(shutil.rmtree, tmp_dir)</pre>
+<p>이제 프로그램이 종료되면 생성된 임시폴더가 자동으로 삭제된다.</p>

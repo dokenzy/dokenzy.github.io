@@ -1,0 +1,56 @@
+---
+layout: post
+title: 'LaTeX:: 고대 이집트 상형문자 조판하기'
+post_id: '1255'
+date: 2014-04-09 03:34:05.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- latex
+- 고대 이집트 문자
+- 로제타석
+- 상형문자
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>1. 준비</h2>
+<ul>
+<li>입력방법: <a title="&quot;가&quot;를 찍는 일곱 가지 방법" href="http://www.ktug.org/xe/index.php?mid=blog&amp;search_target=nick_name&amp;search_keyword=DohyunKim&amp;page=3&amp;document_srl=27532">"가"를 찍는 일곱 가지 방법</a> 참고</li>
+<li>이집트 상형문자: <a title="Egyptian hieroglyphs" href="http://en.wikipedia.org/wiki/Egyptian_hieroglyphs">Egyptian hieroglyphs</a></li>
+<li>폰트: <a href="http://users.teilar.gr/~g1951d/">http://users.teilar.gr/~g1951d</a>/에서 Aegyptus 5.01 <a href="http://users.teilar.gr/~g1951d/Aegyptus_R.ttf">다운로드</a>. 다른 폰트도 테스트 해봤는데 안되는 것들이 있음. 이 폰트는 확실히 됨. 폰트 미리보기(<a href="http://users.teilar.gr/~g1951d/Aegyptus.pdf">PDF)</a></li>
+</ul>
+<h2>2. 코드:</h2>
+<pre class="top-set:false lang:tex decode:true crayon-selected">%!TEX TS-program = xelatex
+\documentclass{article}
+
+\usepackage{kotex}
+\setmainfont{HCR Batang LVT}
+
+\newfontface\hiero{Aegyptus}
+
+\begin{document}
+\LaTeX으로 고대 이집트문자 찍기
+
+% 이 방법은 안됨.
+%\hiero ^^^^1302D \relax 
+
+\hiero \char 77869\relax   % 10진수
+
+\hiero \char "1302D\relax  % 16진수
+
+\hiero \char '230055\relax % 8진수
+
+\end{document}</pre>
+<h2>3. 결과:</h2>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2014/04/aegypt.png"><img class="border=1px solid #aaa" alt="aegypt" src="{{ site.baseurl }}/assets/aegypt.png" width="366" height="317" /></a></p>
+<p>최근에 로제타석과 관련된 책을 읽고 상형문자로 된 문서 만들어 보려다 포기. 글자 찾다가 1년 다 지나가겠음;;;</p>
+<p>끝.</p>

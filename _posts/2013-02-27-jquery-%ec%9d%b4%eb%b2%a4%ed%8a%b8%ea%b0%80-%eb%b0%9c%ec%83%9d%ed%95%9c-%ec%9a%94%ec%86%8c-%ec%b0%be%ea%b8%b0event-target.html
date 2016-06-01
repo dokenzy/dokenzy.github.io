@@ -1,0 +1,47 @@
+---
+layout: post
+title: 'jQuery:: 이벤트가 발생한 요소 찾기(event.target)'
+post_id: '291'
+date: 2013-02-27 21:23:38.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- jQuery
+tags:
+- event.target
+- jquery
+- 이벤트
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a href="http://api.jquery.com/event.target/" target="_blank">http://api.jquery.com/event.target/</a></p>
+<pre class="lang:xhtml decode:true crayon-selected">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;style&gt;
+span, strong, p {
+  padding: 8px; display: block; border: 1px solid #999;  }
+    &lt;/style&gt;
+  &lt;script src="http://code.jquery.com/jquery-latest.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;div id="log"&gt;&lt;/div&gt;
+&lt;div&gt;
+  &lt;p&gt;
+    &lt;strong&gt;&lt;span&gt;click&lt;/span&gt;&lt;/strong&gt;
+  &lt;/p&gt;
+&lt;/div&gt;
+&lt;script&gt;$("body").click(function(event) {
+  $("#log").html("clicked: " + event.target.nodeName);
+});  &lt;/script&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;</pre>

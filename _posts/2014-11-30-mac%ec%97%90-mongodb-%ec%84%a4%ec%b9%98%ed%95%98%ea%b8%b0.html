@@ -1,0 +1,37 @@
+---
+layout: post
+title: Mac에 mongodb 설치하기
+post_id: '1815'
+date: 2014-11-30 18:40:18.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- brew
+- mac
+- mongo
+- mongodb
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>맥(요세미티)에 mongodb를 brew로 설치하고 실행했는데 이런 오류가 발생한다.</p>
+<pre class="lang:default decode:true">2014-11-30T18:27:03.022+0900 warning: Failed to connect to 127.0.0.1:27017, reason: errno:61 Connection refused
+2014-11-30T18:27:03.023+0900 Error: couldn't connect to server 127.0.0.1:27017 (127.0.0.1), connection attempt failed at src/mongo/shell/mongo.js:146
+exception: connect failed
+
+[1]+  Exit 1                  mongo</pre>
+<ol>
+<li> brew uninstall mongodb</li>
+<li>brew install mongodb</li>
+<li>sudo mkdir -p /data/db</li>
+<li>sudo mongod</li>
+</ol>
+<p>끝.</p>

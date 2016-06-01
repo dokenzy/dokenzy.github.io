@@ -1,0 +1,36 @@
+---
+layout: post
+title: SVG로 Letter S 그리기
+post_id: '1758'
+date: 2014-10-12 01:48:47.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- SVG
+tags:
+- Donald Knuth
+- letter S
+- progress
+- svg
+- Typography
+- 도널드 크누스
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>오래 전 Progress님께서 'S자 이야기'라는 문서를 올려주셨다. 도널드 커누스가 쓴 Digital Typography라는 책에 'S자 이야기(The Letter S)'라는 섹션이 있는데, 이 글 중 재미있는 부분을 한글로 옮겨 소개해 주신 문서다.</p>
+<p>인용하면, "프란체스코 토르니엘로(Francesco Torniello)라는 이탈리아의 한 타이포그래퍼가 쓴 알파벳 도해법에서 S자 도해를 수학적으로 계산하여 설명하고 있습니다."</p>
+<p>도널드 커누스가 소개한 방법으로 Adobe Illustrator에서 그리셨는데 결과물이 뭔가 대단하고 멋져보였다. 레오나르도 다빈치의 '인체비례도' 같은 느낌도 들고... 아무튼 엄청 멋있어 보였다.</p>
+<p>그래서 꼭 SVG로 그려보고 싶었는데, 어제밤과 오늘밤 작업한 결과 만족스러운 결과를 얻었다.</p>
+<p>과정은 Progress님의 문서를 그대로 따라 만들었다. 간단한 분수 계산을 해야 하는데, 계산하는 방법을 몰라 헤맸었다;;; 6과 16/17을 (6x16)/17로 계산했다;;; 이거 초등학교 때 배우는 거 같은데...;;;</p>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2014/10/letterS.png"><img class="alignnone size-full wp-image-1761" src="{{ site.baseurl }}/assets/letterS.png" alt="letterS" width="1038" height="1226" /></a></p>
+<p>다 하고보니 SVG 날코딩은 사람이 하는 게 아니구나... 라는 생각이 들었다. 지오지브라로 하면 쉽게 할 수 있는 방법이 있을런지도...</p>
+<p>좌표계가 수학에서 쓰이는 데카르트 좌표계와 달라서 방향을 뒤집어서 그렸다. 이 때 글자도 같이 뒤집히기 때문에 CSS로 transform효과를 주었다. 그런데 맥의 훑어보기(Quick Look)에서는 이 스타일을 적용하지 못하는지 제대로 나오지 않는다(Mavericks 기준).</p>
+<p>update(2015. 11. 17): Mac OS X El Capitan에서 미리보기로 봐도 제대로 나온다!</p>
+<p>SVG 파일: <a href="https://www.dropbox.com/s/41nsymdrf73inzz/letterS.svg?dl=0">https://www.dropbox.com/s/41nsymdrf73inzz/letterS.svg?dl=0</a></p>

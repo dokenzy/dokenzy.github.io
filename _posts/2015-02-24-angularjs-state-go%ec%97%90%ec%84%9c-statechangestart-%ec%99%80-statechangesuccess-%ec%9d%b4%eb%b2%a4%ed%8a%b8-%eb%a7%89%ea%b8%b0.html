@@ -1,0 +1,38 @@
+---
+layout: post
+title: 'AngularJS:: $state.go()에서 $stateChangeStart 와 $stateChangeSuccess 이벤트 막기'
+post_id: '1926'
+date: 2015-02-24 18:44:21.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- angularjs
+tags:
+- $state
+- $stateChangeStart
+- $stateChangeSuccess
+- angularjs
+- go
+- ui-router
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>AngularJS에서 ui-router를 쓸 때, $state의 변화를 줄 때(?) .go() 함수를 쓰는데, 이걸 쓰면 기본적으로 $stateChangeStart 와 $stateChangeSuccess 이벤트가 발생한다. 여러 디렉티브를 함께 쓰다보면 이 이벤트 때문에 원하지 않는 기능이 자동으로 수행된다.</p>
+<p>go()는 내부적으로 $state.transitionTo()를 호출하는데, 이 때 다음 옵션을 기본값으로 사용한다.</p>
+<pre class="lang:js decode:true  ">{ location: true, inherit: true, relative: $state.$current, notify: true }</pre>
+<p>따라서 go()를 호출할 때 옵션을 설정해 주면 기본적으로 발생하는 $stateChangeStart 와 $stateChangeSuccess 이벤트를 막을 수 있다. 이 이벤트를 막는 옵션은 notify를 false로 주면 된다.</p>
+<p>즉, 다음과 같은 형태로 사용하면 된다.</p>
+<p>$state.go('detail', {id: myId}, {notify: false});</p>
+<p>그럼 URL은 바뀌지만 $stateChangeStart 와 $stateChangeSuccess 이벤트는 발생하지 않는다.</p>
+<p>참고:</p>
+<ul>
+<li><a href="http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state">http://angular-ui.github.io/ui-router/site/#/api/ui.router.state.$state</a></li>
+<li><a href="http://stackoverflow.com/questions/23585065/angularjs-ui-router-change-url-without-reloading-state">AngularJS UI Router - change url without reloading state</a></li>
+</ul>

@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Python:: BeautifulSoup4(bs4)를 사용한 스크립트를 cx_freeze로 패키징할 때'
+post_id: '170'
+date: 2012-10-23 01:09:56.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+- Python
+tags:
+- beautifulsoup
+- bs4
+- cx_freeze
+- Python
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>오늘 BeautifulSoup(bs4) 모듈을 사용하는 프로그램을 PyQt로 인터페이스를 입혀서 cx_freeze로 패키징하는데 문제가 생겼다.</p>
+<p>python foo.py</p>
+<p>와 같이 하면 잘 동작하는데, cx_freeze로 패키징한 실행파일(.exe)을 실행하면 bs4모듈을 임포트할 수 없다며 실행이 안된다.</p>
+<p>삽질 끝에 해결한 방법은.</p>
+<p>BeautifulSoup 홈페이지에서 tar.gz 로 소스를 받아 python setup.py install 로 다시 설치.</p>
+<p>기존에 easy_install 로 설치한 것은 이상하게 동작은 잘 되는데, bs4모듈을 탐색기에서 찾을 수도 없었다. 그래서 cx_freeze로 패키징한 파일이 동작을 안하는 듯.</p>
+<p>직접 설치하니 탐색기에도 나타나고, 패키징한 파일도 잘 동작한다.</p>
+<p>&nbsp;</p>

@@ -1,0 +1,58 @@
+---
+layout: post
+title: jQuery로 JSON객체에 레코드 추가하는 방법
+post_id: '325'
+date: 2013-02-27 20:39:05.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- jQuery
+tags:
+- extend()
+- javascript
+- jquery
+- json
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>출처: <a href="http://stackoverflow.com/questions/3898563/appending-to-json-object-using-javascript" target="_blank">http://stackoverflow.com/questions/3898563/appending-to-json-object-using-javascript</a></p>
+<p>아래와 같은 형식의 JSON데이터인 ListData에 새로운 레코드를 추가하려면 extend라는 메소드를 쓰면 된다.</p>
+<p><a href="http://api.jquery.com/jQuery.extend/" target="_blank">jQuery.extend()</a></p>
+<pre class="lang:js decode:true">var ListData = {
+  "main": {
+    "label":"Main",
+    "url":"#main"
+  },
+  "project": {
+    "label":"Project",
+    "url":"#project"
+  },
+  "settings": {
+    "label":"Settings",
+    "url":"#settings",
+    "subnav":[
+      {
+        "label":"Privacy",
+        "url":"#privacy"
+      },
+      {
+        "label":"Security",
+        "url":"#security"
+      },
+      {
+        "label":"Advanced",
+        "url":"#advanced"
+      }
+    ]
+  }
+};
+
+$.extend(ListData, {"hello": { "label":"Hello", "url":"#hello" }});</pre>
+<p>&nbsp;</p>

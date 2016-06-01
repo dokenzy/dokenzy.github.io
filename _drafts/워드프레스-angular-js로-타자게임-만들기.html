@@ -1,0 +1,45 @@
+---
+layout: post
+title: 워드프레스+Angular.js로 타자게임 만들기
+post_id: '1667'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- Web
+tags:
+- angular.js
+- angularjs
+- 워드프레스
+- 타자게임
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>워드프레스에 Angular.js를 붙여서 간단한 타자게임을 만들어봤다. 둘 다 처음 해보는 거라 시행착오가 많았다. 뭔지도 모르고 구글링해서 만든 코드도 많다. 뭔가 더 진행하기 전에 여기서 정리하고 가기로 한다.</p>
+<ol>
+<li>워드프레스를 설치한다.</li>
+<li>[설정]-[고유주소]메뉴의 '고유주소 설정'에서 '글 이름'을 선택한다.</li>
+<li>[페이지]메뉴에서 새 페이지를 만든다. 제목은 '타자 게임'으로 하고, 고유주소와 슬러그를 'type-game'이라고 써준다. 중요한 것은 고유주소와 슬러그의 두 이름이 서로 같아야 한다.</li>
+<li>이제 워드프레스 테마를 만든다.</li>
+<li>wp-content/themes/에 'typegame'이라는 폴더를 만들고, 그 안에 style.css 파일을 만든다. style.css 파일은 테마를 만들기 위해 반드시 필요한 파일이다.</li>
+<li>wp-content/themes/typegame 폴더 안에 page-type-game.php 파일을 만든다. 파일명이 page-type-game.php 인 이유는 아까 만든 '타자 게임'페이지의 고유주소와 슬러그가 'type-game'이기 때문이다. 반드시 같아야 한다.</li>
+<li>page-type-game.php를 이렇게 편집한다. 이제 '타자 게임'이라는 페이지를 열어보면 이 글자가 나오면 잘 된 것이다.</li>
+<li>'타자 게임'페이지에 문제를 추가하기 위해 'Types'라는 플러그인을 설치한다.</li>
+<li>Custom Fields에 '영어 문제'필드를 추가한다.</li>
+<li>'타자 게임' 페이지를 편집하자. '영어 문제'라는 필드가 추가된 것을 볼 수 있다. 문제로 내고 싶은 영어 문장을 여러 개 입력하자.</li>
+<li>angular.js로 앱을 만들기 위해서 여러 CSS파일과 자바스크립트 파일이 필요하다. 이를 위해 wp-content/themes/typegame에 functions.php 파일을 만들자. 여기에 다음과 같이 하면 테마에서 CSS파일과 자바스크립트 파일을 쓸 수 있다.</li>
+<li>워드프레스가 갖고 있는 문제는 PHP이고, 우리가 게임을 할 수 있기 위해서는 Angualar.js가 가져와야 하므로 functions.php에 다음 코드를 추가하여 문제들을 angualar.js의 $rootScope에 저장할 수 있게 하자.</li>
+<li>이제 page-type-game.php 파일을 제대로 만들어 보자.</li>
+<li>게임이 잘 된다. 근데 뭔가 아쉽다. 내 기록을 저장할 수 있게 하자.</li>
+<li>각 사용자마다 저장하는 것이기 때문에 Types의 User Fields를 이용할 수도 있지만 직접 functions.php에 코드를 입력하기로 한다. 이유는 나중에 설명한다.</li>
+<li>이제 사용자가 타자 게임을 끝내면 완료한 게임 수와 평균 타수를 저장할 수 있게 됐다.</li>
+<li>하지만 찜찜한 부분이 있다. 사용자가 자신의 게임수와 타수를 아무렇게나 수정할 수 있는 점이다. 이를 위해 관리자만 수정할 수 있도록 readonly 속성을 추가한다. 이 문제 때문에 Types 대신 직접 코드를 짜는 방식을 사용했다.</li>
+<li>끝.</li>
+</ol>

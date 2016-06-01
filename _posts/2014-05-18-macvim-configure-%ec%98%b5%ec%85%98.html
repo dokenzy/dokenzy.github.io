@@ -1,0 +1,154 @@
+---
+layout: post
+title: MacVim configure 옵션
+post_id: '1504'
+date: 2014-05-18 16:40:44.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+- 개발도구
+tags:
+- configure
+- macvim
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>번역을 할지 모르겠지만, 일단 저장해 두기로 한다.</p>
+<p>`configure' configures this package to adapt to many kinds of systems.</p>
+<p>Usage: auto/configure [OPTION]... [VAR=VALUE]...</p>
+<p>To assign environment variables (e.g., CC, CFLAGS...), specify them as<br />
+VAR=VALUE. See below for descriptions of some of the useful variables.</p>
+<p>Defaults for the options are specified in brackets.</p>
+<p>Configuration:<br />
+-h, --help display this help and exit<br />
+--help=short display options specific to this package<br />
+--help=recursive display the short help of all the included packages<br />
+-V, --version display version information and exit<br />
+-q, --quiet, --silent do not print `checking ...' messages<br />
+--cache-file=FILE cache test results in FILE [disabled]<br />
+-C, --config-cache alias for `--cache-file=config.cache'<br />
+-n, --no-create do not create output files<br />
+--srcdir=DIR find the sources in DIR [configure dir or `..']</p>
+<p>Installation directories:<br />
+--prefix=PREFIX install architecture-independent files in PREFIX<br />
+[/usr/local]<br />
+--exec-prefix=EPREFIX install architecture-dependent files in EPREFIX<br />
+[PREFIX]</p>
+<p>By default, `make install' will install all the files in<br />
+`/usr/local/bin', `/usr/local/lib' etc. You can specify<br />
+an installation prefix other than `/usr/local' using `--prefix',<br />
+for instance `--prefix=$HOME'.</p>
+<p>For better control, use the options below.</p>
+<p>Fine tuning of the installation directories:<br />
+--bindir=DIR user executables [EPREFIX/bin]<br />
+--sbindir=DIR system admin executables [EPREFIX/sbin]<br />
+--libexecdir=DIR program executables [EPREFIX/libexec]<br />
+--sysconfdir=DIR read-only single-machine data [PREFIX/etc]<br />
+--sharedstatedir=DIR modifiable architecture-independent data [PREFIX/com]<br />
+--localstatedir=DIR modifiable single-machine data [PREFIX/var]<br />
+--libdir=DIR object code libraries [EPREFIX/lib]<br />
+--includedir=DIR C header files [PREFIX/include]<br />
+--oldincludedir=DIR C header files for non-gcc [/usr/include]<br />
+--datarootdir=DIR read-only arch.-independent data root [PREFIX/share]<br />
+--datadir=DIR read-only architecture-independent data [DATAROOTDIR]<br />
+--infodir=DIR info documentation [DATAROOTDIR/info]<br />
+--localedir=DIR locale-dependent data [DATAROOTDIR/locale]<br />
+--mandir=DIR man documentation [DATAROOTDIR/man]<br />
+--docdir=DIR documentation root [DATAROOTDIR/doc/PACKAGE]<br />
+--htmldir=DIR html documentation [DOCDIR]<br />
+--dvidir=DIR dvi documentation [DOCDIR]<br />
+--pdfdir=DIR pdf documentation [DOCDIR]<br />
+--psdir=DIR ps documentation [DOCDIR]</p>
+<p>X features:<br />
+--x-includes=DIR X include files are in DIR<br />
+--x-libraries=DIR X library files are in DIR</p>
+<p>Optional Features:<br />
+--disable-option-checking ignore unrecognized --enable/--with options<br />
+--disable-FEATURE do not include FEATURE (same as --enable-FEATURE=no)<br />
+--enable-FEATURE[=ARG] include FEATURE [ARG=yes]<br />
+--enable-fail-if-missing Fail if dependencies on additional features<br />
+specified on the command line are missing.<br />
+--disable-darwin Disable Darwin (Mac OS X) support.<br />
+--disable-smack Do not check for Smack support.<br />
+--disable-selinux Do not check for SELinux support.<br />
+--disable-xsmp Disable XSMP session management<br />
+--disable-xsmp-interact Disable XSMP interaction<br />
+--enable-luainterp=OPTS Include Lua interpreter. default=no OPTS=no/yes/dynamic<br />
+--enable-mzschemeinterp Include MzScheme interpreter.<br />
+--enable-perlinterp=OPTS Include Perl interpreter. default=no OPTS=no/yes/dynamic<br />
+--enable-pythoninterp=OPTS Include Python interpreter. default=no OPTS=no/yes/dynamic<br />
+--enable-python3interp=OPTS Include Python3 interpreter. default=no OPTS=no/yes/dynamic<br />
+--enable-tclinterp Include Tcl interpreter.<br />
+--enable-rubyinterp=OPTS Include Ruby interpreter. default=no OPTS=no/yes/dynamic<br />
+--enable-cscope Include cscope interface.<br />
+--enable-workshop Include Sun Visual Workshop support.<br />
+--disable-netbeans Disable NetBeans integration support.<br />
+--enable-sniff Include Sniff interface.<br />
+--enable-multibyte Include multibyte editing support.<br />
+--enable-hangulinput Include Hangul input support.<br />
+--enable-xim Include XIM input support.<br />
+--enable-fontset Include X fontset output support.<br />
+--enable-gui=OPTS X11 GUI default=auto OPTS=auto/no/gtk2/gnome2/motif/athena/neXtaw/photon/carbon/macvim<br />
+--enable-gtk2-check If auto-select GUI, check for GTK+ 2 default=yes<br />
+--enable-gnome-check If GTK GUI, check for GNOME default=no<br />
+--enable-motif-check If auto-select GUI, check for Motif default=yes<br />
+--enable-athena-check If auto-select GUI, check for Athena default=yes<br />
+--enable-nextaw-check If auto-select GUI, check for neXtaw default=yes<br />
+--enable-carbon-check If auto-select GUI, check for Carbon default=yes<br />
+--enable-macvim-check If auto-select GUI, check for MacVim default=yes<br />
+--disable-gtktest Do not try to compile and run a test GTK program<br />
+--disable-largefile omit support for large files<br />
+--disable-acl Don't check for ACL support.<br />
+--disable-gpm Don't use gpm (Linux mouse daemon).<br />
+--disable-sysmouse Don't use sysmouse (mouse in *BSD console).<br />
+--disable-nls Don't support NLS (gettext()).</p>
+<p>Optional Packages:<br />
+--with-PACKAGE[=ARG] use PACKAGE [ARG=yes]<br />
+--without-PACKAGE do not use PACKAGE (same as --with-PACKAGE=no)<br />
+--with-developer-dir=PATH use PATH as location for Xcode developer tools<br />
+--with-macsdk=SDK SDK version (10.4, 10.5, 10.6, ...)<br />
+--with-macarchs=ARCHS space separated list of archs (i386 x86_64 ppc ...)<br />
+--with-local-dir=PATH search PATH instead of /usr/local for local libraries.<br />
+--without-local-dir do not search /usr/local for local libraries.<br />
+--with-vim-name=NAME what to call the Vim executable<br />
+--with-ex-name=NAME what to call the Ex executable<br />
+--with-view-name=NAME what to call the View executable<br />
+--with-global-runtime=DIR global runtime directory in 'runtimepath'<br />
+--with-modified-by=NAME name of who modified a release version<br />
+--with-features=TYPE tiny, small, normal, big or huge (default: normal)<br />
+--with-compiledby=NAME name to show in :version message<br />
+--with-lua-prefix=PFX Prefix where Lua is installed.<br />
+--with-luajit Link with LuaJIT instead of Lua.<br />
+--with-plthome=PLTHOME Use PLTHOME.<br />
+--with-python-config-dir=PATH Python's config directory<br />
+--with-python3-config-dir=PATH Python's config directory<br />
+--with-tclsh=PATH which tclsh to use (default: tclsh8.0)<br />
+--with-ruby-command=RUBY name of the Ruby command (default: ruby)<br />
+--with-x use the X Window System<br />
+--with-gnome-includes=DIR Specify location of GNOME headers<br />
+--with-gnome-libs=DIR Specify location of GNOME libs<br />
+--with-gnome Specify prefix for GNOME files<br />
+--with-motif-lib=STRING Library for Motif<br />
+--with-tlib=library terminal library to be used<br />
+--with-xcodecfg=CFG Debug, Release (default: Release)</p>
+<p>Some influential environment variables:<br />
+CC C compiler command<br />
+CFLAGS C compiler flags<br />
+LDFLAGS linker flags, e.g. -L&lt;lib dir&gt; if you have libraries in a<br />
+nonstandard directory &lt;lib dir&gt;<br />
+LIBS libraries to pass to the linker, e.g. -l&lt;library&gt;<br />
+CPPFLAGS (Objective) C/C++ preprocessor flags, e.g. -I&lt;include dir&gt; if<br />
+you have headers in a nonstandard directory &lt;include dir&gt;<br />
+CPP C preprocessor<br />
+XMKMF Path to xmkmf, Makefile generator for X Window System</p>
+<p>Use these variables to override the choices made by `configure' or to help<br />
+it to find libraries and programs with nonstandard names/locations.</p>
+<p>Report bugs to the package provider.</p>

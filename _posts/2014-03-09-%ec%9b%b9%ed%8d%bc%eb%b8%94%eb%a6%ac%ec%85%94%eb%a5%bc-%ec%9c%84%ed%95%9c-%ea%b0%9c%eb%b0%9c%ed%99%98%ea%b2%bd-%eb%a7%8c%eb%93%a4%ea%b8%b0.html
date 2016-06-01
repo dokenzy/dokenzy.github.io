@@ -1,0 +1,41 @@
+---
+layout: post
+title: 웹퍼블리셔를 위한 개발환경 만들기
+post_id: '1038'
+date: 2014-03-09 06:35:01.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- autoset
+- ngxmp
+- xampp
+- xwamp
+- 웹서버
+- 웹퍼블리셔
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>웹퍼블리셔의 역할이 어디까지인가에 대해서는 서로 의견이 다를 수 있다. 하지만 일단 많이 알면 알수록 좋다. 특히 클라이언트 환경이 다양해지고, HTML5가 점점 많이 쓰이면서 고려해야 할 것들도 훨씬 많아졌다. 여기에 다양한 자바스크립트 라이브러리들도 쏟아지는 상황에서 HTML과 CSS만 가지고는 해결할 수 없는 문제들이 많이 있다.</p>
+<p>html 파일 안에 php코드를 삽입했는데, PHP코드가 동작하지 않는다면? 웹 서버를 손봐야 한다.</p>
+<p>html5의 &lt;video&gt;태그로 동영상을 넣었는데, 최신 웹브라우저인데도 동영상을 볼 수 없다면? 웹 서버를 손봐야 한다.</p>
+<p>따라서 웹퍼블리셔도 웹서버를 직접 운영해 보면서 웹브라우저와 웹 서버간의 상호작용에 대해 이해할 필요가 있다.</p>
+<p>서버 환경은 어차피 운영환경에 따라 전문가들이 설정할테니 웹퍼블리셔가 그런 것 까지 고려하지는 않아도 된다. 여기서는 윈도우즈에 웹서버+DB서버(MySQL)+PHP를 쉽게 설치할 수 있는 원클릭 인스톨러를 소개한다.</p>
+<p>1. rwapm: <a href="http://kldp.net/projects/rwapm">http://kldp.net/projects/rwapm</a></p>
+<p>우리나라의 토토루님이 만든 윈도우즈용 프로그램. 내가 윈도우즈를 주로 쓸 때 애용했다. Apache 대신 Nginx를 사용한 <a href="http://dev.naver.com/projects/ngxmp/">ngxmp</a>라는 프로그램도 있다.</p>
+<p>&nbsp;</p>
+<p>3. Autoset: <a href="http://autoset.net">http://autoset.net</a></p>
+<p>우리나라 개발자가 만든 윈도우즈용 프로그램. Cubrid라는 DB를 지원하지만 그냥 MySQL로 설치하기를 권한다.</p>
+<p>&nbsp;</p>
+<p>2. xampp: <a href="http://www.apachefriends.org/">http://www.apache</a><a href="http://www.apachefriends.org/">friends.org</a></p>
+<p>외국의 apachefriends팀에서 만든 프로그램. 윈도우즈용 뿐만 아니라 Mac, Linux용도 제공한다.</p>
+<p>설치를 마치면 홈디렉토리에 index.html 파일부터 건드려보자. 홈디렉토리는 웹서버 설정파일(보통은 httpd.conf같은 파일)에 설정되어 있다.  이제 웹서버가 어떻게 돌아가는지 감을 잡았으면 404 에러가 발생할 때 웹서버가 보여주는 page not found 페이지같은 것도 건드려보자.</p>
+<p>끝.</p>

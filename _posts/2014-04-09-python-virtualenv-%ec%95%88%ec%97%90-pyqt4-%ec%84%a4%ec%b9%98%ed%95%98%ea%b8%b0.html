@@ -1,0 +1,37 @@
+---
+layout: post
+title: 'Python:: virtualenv 안에 PyQt4 설치하기'
+post_id: '1320'
+date: 2014-04-09 01:53:08.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- pyqt
+- Python
+- sip
+- virtualenv
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>참고: <a href="http://stackoverflow.com/questions/19856927/install-sip-pyqt-on-virtualenv">http://stackoverflow.com/questions/19856927/install-sip-pyqt-on-virtualenv</a></p>
+<ol>
+<li>virtualenv를 활성화한다(ex: source virtualenv_prj/bin/activate).</li>
+<li><span class="lang:python decode:true  crayon-inline ">cd virtualenv_prj</span></li>
+<li><span class="lang:python decode:true crayon-inline">pip install --no-install sip</span>를 실행한다. 마지막에 에러가 뜨지만 무시한다.</li>
+<li><span class="lang:python decode:true  crayon-inline ">cd build/sip</span></li>
+<li><span class="lang:python decode:true  crayon-inline ">python configure.py &amp;&amp; make &amp;&amp; make install</span></li>
+<li><span class="lang:python decode:true  crayon-inline">cd ../..</span> (virtualenv_prj 폴더)</li>
+<li><a href="http://www.riverbankcomputing.co.uk/software/pyqt/download">PyQt홈페이지</a>에서 Source Packages 중에 자신의 플랫폼에 해당하는 파일을 다운로드한다.</li>
+<li>압축을 풀고 그 폴더(PyQt-&lt;flatform&gt;-gpl-&lt;version&gt;)로 들어간다.</li>
+<li><span class="lang:python decode:true  crayon-inline ">python configure.py &amp;&amp; make &amp;&amp; make install</span>  실행</li>
+</ol>
+<p>끝.</p>

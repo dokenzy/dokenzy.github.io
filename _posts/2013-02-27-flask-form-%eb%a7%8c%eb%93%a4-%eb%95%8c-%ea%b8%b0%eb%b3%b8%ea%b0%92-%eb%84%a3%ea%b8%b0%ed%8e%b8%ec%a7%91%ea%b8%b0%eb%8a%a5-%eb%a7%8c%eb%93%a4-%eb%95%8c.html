@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Flask:: form 만들 때 기본값 넣기(편집기능 만들 때)'
+post_id: '338'
+date: 2013-02-27 20:44:43.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Flask
+tags:
+- edit
+- flask
+- form
+- obj
+- value
+- 편집
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>출처: <a href="http://stackoverflow.com/questions/8128238/how-to-populate-my-wtform-variables" target="_blank">http://stackoverflow.com/questions/8128238/how-to-populate-my-wtform-variables</a></p>
+<p>웹 개발을 할 때, 기존 데이타를 수정하는 기능은 필수다. 즉, 편집 기능.</p>
+<p>편집 기능을 제공하기 위해서는 폼 필드에 DB 등에 저장된 값을 가져와서 폼 필드의 기본값으로 제공해야 한다.</p>
+<p>flask에서는 폼을 만들 때, 객체를 넘겨주면 간단히 처리할 수 있다. obj키워드에 객체를 할당한다.</p>
+<pre class="lang:python decode:true crayon-selected">post = DSBOARD.query.get(id)
+form = BoardForm(obj=post)#post객체의 값들이 form의 해당 필드에 기본값으로 들어간다.</pre>
+<p>&nbsp;</p>

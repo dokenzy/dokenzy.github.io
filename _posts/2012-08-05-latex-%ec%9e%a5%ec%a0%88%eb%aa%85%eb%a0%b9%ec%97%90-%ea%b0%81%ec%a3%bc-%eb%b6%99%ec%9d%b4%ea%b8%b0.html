@@ -1,0 +1,28 @@
+---
+layout: post
+title: 'LaTeX:  장절명령에 각주 붙이기'
+post_id: '65'
+date: 2012-08-05 15:05:40.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- footnote
+- latex
+- section
+- 각주
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>KTUG FaQ에서 가져옴(<a href="http://faq.ktug.or.kr/faq/%B0%A2%C1%D6#s-6.8">http://faq.ktug.or.kr/faq/%B0%A2%C1%D6#s-6.8</a> )</p>
+<p>LaTeX에서 section같은 장절명령에서는 각주명령(\footnote)를 사용하면 컴파일할 때 에러가 발생한다.</p>
+<p>다음과 같이 하면 장절명령에도 각주를 넣을 수 있다.</p>
+<pre class="lang:tex decode:true">\section[서론]{서론\protect\footnote{This is an example.}}</pre>

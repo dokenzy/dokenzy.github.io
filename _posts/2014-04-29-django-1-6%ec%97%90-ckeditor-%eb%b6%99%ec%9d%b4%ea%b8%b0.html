@@ -1,0 +1,55 @@
+---
+layout: post
+title: Django 1.6에 CKEditor 붙이기
+post_id: '1417'
+date: 2014-04-29 10:21:15.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Django
+tags:
+- ckeditor
+- django
+- django-wysiwyg
+- No module named defaults
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a href="https://github.com/pydanny/django-wysiwyg">https://github.com/pydanny/django-wysiwyg</a></p>
+<h2>1. django-wysiwyg 설치</h2>
+<p>1. pip로 패키지 설치</p>
+<pre class="lang:sh decode:true">pip install django-wysiwyg</pre>
+<p>2. settings.py의 INSTALLED_APPS에 <span class="lang:python decode:true  crayon-inline ">'django_wysiwyg' </span> 추가</p>
+<p>3. settings.py에 위지윅 에디터를 ckeditor로 설정</p>
+<pre class="lang:python decode:true">DJANGO_WYSIWYG_FLAVOR = "ckeditor"</pre>
+<p>4. http://ckeditor.com/에서 ckeditor를 받아서 /static/ckeditor에 복사</p>
+<h2>2. <a href="https://github.com/shaunsephton/django-ckeditor" target="_blank">django-ckeditor</a> 설치</h2>
+<p>1. django-ckeditor 설치</p>
+<pre class="lang:sh decode:true">pip install django-ckeditor</pre>
+<p>django-ckeditor-updated를 설치해도 된다고 한다.</p>
+<p>2. 프로젝트의 settings.py의 INSTALLED_APPS에  'ckeditor' 추가</p>
+<p>3. <span class="lang:sh decode:true  crayon-inline ">$ /manage.py collectstatic</span> 실행</p>
+<p>4. 프로젝트의 settings.py에 CKEDITOR_UPLOAD_PATH 설정</p>
+<p>5. 프로젝트의 urls.py에 ckeditor url 추가</p>
+<pre class="lang:python decode:true">url(r'^ckeditor/', include('ckeditor_urls')),
+</pre>
+<p>6. (옵션)<span style="color: #333333;">CKEDITOR_IMAGE_BACKEND 설정</span></p>
+<p>위 링크 따라 설치하고 해보면 다음 오류 발생</p>
+<p><span class="lang:default decode:true  crayon-inline ">ImportError: No module named defaults</span></p>
+<p><a href="http://davidmburke.com/2013/11/10/django-1-6-urls-defaults-compatibility-work-around/" target="_blank">http://davidmburke.com/2013/11/10/django-1-6-urls-defaults-compatibility-work-around/</a> 보고 패치한다. 간단히 요약하면</p>
+<p><span class="lang:python decode:true  crayon-inline ">from django.conf.urls.defaults import *</span>  이 코드는</p>
+<p><span class="lang:python decode:true  crayon-inline ">from django.conf.urls import *</span>  이렇게 바꿔야 한다.</p>
+<p>After that you can work around the issue if you don’t feel like forking the app. Just copy their urls.py file into your application then import that urls file instead.</p>
+<p>urls.py파일을 개발하고 있는 프로젝트에 ckeditor_urls.py라는 이름으로 복사한 후 이렇게 수정한다.</p>
+<p>(r'^ckeditor/', include('ckeditor.urls')),<br />
+를<br />
+(r'^ckeditor/', include('mystuff.ckeditor_urls')),<br />
+로 바꾼다.</p>
+<p>이제 잘 된다. 그런데 ckeditor로 작성하고 결과를 보니 html  태그가 보인다. 이런 경우에는  템플릿에서 <span class="lang:python decode:true  crayon-inline ">{{ my_html_text|safe }}</span>  이렇게 해주면 된다.</p>

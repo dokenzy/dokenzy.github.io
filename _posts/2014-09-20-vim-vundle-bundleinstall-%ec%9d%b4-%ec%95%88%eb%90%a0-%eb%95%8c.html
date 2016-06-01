@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Vim:: vundle BundleInstall 이 안될 때'
+post_id: '1710'
+date: 2014-09-20 00:59:39.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- Bundle
+- command line tools
+- Vim
+- vundle
+- xcode
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>MacVim에서 Vundle로 플러그인을 관리해서 쓰고 있다. 그런데 오늘 어떤 플러그인을 추가하려고 .vimrc를 변경한 뒤 BundleInstall 명령을 실행했더니 error processing 메시지가 뜨면서 실패한다.</p>
+<p>혹시나 하고 .vim/bundle 디렉토리를 지운 후(이름을 변경), vundle을 설치하기 위해</p>
+<pre class="lang:sh decode:true ">git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim</pre>
+<p>명령을 실행했더니 이런 오류가 발생한다.</p>
+<pre class="lang:sh decode:true ">Agreeing to the Xcode/iOS license requires admin privileges, please re-run as root via sudo.</pre>
+<p>원인은 아마도 오늘 업데이트한 Xcode(6.0.1)나 Command Line Tools(6.0) 때문인 듯 하다.</p>
+<p>이런 경우에는 그냥 Xcode를 실행하면 된다. 그러면 관리자 패스워드를 물어볼텐데 패스워드를 입력해 주면 해결된다.</p>
+<p>끝.</p>

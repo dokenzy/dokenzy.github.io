@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'LaTeX:: oblivoir에서 titleref사용하기(nameref 대체)'
+post_id: '721'
+date: 2013-12-06 00:54:27.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- chapter
+- label
+- latex
+- nameref
+- oblivoir
+- titleref
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>nameref 패키지를 사용하면, 상호참조할 대상의 제목을 가져온다.</p>
+<p>가령</p>
+<pre class="lang:python decode:true">\usepackage{nameref}
+...
+\nameref{hello}
+...
+\section{fine thank you, and you?}\label{hello}
+...</pre>
+<p>라고 했을 때,</p>
+<p><span class="lang:tex decode:true crayon-inline">\nameref{hello}</span>가 위치한 곳에 'fine thank you, and you?'가 나온다.</p>
+<p>그런데 oblivoir 클래스에서 chapter 옵션을 사용하면 이 패키지가 작동이 안된다.</p>
+<p>이럴 때는 oblivoir에서 제공하는 <span class="lang:tex decode:true crayon-inline">\titleref{hello}</span>명령을 사용하자.</p>

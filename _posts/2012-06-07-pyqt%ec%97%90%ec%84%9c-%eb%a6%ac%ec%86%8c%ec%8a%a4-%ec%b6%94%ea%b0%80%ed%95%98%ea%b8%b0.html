@@ -1,0 +1,47 @@
+---
+layout: post
+title: PyQt에서 리소스 추가하기
+post_id: '20'
+date: 2012-06-07 08:57:15.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+- Python
+tags:
+- pyqt
+- Python
+- qrc
+- 리소스 파일
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a title="http://www.manaware.net/pyqt-programming/resource-files.html" href="http://www.manaware.net/pyqt-programming/resource-files.html" target="_blank">http://www.manaware.net/pyqt-programming/resource-files.html</a></p>
+<p>이미지나 HTML파일 등을 PyQt 프로그램 내에 함께 설치해야 하는 경우, 각 리소스파일들을 묶어 하나의 파이썬 모듈로 만들기 위한 방법.</p>
+<p>1. qrc파일이 필요하다. qrc파일은 단순한 xml문서이다.</p>
+<pre class="toolbar:1 lang:python decode:true  " title="example.qrc">&lt;!DOCTYPE RCC&gt;
+&lt;RCC version="1.0"&gt;
+&lt;qresource&gt;
+&lt;file alias="filenew.png"&gt;images/filenew.png&lt;/file&gt; 
+&lt;file alias="fileopen.png"&gt;images/fileopen.png&lt;/file&gt;
+&lt;file alias="icon.png"&gt;images/icon.png&lt;/file&gt;
+&lt;file&gt;help/editmenu.html&lt;/file&gt;
+&lt;file&gt;help/filemenu.html&lt;/file&gt;
+&lt;file&gt;help/index.html&lt;/file&gt;
+&lt;/qresource&gt;
+&lt;/RCC&gt;</pre>
+<p>2. pyrcc4를 이용해서 파이썬 모듈로 만든다.<br />
+<span class="lang:python decode:true crayon-inline ">pyrcc4 example.qrc -o example_rc.py</span><br />
+example.qrc 파일 내용이 변경될 때마다 이 작업을 해야 한다.</p>
+<p>3. 저 리소스 파일 모듈(example_rc.py)을 사용할 파이썬 파일에 추가한다.<br />
+<span class="lang:python decode:true crayon-inline ">import example_rc.py</span></p>
+<p>4. 각 이미지 등의 리소스가 들어갈 곳에 아래 처럼 사용한다.<br />
+<span class="lang:python decode:true crayon-inline ">QIcon(":/images/filenew.png")</span></p>
+<p><span class="lang:python decode:true crayon-inline ">:/</span> 와 같이 시작하면 PyQt가 리소스 파일이라고 인식한다.</p>

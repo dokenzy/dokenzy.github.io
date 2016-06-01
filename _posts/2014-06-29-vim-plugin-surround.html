@@ -1,0 +1,71 @@
+---
+layout: post
+title: 'Vim plugin:: Surround'
+post_id: '1663'
+date: 2014-06-29 14:56:34.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- plugins
+- surround
+- Vim
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>설명: surround.vim : Delete/change/add parentheses/quotes/XML-tags/much more with ease</p>
+<p>코딩할 때 텍스트를 태그, 따옴표, 괄호 등으로 감싸거나 없애는 경우가 많은데 이를 쉽게 해주는 플러그인이다.</p>
+<p>플러그인 주소: <a href="http://www.vim.org/scripts/script.php?script_id=1697">http://www.vim.org/scripts/script.php?script_id=1697</a></p>
+<p>GitHub 주소: <a href="https://github.com/tpope/vim-surround">https://github.com/tpope/vim-surround</a></p>
+<h2>1. 설치</h2>
+<pre class="lang:sh decode:true">cd ~/.vim/bundle
+git clone git://github.com/tpope/vim-surround.git</pre>
+<h2>2. 사용법</h2>
+<h3>1) 쌍따옴표를 홑따옴표로 바꾸기</h3>
+<pre class="lang:default decode:true">"Hello world!"</pre>
+<p>위와 같은 텍스트가 있을 때, 저 안 아무데나 커서를 두고 일반모드에서 <span class="lang:default decode:true  crayon-inline ">cs"'</span> 를 하면 이렇게 바뀐다.</p>
+<pre class="lang:default decode:true">'Hello world!'</pre>
+<h3>2) 홑따옴표를 태그로 바꾸기</h3>
+<pre class="lang:default decode:true">'Hello world!'</pre>
+<p>위와 같은 상태에서 <span class="lang:default decode:true  crayon-inline ">cs'&lt;q&gt;</span> 라고 입력하면 이렇게 바뀐다.</p>
+<pre class="lang:default decode:true">&lt;q&gt;Hello world!&lt;/q&gt;</pre>
+<h3>3) 태그를 쌍따옴표로 바꾸기</h3>
+<pre class="lang:default decode:true">&lt;q&gt;Hello world!&lt;/q&gt;</pre>
+<p>위와 같은 상태에서 <span class="lang:default decode:true  crayon-inline ">cst"</span> 라고 입력하면 이렇게 바뀐다.</p>
+<pre class="lang:default decode:true">"Hello world!"</pre>
+<h3>4) 따옴표 지우기</h3>
+<p>&nbsp;</p>
+<pre class="lang:default decode:true">"Hello world!"</pre>
+<p>위와 같은 상태에서 <span class="lang:default decode:true  crayon-inline ">ds"</span> 라고 입력하면 이렇게 바뀐다.</p>
+<pre class="lang:default decode:true">Hello world!</pre>
+<h3>5) 커서가 있는 단어를 대괄호로 감싸기</h3>
+<pre class="lang:default decode:true">Hello world!</pre>
+<p>위와 같은 상태에서 Hello 위에 커서를 둔다(블럭으로 지정하면 안된다). 그리고 나서 <span class="lang:default decode:true  crayon-inline">ysiw]</span> 를 입력하면 다음과 같이 바뀐다. 여기서 iw는 텍스트 덩어리를 가리킨다.</p>
+<pre class="lang:default decode:true">[Hello] world!</pre>
+<h3>6) 대괄호를 중괄호로 바꾸기</h3>
+<pre class="lang:default decode:true">[Hello] world!</pre>
+<p>위와 같은 상태에서 Hello에 커서를 두고 <span class="lang:default decode:true  crayon-inline ">cs]}</span> 를 입력하면 다음과 같이 바뀐다.</p>
+<pre class="lang:default decode:true">{Hello} world!</pre>
+<p>만약 cs]} 대신 <span class="lang:default decode:true  crayon-inline ">cs]{</span> 라고 입력하면 다음과 같이 공백이 추가된다.</p>
+<pre class="lang:default decode:true">{ Hello } world!</pre>
+<h3>7) 한 줄 전체를 소괄호로 감싸기</h3>
+<pre class="lang:default decode:true">{ Hello } world!</pre>
+<p>위와 같은 상태에서 yssb 또는  yss)를 입력하면 다음과 같이 바뀐다.</p>
+<pre class="lang:default decode:true">({ Hello } world!)</pre>
+<h3>8) 괄호 다 지우기</h3>
+<pre class="lang:default decode:true">({ Hello } world!)</pre>
+<p>이 상태에서 ds}ds)를 입력하면 다음과 같이 바뀐다.</p>
+<pre class="lang:default decode:true">Hello world!</pre>
+<h3>9) 태그로 감싸기</h3>
+<pre class="lang:default decode:true">Hello world!</pre>
+<p>위와 같은 상태에서 hello에 커서를 두고 ysiw&lt;em&gt;을 입력하면 다음과 같이 바뀐다.</p>
+<pre class="lang:default decode:true">&lt;span&gt;Hello&lt;/span&gt; world!</pre>
+<p>끝.</p>

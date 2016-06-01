@@ -1,0 +1,43 @@
+---
+layout: post
+title: flask 업로드 폼에 속성 추가하기
+post_id: '507'
+date: 2013-06-24 13:30:37.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Flask
+tags:
+- accept
+- flask
+- headers
+- wtform
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>flask는 WTForm을 이용해서 폼을 쉽게 생성할 수 있다. WTF는 몇 가지 기본 속성들도 추가할 수 있는 인터페이스를 제공하는데, 어떤 속성들은 제공하지 않는다.</p>
+<p>예를 들면 내가 요즘 만들고 있는 웹어플리케이션은 엑셀파일을 업로드하는 기능이 있다. 사용자가 엑셀 파일만 선택할 수 있도록 옵션을 주고 싶다.</p>
+<p>스택오버플로우에서 방법을 찾았다(<a href="http://stackoverflow.com/questions/12284732/how-to-add-an-attribute-that-contains-a-hyphen-to-a-wtforms-field" target="_blank">How to add an attribute that contains a hyphen to a WTForms field</a>)</p>
+<p>1. forms.py</p>
+<pre class="lang:python decode:true">class UploadForm(Form):
+    excel = FileField('excel')
+    description = TextAreaField('description', validators=[Required()])</pre>
+<p>2. upload.html</p>
+<pre class="lang:python decode:true">{{ form.excel(**{'accept':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}) }}</pre>
+<p>위와 같이 <span class="lang:python decode:true  crayon-inline ">form.excel(**{'key': 'value'})</span> 와 같은 형태로 작성하면 된다.</p>
+<p>이미지 파일의 경우는 다음과 같이 하면 된다.</p>
+<pre class="crayon-selected">{{ form.excel(**{'accept':'image/*'}) }}</pre>
+<p>이 때, 바이너리 파일의 헤더 정보를 구하려면,</p>
+<p>2. views.py</p>
+<pre class="lang:python decode:true">form = UploadForm()
+if request.method == 'POST':
+    print form.excel.data.headers
+    ... 생략 ...</pre>
+<p>와 같이 첨부파일 데이타 객체의 headers 속성을 보면 된다.</p>

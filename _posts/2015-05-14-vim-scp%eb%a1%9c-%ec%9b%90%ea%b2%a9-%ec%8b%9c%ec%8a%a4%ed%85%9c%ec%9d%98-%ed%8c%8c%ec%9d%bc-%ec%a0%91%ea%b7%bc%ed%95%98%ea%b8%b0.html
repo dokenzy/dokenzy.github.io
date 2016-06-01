@@ -1,0 +1,40 @@
+---
+layout: post
+title: 'Vim:: scp로 원격 시스템의 파일 접근하기'
+post_id: '2067'
+date: 2015-05-14 15:49:02.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- scp.aws ec2
+- ssh
+- Vim
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>디플로이 경험이 없다보니 실서버인 AWS에 올리고 나자 이런 저런 문제들이 생기고 있다.</p>
+<p>git으로 push하고 pull을 하면 히스토리가 너무 지저분해져서 EC2서버에서 직접 수정하면서 작업하기로 했다. 그러다보니 아무래도 내 스타일대로 빌드해서 각종 플러그인을 추가해서 쓰는 Macvim을 쓰다가 터미널 Vim에서 하려니 답답한 게 한 두가지가 아니다.</p>
+<p>그래서 Vim으로 원격에 있는 리눅스 시스템에 SCP로 접속해서 작업하려고 한다.</p>
+<p>참고: 스택익스체인지 &lt;<a href="http://serverfault.com/questions/427299/vim-scp-parameter-with-private-public-key-pair">Vim SCP parameter with private public key pair</a>&gt;</p>
+<p>1. <span class="lang:sh decode:true  crayon-inline ">$HOME/.ssh/config</span>  파일을 만들어서 다음 내용을 자신의 환경에 맞추어 입력한다.</p>
+<pre class="lang:default decode:true ">Host myserveralias
+Hostname ec-address
+User user
+IdentityFile /path/to/keyfile
+PasswordAuthentication no</pre>
+<p>2. Vim을 열고 다음 명령으로 원격 시스템에 접속한다.</p>
+<pre class="lang:vim decode:true ">:e scp://myserveralias//</pre>
+<p>만약 AWS EC2에 설치한 우분투의 자신의 홈디렉토리를 열고 싶다면,</p>
+<pre class="lang:vim decode:true ">:e scp://myserveralias//home/ubuntu</pre>
+<p>과 같이 하면 된다.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

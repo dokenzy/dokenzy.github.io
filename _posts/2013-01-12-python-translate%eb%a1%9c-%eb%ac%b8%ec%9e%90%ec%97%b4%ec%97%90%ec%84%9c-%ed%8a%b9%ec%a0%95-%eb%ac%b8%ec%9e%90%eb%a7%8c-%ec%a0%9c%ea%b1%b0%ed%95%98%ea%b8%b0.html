@@ -1,0 +1,49 @@
+---
+layout: post
+title: 'Python:: 문자열에서 특정 문자 제거하기'
+post_id: '259'
+date: 2013-01-12 21:17:33.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- Python
+- re
+- translate
+- 문자 제거
+- 정규식
+- 특수문자
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>문자열에서 ?, /, : 같은 특수문자들을 제거하는 방법</p>
+<h3>1. 바이트 문자열</h3>
+<pre class="lang:python decode:true">str = 'ab.cd#ef /gh ?ij :kl $mn }'
+new_str = str.translate(None, ".#/?:$}")
+print new_str
+abcdef gh ij kl mn</pre>
+<p>파이썬에서 translate()라는 기본함수로 제공한다.</p>
+<p><a href="http://docs.python.org/2/library/stdtypes.html#str.translate" target="_blank"> http://docs.python.org/2/library/stdtypes.html#str.translate</a></p>
+<h3>2. 유니코드</h3>
+<p>유니코드 문자열인 경우에는 replace()를 이용한다. 단, 인자 순서가 translate()와 반대다. 또한 변경할 문자열을 None 대신 ''로 해주어야 한다.</p>
+<pre>str = u'ab.cd#ef /gh ?ij :kl $mn }'
+new_str = str.replace(".#/?:$}", '')
+print new_str
+abcdef gh ij kl mn</pre>
+<p>&nbsp;</p>
+<h3>3. 정규표현식</h3>
+<p>제일 추천하는 방법. 유니코드나 바이트 문자열이나 상관없이 동일하게 사용할 수 있다.</p>
+<pre class="lang:python decode:true ">import re
+b = u'$5$rounds=80000$hO.drwC0AoDbBm6k$eMdev395x3yntXuYL'
+bb = re.sub('[=.#/?:$}]', '', b)
+print bb</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

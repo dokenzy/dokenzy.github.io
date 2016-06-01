@@ -1,0 +1,39 @@
+---
+layout: post
+title: ImageMagick 사용법
+post_id: '1210'
+date: 2014-03-25 03:40:07.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- density
+- imagemagick
+- pdf 추출
+- resize
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>1. PDF 파일의 각 페이지를 PNG 파일로 추출하기</h2>
+<pre class="lang:sh decode:true">convert -density 72 main.pdf -resize 50% preview.png</pre>
+<h3>옵션 설명:</h3>
+<ul>
+<li>-density 72: 해상도를 72로</li>
+<li>main.pdf: 대상 PDF 파일</li>
+<li>-resize 50%: 크기를 50%로</li>
+<li>preview.png: PNG 파일명. PDF파일의 1페이지부터 preview-0.png, preview-1.png, preview-2.png 와 같은 이름으로 PNG파일이 만들어진다.</li>
+</ul>
+<p>만약 main.pdf의 5페이지만 추출하려면</p>
+<pre class="lang:default decode:true">convert -density 72 main.pdf[4] -resize 50% preview.png</pre>
+<p>와 같이 PDF 이름 뒤에 [쪽번호-1]를 추가한다. 5페이지를 추출하려면 [4]를 입력해야 한다. 0부터 셈하기 때문이다.</p>
+<h2>2. 여러 이미지 파일을 PDF파일 하나로 만들기</h2>
+<pre class="lang:sh decode:true">convert *.jpg -resize 70% -quality 25 merge.pdf</pre>
+<p>&nbsp;</p>

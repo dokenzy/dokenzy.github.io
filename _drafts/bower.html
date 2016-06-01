@@ -1,0 +1,123 @@
+---
+layout: post
+title: bower
+post_id: '1544'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- 개발도구
+tags:
+- bower
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p class="p1"><b>bower</b></p>
+<ol class="ol1">
+<li class="li2">
+bower는 트위터에서 만든 프론트엔드 패키지 매니저</li>
+<li class="li2">
+http://bower.io/</li>
+<li class="li2">
+참고: http://blog.outsider.ne.kr/933</li>
+</ol>
+<p class="p3">
+<p class="p4"><b>bower 설치하기</b></p>
+<p class="p3">
+<p class="p5">bower를 설치하기 위해서는 node.js가 제공하는 npm이라는 node package manager가 필요하다. 따라서 node부터 설치한다.</p>
+<ol class="ol1">
+<li class="li2">
+brew install node</li>
+<li class="li2">
+npm install -g bower</li>
+</ol>
+<p class="p3">
+<p class="p4"><b>bower로 패키지 설치하기</b></p>
+<p class="p3">
+<p class="p5">여기서 말하는 패키지는 anguar.js나 jquery같은 프론트엔드 자바스크립트 라이브러리다.</p>
+<p class="p3">
+<p class="p5">bower install angular</p>
+<p class="p3">
+<p class="p5">여러 개를 한 번에 설치할 수도 있다.</p>
+<p class="p3">
+<p class="p5">bower install angular jquery</p>
+<p class="p3">
+<p class="p5">그러면 bower 명령이 실행된 곳에 bower_components라는 폴더가 생기고 그 밑에 angular와 jquery라는 폴더가 생긴다.</p>
+<p class="p3">
+<p class="p5">angular같은 경우는 bower_componets/angular/에 angular.js, angular.min.js, angular.min.js.map 등의 파일과 bower.json이라는 파일이 생긴다.</p>
+<p class="p3">
+<p class="p5">bower.json파일을 보면 다음과 같이 생겼다.</p>
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p6">{</p>
+<p class="p6">  "name": "angular",</p>
+<p class="p6">  "version": "1.2.16",</p>
+<p class="p6">  "main": "./angular.js",</p>
+<p class="p6">  "dependencies": {</p>
+<p class="p6">  }</p>
+<p class="p6">}</p>
+<p class="p3">
+<p class="p5">jquery 역시 bower_components/jquery/dist/에 jquery.js, jquery.min.js, jquery.min.js.map, bower.json 등의 파일이 생겼다. bower.json에 대해서는 바로 아래에, *.min.js.map 파일에 대해서는 밑에서 설명한다.</p>
+<p class="p3">
+<p class="p4"><b>bower로 설치한 패키지 관리</b></p>
+<p class="p3">
+<p class="p5">angular.js 대한 메타 정보를 담고 있다. 현재 이 파일은 bower_components/angular/ 폴더에 만들어졌다. 하지만 프로젝트를 진행하다보면 설치할 js패키지들이 한 둘이 아니다. bower로 설치한 패키지들을 실서버에 바로 적용할 수 있어야 한다. 물론 bower로 설치한 js패키지들을 통째로 git에 넣어서 관리할 수도 있지만 사실 이런 라이브러리들은 개발자가 수정할 일이 거의 없다. 따라서 bower로 설치한 패키지 리스트만 파일로 저장해 두고 나중에 이 리스트를 참고해서 패키지를 설치하는 것이 좋다. 즉 패키지 리스트 파일만 git에 넣어두고, 실서버에서는 bower가 제공하는 명령을 이용해서 리스트 파일에 있는 패키지들을 설치하는 것이다.</p>
+<p class="p3">
+<p class="p5">먼저 조금 전에 설치했던 jquery 패키지를 지우자. bower는 uninstall 명령을 제공한다. 앞으로는 bower uninstall 명령을 사용하겠지만 지금은 깨끗한 상태에서 다시 설치하도록 rm -rf bower_components로 삭제하자.</p>
+<p class="p3">
+<p class="p5">다시 angular 패키지를 설치하자. 그러기 위해서 bower init 명령을 사용한다.</p>
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p5">[?] name: try [?] version: 0.0.0 [?] description: [?] main file: [?] keywords: [?] authors: myname <a href="mailto:myname@mydomain.com"><span class="s1">myname@mydomain.com</span></a> [?] license: MIT [?] homepage: [?] set currently installed components as dependencies? Yes [?] add commonly ignored files to ignore list? Yes [?] would you like to mark this package as private which prevents it from being accidentally pu[?] would you like to mark this package as private which prevents it from being accidentally published to the registry? No</p>
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p3">
+<p class="p5">{ name: ‘try’, version: ‘0.0.0’, authors: [ ‘myname <a href="mailto:myemail@mydomain.com"><span class="s1">myemail@mydomain.com</span></a>’ ], license: ‘MIT’, ignore: [ ‘<i>*/.</i>’, ‘node_modules’, ‘bower_components’, ‘test’, ‘tests’ ] }</p>
+<p class="p3">
+<p class="p5">[?] Looks good? Yes</p>
+<p class="p3">
+<p class="p5">그러면 현재 폴더에 bower.json이라는 파일이 생긴다.</p>
+<ol class="ol1">
+<li class="li2">
+bower install angular –save</li>
+</ol>
+<p class="p3">
+<p class="p5">그럼 bower.json이라는 파일이 생성되고 여러 메타 정보들과 dependencies라는 항목에 angular가 추가된 것을 볼 수 있다. 대신 bower_components/angular/에는 bower.json 파일이 생성되지 않았다.</p>
+<p class="p3">
+<p class="p7"><b>map 파일</b></p>
+<p class="p3">
+<p class="p3">
+<p class="p5">*.min.js.map이라는 파일은 minified한 js파일을 디버깅할 때 분석하기 쉽도록 해주는 파일이다. 만약 map파일이 없다고 404 에러가 발생하면 map파일을 min.js파일이 있는 폴더에 넣어주거나 min.js파일 맨 밑에서 //# sourceMappingURL=angular.min.js.map 이 코드를 제거해주면 된다. 자세한 내용은 <a href="http://www.html5rocks.com/en/tutorials/developertools/sourcemaps/"><span class="s1">Introduction to JavaScript Source Maps</span></a> 참고.</p>

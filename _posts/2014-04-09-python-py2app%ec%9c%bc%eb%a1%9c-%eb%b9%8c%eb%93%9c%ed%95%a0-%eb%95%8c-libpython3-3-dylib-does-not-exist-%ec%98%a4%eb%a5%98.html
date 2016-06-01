@@ -1,0 +1,38 @@
+---
+layout: post
+title: 'Python:: py2app으로 빌드할 때 libpython3.3.dylib does not exist 오류'
+post_id: '1323'
+date: 2014-04-09 03:06:20.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+- Python
+tags:
+- libpython3.3.dylib
+- py2app
+- pyinstaller
+- Python
+- pythonz
+- virtualenv
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyInstaller가 Python 3를 지원하지 않는다. 젠장.</p>
+<p>그래서 py2app으로 빌드하기로 했다.</p>
+<pre class="lang:python decode:true">(py3k)$ python setup.py py2app</pre>
+<p>오류가 발생한다.</p>
+<pre class="lang:python decode:true ">ValueError: '/Users/dokenzy/venvs/py3k/lib/libpython3.3.dylib' does not exist</pre>
+<p>현재 py3k은 virtualenv + .pythonz/pythons/CPython-3.3.3로 만든 환경이다.</p>
+<p>.pythonz/pythons/CPython-3.3.3/lib에 libpython3.3m.dylib 파일이 있다.</p>
+<p>복사하자.</p>
+<pre class="lang:python decode:true ">cp .pythonz/pythons/CPython-3.3.3/lib/libpython3.3m.dylib /Users/dokenzy/venvs/py3k/lib/libpython3.3.dylib</pre>
+<p>다시 빌드하면 된다.</p>
+<p>참고로 libpython3.3m.dylib를 심볼릭 링크만 거는 것으로는 안된다. 복사해와야 한다.</p>

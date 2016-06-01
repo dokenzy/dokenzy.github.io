@@ -1,0 +1,38 @@
+---
+layout: post
+title: PyQt에서 pdb 사용하기
+post_id: '131'
+date: 2012-10-04 08:58:47.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- debugger
+- pdb
+- pyqt
+- pyqtRemoveInputHook()
+- set_trace()
+- stackoverflow
+- 디버거
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>스택오버플로우에서 찾은 자료: <a href="http://stackoverflow.com/questions/1736015/debugging-a-pyqt4-app">http://stackoverflow.com/questions/1736015/debugging-a-pyqt4-app</a></p>
+<p>파이썬은 pdb라는 디버거를 기본으로 제공한다.</p>
+<p>pdb는</p>
+<pre class="lang:python decode:true">import pdb
+pdb.set_trace()</pre>
+<p>와 같이 사용하면 된다.</p>
+<p>그런데 PyQt와 함께 쓸 경우에는 pdb가 동작하지 않는다. 이런 경우에는 <span class="lang:python decode:true  crayon-inline ">pdb.set_trace()</span> 를 사용하기 전에 먼저 <span class="lang:python decode:true  crayon-inline ">pyqtRemoveInputHook()</span> 를 사용해야 한다.</p>
+<p>즉, 위 코드를 아래와 같이 수정하면 PyQt어플을 개발할 때에도 pdb를 사용할 수 있다.</p>
+<pre class="lang:python decode:true">import pdb
+pyqtRemoveInputHook()
+pdb.set_trace()</pre>

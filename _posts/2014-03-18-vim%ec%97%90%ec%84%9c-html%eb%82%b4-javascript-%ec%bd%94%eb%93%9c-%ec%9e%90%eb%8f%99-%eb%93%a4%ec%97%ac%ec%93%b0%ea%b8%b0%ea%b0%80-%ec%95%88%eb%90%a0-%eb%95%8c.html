@@ -1,0 +1,34 @@
+---
+layout: post
+title: Vim에서 HTML내 Javascript 코드 자동 들여쓰기가 안될 때
+post_id: '1125'
+date: 2014-03-18 22:04:03.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 개발도구
+tags:
+- coding
+- indentation
+- javascript
+- macvim
+- Vim
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>모 커뮤니티에 올라온 질문.</p>
+<p>Vim에서 HTML파일을 편집하는데, &lt;script&gt;&lt;/script&gt;안에서 자바스크립트 코드가 자동 들여쓰기가 안된다고.</p>
+<p><a href="https://github.com/pangloss/vim-javascript">vim-javascript</a>는 일단 내 Macvim에서 원하는 기능이 되지 않았다.</p>
+<p>어쩔 수 없이 Vim에서 set 명령으로 파일타입을 변경해야 하나?</p>
+<pre class="lang:sh decode:true">:set filetype=javascript(또는 js)</pre>
+<p>이 방법은 확실하긴 하지만 번거롭다.</p>
+<p>다행히 좋은 플러그인을 발견했다. 이름하야 <a href="http://www.vim.org/scripts/script.php?script_id=1830">html improved indentation</a>: A better indentation for HTML and embedded javascript</p>
+<p>~/.vim 폴더 밑에 indent 폴더를 만들고, 거기에 다운받은 html.vim 파일을 넣으면 된다.</p>
+<p>끝.</p>

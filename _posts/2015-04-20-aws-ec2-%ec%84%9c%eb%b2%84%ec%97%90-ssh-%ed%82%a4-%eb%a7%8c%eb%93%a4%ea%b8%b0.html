@@ -1,0 +1,50 @@
+---
+layout: post
+title: AWS EC2 서버에 ssh 키 만들기
+post_id: '2025'
+date: 2015-04-20 17:02:06.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Git
+tags:
+- aws
+- bitbucket
+- ec2
+- git
+- ssh
+- ssh-keygen
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>aws ec2에 우분투 인스턴스를 추가했다. bitbucket에 있는 비공개 프로젝트를 git으로 가져오기 위해 sshkey 설정을 해야한다. 간만에 하는 거라 헷갈려서 정리해둔다.</p>
+<p>공개된 git 저장소를 가져올 때도 그런지 모르겠는데, 비공개 git을 clone하려니 당연히 거부되었다.</p>
+<pre class="lang:sh decode:true">Cloning into 'my-private-repository'...
+The authenticity of host 'bitbucket.org (131.103.20.167)' can't be established.
+RSA key fingerprint is 97:8c:xx~~~.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added 'bitbucket.org,131.103.20.167' (RSA) to the list of known hosts.
+Permission denied (publickey).
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.</pre>
+<p>다음 방법을 따라 bitbucket에 현재 사용중인 우분투 서버의 공개키를 설정해야 한다.</p>
+<p>1. 우분투 서버에서 <span class="lang:sh decode:true  crayon-inline">ssh-keygen</span>  명령을 실행하면 아래같은 프롬프트가 뜬다.</p>
+<pre class="lang:sh decode:true">Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ubuntu/.ssh/id_rsa):</pre>
+<p>기본 위치로 설정한다. 패스워드는 설정하고 싶으면 하고, 안하고 싶으면 안하면 된다.</p>
+<pre class="lang:sh decode:true">cat ~/.ssh/id_rsa.pub</pre>
+<p>명령을 실행하면 방금 만들어진 공개키를 볼 수 있다. 클립보드로 복사한다.</p>
+<p>2. bitbucket.org에 로그인한 후, 'manage account'메뉴로 들어간다.</p>
+<p>3. [Security]-[SSH keys] 메뉴로 들어간다.</p>
+<p>4. 'Add key'버튼을 누른다.</p>
+<p>5. Label에 원하는 이름을 넣는다. Key에는 방금 전에 복사해둔 공개키를 붙여넣기한다.</p>
+<p>끝.</p>

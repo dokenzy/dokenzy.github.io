@@ -1,0 +1,53 @@
+---
+layout: post
+title: 'PyQt: 메뉴바에서 하위 메뉴 추가하기'
+post_id: '60'
+date: 2012-07-17 01:21:16.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- pyqt
+- Python
+- 메뉴
+- 하위 메뉴
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>PyQt로 메뉴가 있는 윈도우를 만들 때, 하위 메뉴를 만드는 방법에 대한 간단한 예.</p>
+<pre class="lang:python decode:true">class MyWin(QMainWindow):
+	def __init__(self, parent=None):
+		super(MyWin, self).__init__(parent)
+		self.Actions()
+		self.Menu()
+
+def Actions(self):
+	self.settingAction = QAction(QIcon(':/setting.png'), '&amp;Setting', self)
+	self.openDirAAAAction = QAction(QIcon(':/folder.png'), '&amp;AAA', self)
+	self.openDirBBBAction = QAction(QIcon(':/folder.png'), '&amp;BBB', self)	
+	self.openDirCCCAction = QAction(QIcon(':/folder.png'), '&amp;CCC', self)
+
+def Menu(self):
+	menubar = self.menuBar()
+
+	toolsMenu = menubar.addMenu("&amp;Tools")
+	toolsMenu.addAction(self.settingAction)
+	openDirMenu = toolsMenu.addMenu(QIcon(':/folder.png'), "&amp;Open Dir")
+	openDirMenu.addActions((self.openDirAAAAction,self.openDirBBBAction,self.openDirCCCAction))</pre>
+<p>&nbsp;</p>
+<ol>
+<li>menuBar()로 메뉴객체를 만든다 -&gt; menubar</li>
+<li>이 메뉴객체에 메뉴를 추가한다 -&gt; toolsmenu</li>
+<li>추가한 메뉴에 액션을 추가한다. 이 때 toolsmenu에 직접 추가하면 [Tools]메뉴에  바로 보인다-&gt; Setting</li>
+<li>toolsmenu에 addMenu메소드로 하위메뉴를 추가한다 -&gt; &amp;Open Dir</li>
+<li>추가한 하위메뉴(&amp;Open Dir)에 액션을 추가한다 -&gt; openDirAAAAction, openDirBBBAction, openDirCCCAction</li>
+<li>5번에서 추가한 액션들은 [Tools]-[Open Dir]메뉴 아래에 나타난다.</li>
+</ol>

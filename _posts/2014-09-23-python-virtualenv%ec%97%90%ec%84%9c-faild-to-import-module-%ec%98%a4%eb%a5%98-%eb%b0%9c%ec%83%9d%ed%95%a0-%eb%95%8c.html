@@ -1,0 +1,45 @@
+---
+layout: post
+title: 'Python:: virtualenv에서 Failed to import * module 오류 발생할 때'
+post_id: '1722'
+date: 2014-09-23 00:38:44.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- pip
+- Python
+- pythonz
+- virtualenv
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>맥 OS X(Mavericks)에서 virtualenv로 새 환경을 만들려는데 아래같은 오류가 발생한다.</p>
+<pre class="lang:sh decode:true">Running virtualenv with interpreter .pythonz/pythons/CPython-3.4.1/bin/python
+Using base prefix '/Users/username/.pythonz/pythons/CPython-3.4.1'
+New python executable in venvs/proj/bin/python
+Failed to import the site module
+Traceback (most recent call last):
+  File "/Users/username/venvs/proj/lib/python3.4/site.py", line 67, in &lt;module&gt;
+    import os
+  File "/Users/username/venvs/proj/lib/python3.4/os.py", line 614, in &lt;module&gt;
+    from _collections_abc import MutableMapping
+ImportError: No module named '_collections_abc'
+ERROR: The executable venvs/proj/bin/python is not functioning
+ERROR: It thinks sys.prefix is '/Users/username' (should be '/Users/username/venvs/proj')
+ERROR: virtualenv is not compatible with this system or executable</pre>
+<p>virtualenv(+pythonz)로 새로운 환경을 만들려는데 이런 오류가 발생한다.</p>
+<p><strong>해결방법: virtualenv를 업데이트한다.<br />
+</strong></p>
+<pre class="lang:sh decode:true">sudo pip install --upgrade virtualenv</pre>
+<p>관련 링크: <a href="https://github.com/pypa/virtualenv/issues/463">error with virtualenv and python 3.4a1 #463</a></p>
+<p>근데 이상하다. 최근에 회사에서 쓰는 맥북에서는 이런 문제가 없었는데...<br />
+(둘 다 CPython 3.4.1)</p>

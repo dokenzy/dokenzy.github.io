@@ -1,0 +1,73 @@
+---
+layout: post
+title: svg를 이용해서 인터랙티브한 우리나라 지도 만들기(특정 지역 하이라이트)
+post_id: '1071'
+date: 2014-03-11 02:12:37.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- javascript
+- jQuery
+- SVG
+tags:
+- d3.js
+- gist
+- jquery
+- QGis
+- shp
+- SimpleSvg
+- svg
+- 마우스 이벤트
+- 지도
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>이 글의 <a title="svg를 이용해서 인터랙티브한 우리나라 지도 만들기(업데이트)" href="http://blog.dokenzy.com/archives/1143">업데이트된 버전</a>을 읽기를 권한다.</p>
+<h3><del>데모: <a href="http://jsbin.com/zewujize/2/" target="_blank">http://jsbin.com/zewujize/2/</a></del></h3>
+<h2><del>1. 지도파일 구하기</del></h2>
+<p><del>우리나라 지도 파일이 필요하다. <a href="http://www.gadm.org/country">http://www.gadm.org/country</a>에서 지도데이터를 받는다.</del></p>
+<p style="padding-left: 30px;"><del>Country: South Korea</del><br />
+<del> File Format: Shapefile</del></p>
+<p><del>을 선택한 후, OK버튼을 누르면 KOR_adm.zip이라는 파일을 다운로드한다. (http://sgis.kostat.go.kr/statbd/statbd_03.vw에서도 받을 수 있는데, shp포맷을 구하기 위해서는 로그인을 해야한다. 세금으로 뭐하는 짓인지 모르겠다. JPG는 로그인하지 않아도 받을 수 있다.)</del></p>
+<p><del>이 압축파일에 svg파일이 있으면 좋으련만, 아쉽게도 svg포맷으로는 제공하지 않는다. 따라서 이 파일을 가지고 svg파일을 만들어야 한다. 파일 중에 확장자가 *.shp 라는 파일이 필요하다. shp파일도 여러 개가 있는데, 나는 KOR_adm2.shp를 사용하기로 했다. 이유는 없다.</del></p>
+<h2><del>2. SVG파일 만들기</del></h2>
+<p><del>shp을 svg로 변환해야 한다. 오픈소스 중에 QGis라는 툴을 사용하기로 했다. Mac, Windows, Linux용을 제공한다. Mac에서 설치하기 위해 이것 저것 빌드하다가 오류나서 멘붕이었는데, <a href="http://qgis.dakotacarto.com/">http://qgis.dakotacarto.com/</a>에 가면 맥에서 바로 실행할 수 있는 app파일을 제공한다. nightly build 버전이지만 svg로 변환하는 것은 문제없었다. 그냥 다운받아서 응용프로그램 폴더에 넣으면 끝이다.</del></p>
+<p><del>이 짓을 해서 만든 svg 파일: <a href="https://dl.dropboxusercontent.com/u/15191254/kor.svg">kor.svg</a></del></p>
+<h2><del>3. SimpleSvg 플러그인 설치</del></h2>
+<p><del>svg로 변환하는 플러그인을 설치해야 한다. QGis를  실행한 후, '플러그인'-'플러그인 관리 및 설치'에 들어가서 SimpleSvg를 설치한다. 메뉴에 '웹'이라는 메뉴가 추가됐다.</del></p>
+<h2><del>4. 변환</del></h2>
+<p><del>현재 하얀 캔버스에 shp파일을 드래그해서 넣으면 지도가 보인다. 메뉴에서 '웹'-'Save as SVG'-'Save as SVG'를 선택한 후, 저장할 경로를 입력하면 svg로 변환된다.</del></p>
+<h2><del>5. jQuery와 d3.js를 이용해 인터랙티브한 효과 주기</del></h2>
+<p><del>svg파일을 구했으니 HTML과 자바스크립트로 코딩할 일만 남았다. 나는 마우스를 가져가면(mouseover) 특정 지역이 하이라이팅되고, 다시 마우스가 나가면(mouseout) 원래 색으로 바뀌게 하려고 한다.</del></p>
+<p><del>jQuery와 d3.js를 사용하자.</del></p>
+<pre class="lang:xhtml decode:true" title="SVG를 이용한 인터랙티브 지도"><del>&lt;!doctype html&gt;
+&lt;html&gt;
+	&lt;head&gt;
+		&lt;script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"&gt;&lt;/script&gt;
+		&lt;script src="http://d3js.org/d3.v3.min.js" charset="utf-8"&gt;&lt;/script&gt;
+	&lt;/head&gt;
+	&lt;body&gt;
+		&lt;svg xmlns="http://www.w3.org/2000/svg" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox = "0 0 849 591" version = "1.1"&gt;
+                ... 생략 ... 
+                ... 전체코드: https://gist.github.com/dokenzy/9468928
+		&lt;/svg&gt;
+		&lt;script&gt;
+			$("#kor_adm2*").mouseover(function(event) {
+				var _path = event.target;
+				d3.select(_path).style("fill", "red");
+			}).mouseout(function(event) {
+				var _path = event.target;
+				d3.select(_path).style("fill", "#538F95");
+			});
+		&lt;/script&gt;
+	&lt;/body&gt;
+&lt;/html&gt;</del></pre>
+<p><del>위 코드의 마지막 스크립트와 같이 jQuery로 마우스가 올라간 &lt;path&gt; 요소를 찾아서 스타일을 주고, 마우스가 나가면 다시 원래 색으로 바꾸면 된다.</del></p>
+<p><del>끝.</del></p>

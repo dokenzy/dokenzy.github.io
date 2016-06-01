@@ -1,0 +1,62 @@
+---
+layout: post
+title: '''글상자를 페이지의 오른쪽에 두기'' LuaTeX으로 따라하기'
+post_id: '2154'
+date: 2016-02-23 00:28:08.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- lualatex
+- LuaTeX
+- minipage
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>이호재님 블로그에서 '<a href="http://hoze.tistory.com/1290">글상자를 페이지의 오른쪽에 두기</a>'라는 글을 봤다.</p>
+<p>나는 expl3를 전혀 모르기 때문에, 최근에 공부하고 있는 LuaTeX으로 만들어 봤다.</p>
+<p>원글의 것과 동일한 기능을 하는지는 확신할 수 없다. 아이디어만 LuaTeX으로 따라했다.</p>
+<pre class="lang:tex decode:true ">\documentclass{article}
+% 
+\usepackage{luacode}
+\begin{luacode*}
+texs = {'PDFLaTeX', 'XeTeX', 'LuaTeX'}
+max = 0
+for k, v in pairs(texs) do
+	if v:len() &gt; max then
+		max = v:len()
+	end
+end
+print(max)
+max_length = max * 0.5 .. 'cm'
+\end{luacode*}
+
+\begin{document}
+Max length is \luaexec{tex.sprint(max_length)}.\
+
+\vspace{1cm}
+
+\hfill
+\begin{minipage}{\luadirect{tex.print(max_length)}}
+	\luaexec{
+    	for k, v in pairs(texs) do
+    		tex.sprint("".. v .."\\")
+    	end
+	}
+\end{minipage}
+\end{document}</pre>
+<p>&nbsp;</p>
+<p>결과:</p>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2016/02/mini.png" rel="attachment wp-att-2156"><img class="aligncenter wp-image-2156 size-full" src="{{ site.baseurl }}/assets/mini.png" alt="mini" width="617" height="267" /></a></p>
+<p>&nbsp;</p>
+<p>아쉬운 점은 제일 긴 문자열에 단순히 0.5를 곱해서 너비를 지정한 것이다.</p>
+<p>실제 식자될 상태의 너비를 구할 수 있으면 좋겠다.</p>
+<p>그리고, expl3는 계속 모르도록 해야지;;;</p>

@@ -1,0 +1,46 @@
+---
+layout: post
+title: Dokuwiki 자동입력 패치
+post_id: '579'
+date: 2013-10-08 01:24:25.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- dokuwiki
+- php
+- 도쿠위키
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><span style="color: #ff0000;">별로 권장하지 않음. 관련 플러그인을 찾지 못해 그냥 만들었음. 관련 플러그인이 있으면 그거 쓰는 걸 추천함.</span></p>
+<p>dokuwiki를 영어 단어 공부용으로 사용중이다. 새로운 단어를 추가할 때 항상 일정한 양식에 맞추어 작성한다. 매번 양식을 만드는 게 힘들어서 dokuwiki를 수정하기로 했다.</p>
+<p>dokuwiki 버전: Weatherwax</p>
+<p>손을 댈 파일은 dokuwiki/inc/form.php이다. 패치를 하기 전에 백업을 해두자.</p>
+<p>위 파일의 683번째줄을 보면 <span class="lang:php decode:true  crayon-inline ">if ($attrs['_text'] == ''){</span> 이런 코드가 있다. 이 코드를 다음과 같은 식으로 바꾼다.</p>
+<pre class="lang:php decode:true crayon-selected">    if ($attrs['_text'] == ''){
+        try {
+            $new_word = $_GET["id"];
+        }
+        catch(Exception $e) {
+            $new_word = '';
+        }
+        $attrs['_text'] = '====== '.$new_word.' ======
+  - [[]]
+  - [[lesson]]
+
+==== meanings ====
+  -
+
+==== sentences ====
+  - ';
+    }</pre>
+<p>즉, 새 페이지(빈 페이지)인 경우, 위와 같은 내용이 자동으로 들어가게 된다.</p>

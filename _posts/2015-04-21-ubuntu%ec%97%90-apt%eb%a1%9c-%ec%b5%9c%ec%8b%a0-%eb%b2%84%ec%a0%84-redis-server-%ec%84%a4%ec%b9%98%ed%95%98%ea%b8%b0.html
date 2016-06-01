@@ -1,0 +1,39 @@
+---
+layout: post
+title: Ubuntu에 APT로 최신 버전 Redis-Server 설치하기
+post_id: '2029'
+date: 2015-04-21 00:34:56.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- redis
+- redis-server
+- ubuntu
+- 우분투
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>우분투는 AWS에서 기본 제공하는 64bit 이미지로 설치하였다.</p>
+<h3>0. 참고</h3>
+<ul>
+<li><a href="http://tosbourn.com/install-latest-version-redis-ubuntu/">How to install the latest version of Redis on Ubuntu</a></li>
+<li><a href="http://blog.saltfactory.net/65">NoSQL redis - 설치 편</a></li>
+</ul>
+<h3>1. apt 저장소 추가</h3>
+<pre class="lang:sh decode:true ">$ sudo apt-get install -y python-software-properties
+$ sudo add-apt-repository -y ppa:rwky/redis
+$ sudo apt-get update</pre>
+<h3>2. redis 설치</h3>
+<pre class="lang:sh decode:true">$ sudo apt-get install -y redis-server</pre>
+<h3>3. 실행</h3>
+<pre class="lang:sh decode:true ">sudo /usr/bin/redis-server /etc/redis/redis.conf</pre>
+<p>설정파일을 지정하지 않으면 실행할 때 경고가 발생한다.</p>

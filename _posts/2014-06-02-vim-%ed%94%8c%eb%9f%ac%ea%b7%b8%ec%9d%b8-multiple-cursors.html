@@ -1,0 +1,40 @@
+---
+layout: post
+title: 'Vim 플러그인: multiple cursors'
+post_id: '1581'
+date: 2014-06-02 00:54:21.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- multiple cursors
+- sublime text
+- Vim
+- 플러그인
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>에디터로 거의 Vim만 사용하는데, 가끔 Sublime Text가 부러울 때가 있다. 바로 multiple cursors 기능이다.</p>
+<p>같은 텍스트 덩어리를 한 번에 편집할 수 있는 어마무시한 기능이다.</p>
+<p>혹시나 해서 검색해 봤더니 역시 있다!</p>
+<p>이름하야 <a href="https://github.com/terryma/vim-multiple-cursors">vim-multiple-cursors</a></p>
+<p>Pathogen이나 Vundle로 쉽게 설치할 수 있을 뿐만 아니라 쓰는 방법도 쉽다.</p>
+<ol>
+<li>vim-multiple-cursors를 설치한다.</li>
+<li>Vim으로 텍스트 파일을 연다.</li>
+<li>일반 모드상태에서 원하는 단어에 커서를 두고 &lt;Ctrl-N&gt;키를 누르면 커서가 위치한 단어가 선택된다.</li>
+<li>계속 &lt;Ctrl-N&gt;키를 눌러서 파일 여기저기에 있는 같은 단어를 선택한다.</li>
+<li>i, s, c, a 등의 키를 눌러서 입력상태로 바꾼 후 편집하면 아까 선택했던 같은 단어들이 동시에 수정된다!</li>
+</ol>
+<p>&lt;Ctrl-X&gt;를 누르면 다음 단어로 커서가 넘어가고, 현재의 단어는 선택하지 않을 수 있다.</p>
+<p>&lt;Ctrl-P&gt;를 누르면 이전에 선택한 단어로 커서가 이동하면서 선택했던 것을 취소할 수 있다.</p>
+<p>글로 쓰니까 복잡해 보이는데, 직접 해보면 쉽다.</p>
+<p>강추 플러그인.</p>

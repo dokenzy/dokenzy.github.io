@@ -1,0 +1,42 @@
+---
+layout: post
+title: 'Javascript:: 타입 체크'
+post_id: '319'
+date: 2013-02-27 20:47:09.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- javascript
+tags:
+- instanceof
+- javascript
+- prototype
+- typeof
+- 타입 체크
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>출처: <a href="http://tobyho.com/2011/01/28/checking-types-in-javascript/" target="_blank">http://tobyho.com/2011/01/28/checking-types-in-javascript/</a></p>
+<h2>1. typeof</h2>
+<pre class="lang:js decode:true">typeof 3 // "number"
+typeof "abc" // "string"
+typeof {} // "object"
+typeof true // "boolean"
+typeof undefined // "undefined"
+typeof function(){} // "function"</pre>
+<h2>2. instanceof</h2>
+<pre class="lang:js decode:true">function Animal(){}
+var a = new Animal()
+a instanceof Animal // true</pre>
+<h2> 3. prototype</h2>
+<p>출처: <a href="http://stackoverflow.com/questions/7893776/the-most-accurate-way-to-check-js-object-type" target="_blank">http://stackoverflow.com/questions/7893776/the-most-accurate-way-to-check-js-object-type</a></p>
+<pre class="lang:js decode:true">Object.prototype.toString.call(타입을 알고 싶은 객체);</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

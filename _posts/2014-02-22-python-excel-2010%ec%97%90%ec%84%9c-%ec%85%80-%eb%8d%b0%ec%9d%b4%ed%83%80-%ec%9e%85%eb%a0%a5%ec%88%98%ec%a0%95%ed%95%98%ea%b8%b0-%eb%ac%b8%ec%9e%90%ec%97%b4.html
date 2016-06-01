@@ -1,0 +1,48 @@
+---
+layout: post
+title: 'Python:: Excel 2010에서 셀 데이타 입력(수정)하기 - 문자열'
+post_id: '949'
+date: 2014-02-22 12:23:28.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- count
+- excel
+- lxml
+- Python
+- sst
+- uniqueCount
+- XML
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>기존 <a title="Python:: Excel 2010에서 셀 데이타 입력(수정)하기" href="http://blog.dokenzy.com/archives/945">Excel 2010에서 셀 데이타 입력(수정)하기 - 숫자</a> 에서는 숫자값을 입력하는 방법만 소개했다. 여기서는 좀 더 지저분한 문자열 입력하는 방법에 대해 설명한다. 왜 숫자보다 복잡하냐면, XLSX는 데이타 크기를 줄이기 위해 문자열 레퍼런스를 사용한다. 이해를 돕기 위해 xl/sharedStrings.xml이라는 파일부터 보이겠다.</p>
+<pre class="lang:python decode:true">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;
+&lt;sst xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" count="3" uniqueCount="3"&gt;
+  &lt;si&gt;
+    &lt;t&gt;한국어&lt;/t&gt;
+  &lt;/si&gt;
+  &lt;si&gt;
+    &lt;t&gt;English&lt;/t&gt;
+  &lt;/si&gt;
+  &lt;si&gt;
+    &lt;t&gt;日本語&lt;/t&gt;
+  &lt;/si&gt;
+&lt;/sst&gt;</pre>
+<p>간단하게 생겼다. 하지만 아주 중요한 파일이다.</p>
+<p>&lt;sst count="3" uniqueCount="3"&gt;을 주의깊게 보자. &lt;sst&gt;에는 각 문자열들이 &lt;si&gt;&lt;t&gt;안에 들어있다. 이 &lt;si&gt;요소의 갯수가 uniqueCount="3"의 3과 일치해야 한다. 그렇지 않으면 xlsx파일을 열 때 경고 또는 오류가 발생한다(repair 어쩌구 저쩌구).</p>
+<p>그렇다면 count="3"이란 무엇인가?</p>
+<p>예를 들어, 셀 어딘가에 '한국어'라는 단어를 추가했다고 하자. 그렇다면 &lt;sst&gt;에 &lt;si&gt;&lt;t&gt;를 추가할 필요가 없다. 이미 있는 단어이기 때문이다. 또 &lt;sst uniqueCount="3"&gt;이라는 값도 바뀔 이유가 없다. 새로운 문자열을 갖는 &lt;st&gt;&lt;t&gt;가 추가되지 않았기 때문이다.</p>
+<p>하지만 count값은 +1이 되어야 한다. 레퍼런스하는 셀이 추가되었기 때문이다. 즉, count속성값은 &lt;sst&gt;있는 문자열들을 참조하는 셀들의 갯수이다. 따라서 셀을 추가하거나 삭제할 때마다 count와 uniqueCount의 속성값을 변경해 주어야 한다.</p>
+<p>사실 추가할 때는 새 노드만들고 저 속성들에 +1만 해주면 되기 때문에 신경쓸 게 많이 없지만, 문자열 셀을 삭제할 경우, 다른 셀에서 같은 문자열을 쓰고 있는지 검사해야 하기 때문에 신경쓸 게 많다.</p>
+<p>프로그래밍하기가 좀 번거로워서 그렇지, 많은 데이타를 처리해야하는 엑셀 입장에서는 당연한 방법일 것이다.</p>
+<p>끝.</p>

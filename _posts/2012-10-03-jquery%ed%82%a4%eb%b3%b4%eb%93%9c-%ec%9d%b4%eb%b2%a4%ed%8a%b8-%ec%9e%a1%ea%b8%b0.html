@@ -1,0 +1,35 @@
+---
+layout: post
+title: jQuery::키보드 엔터키 이벤트 잡기
+post_id: '128'
+date: 2012-10-03 23:36:02.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- jQuery
+tags:
+- enter key
+- javascript
+- jquery
+- keycode
+- keypress
+- which
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>jQuery에서 키보드 이벤트를 잡을 때는 keypress, keydown, keyup 과 같은 키워드를 이용한다.</p>
+<p>하지만 이 키워드를 그냥 이용하기 보다는 엔터키인지 확인하는 경우가 많다.</p>
+<p>사용자가 엔터키를 눌렀는지 확인하는 방법.</p>
+<pre class="lang:js decode:true">$('#my-id').live('keypress', function(e) {
+	if (e.which == 13) {/* 13 == enter key@ascii */
+		alert("you pressed enter key");
+	}
+}</pre>
+<p><strong>e.which</strong>가 핵심. which를 써야 된다. keycode가 아니다!</p>

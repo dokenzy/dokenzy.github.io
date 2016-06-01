@@ -1,0 +1,115 @@
+---
+layout: post
+title: 'Python:: Excel 2010에 새 시트 추가하기(3) – workbook.xml'
+post_id: '914'
+date: 2014-02-14 11:50:42.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- etree
+- excel
+- lxml
+- parsing
+- Python
+- workbook.xml
+- XML
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Excel 2010에 새 시트 추가하기 세 번째는 xl/workbook.xml파일.</p>
+<p>이렇게 생겼다.</p>
+<pre class="lang:python decode:true">&lt;?xml version="1.0"?&gt;
+&lt;workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"&gt;
+  &lt;fileVersion appName="xl" lastEdited="5" lowestEdited="5" rupBuild="9302"/&gt;
+  &lt;workbookPr defaultThemeVersion="124226"/&gt;
+  &lt;bookViews&gt;
+    &lt;workbookView xWindow="480" yWindow="45" windowWidth="18195" windowHeight="8520"/&gt;
+  &lt;/bookViews&gt;
+  &lt;sheets&gt;
+    &lt;sheet name="Slayers" sheetId="1" r:id="rId1"/&gt;
+    &lt;sheet name="Sheet2" sheetId="2" r:id="rId2"/&gt;
+    &lt;sheet name="Sheet3" sheetId="3" r:id="rId3"/&gt;
+  &lt;/sheets&gt;
+  &lt;calcPr calcId="144525"/&gt;
+&lt;/workbook&gt;</pre>
+<p>xmlns:r의 값이 무지하게 길다는 거 외에는 딱히 어려울 건 없고, &lt;sheet&gt;에 시트의 이름과 sheetId, r:id값이 있다는 것을 알아두자. sheetId는 실제 엑셀파일을 열었을 때 나오는 시트 순서이고, r:id값은 실제 xml파일과 연결하는 id이다.</p>
+<p>다음은 workbook.xml파일을 조작하는 파이썬 코드.</p>
+<pre class="lang:python decode:true">def _workbook(self, sheetname):
+    workbook_name = 'workbook.xml'
+
+    # get workbook.xml
+    f = open(workbook_name)
+    s = f.read()
+    f.close()
+    workbook_XML = etree.XML(bytes(s, 'utf-8'))
+
+    NS_SPREADSHEETML = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
+    sheets = workbook_XML.find('ns:sheets', namespaces={'ns': NS_SPREADSHEETML})
+    _sheets = workbook_XML.xpath('//ns:sheet', namespaces={'ns': NS_SPREADSHEETML})
+
+    _Ids = [int(sheet.get('sheetId') for sheet in _sheets)]
+    new_id = max(_Ids) + 1  # new sheetId
+
+    ns_rels = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
+    NSMAP = {'r': ns_rels}
+    new_sheet = etree.Element('sheet')
+    new_sheet.set('name', sheetname)
+    new_sheet.set('{%s}id' % NSMAP['r'], 'rId' + str(self.count))
+    new_sheet.set('sheetId', str(new_id))
+    sheets.insert(len(sheets), new_sheet)
+
+    # save workbook.xml
+    workbook_str = etree.tostring(workbook_XML, encoding='utf-8')
+    f = open(workbook_name, 'w')
+    f.write(str(workbook_str, 'utf-8'))
+    f.close()</pre>
+<p>과정:</p>
+<ol>
+<li>etree.XML로 workbook.xml파일을 가지고 Element를 만든다.
+<pre>    workbook_name = 'workbook.xml'
+
+    # get workbook.xml
+    f = open(workbook_name)
+    s = f.read()
+    f.close()
+    workbook_XML = etree.XML(bytes(s, 'utf-8'))</pre>
+</li>
+<li>&lt;sheet&gt;노드들을 찾는다.
+<pre class="lang:python decode:true crayon-selected">    NS_SPREADSHEETML = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
+
+    sheets = workbook_XML.find('ns:sheets', namespaces={'ns': NS_SPREADSHEETML})
+    _sheets = workbook_XML.xpath('//ns:sheet', namespaces={'ns': NS_SPREADSHEETML})</pre>
+</li>
+<li>sheetId값 중에 가장 큰 값에 1을 더한다. 즉 새 sheetId는 4가 된다.
+<pre>    _Ids = [int(sheet.get('sheetId') for sheet in _sheets)]
+    new_id = max(_Ids) + 1  # new sheetId</pre>
+</li>
+<li>새 &lt;sheet&gt;Element를 만들고, sheetId와 r:id 속성을 추가한다.
+<pre>    ns_rels = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
+    NSMAP = {'r': ns_rels}
+    new_sheet = etree.Element('sheet')
+    new_sheet.set('name', sheetname)
+    new_sheet.set('{%s}id' % NSMAP['r'], 'rId' + str(self.count))
+    new_sheet.set('sheetId', str(new_id))</pre>
+</li>
+<li>새 &lt;sheet&gt;를 기존 &lt;sheets&gt;에 넣는다.
+<pre>    sheets.insert(len(sheets), new_sheet)</pre>
+</li>
+<li>작업한 결과를 문자열로 변환한 후, workbook.xml파일에 쓴다.
+<pre>    # save workbook.xml
+    workbook_str = etree.tostring(workbook_XML, encoding='utf-8')
+    f = open(workbook_name, 'w')
+    f.write(str(workbook_str, 'utf-8'))
+    f.close()</pre>
+</li>
+</ol>
+<p>끝.</p>

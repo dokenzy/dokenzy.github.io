@@ -1,0 +1,34 @@
+---
+layout: post
+title: 'Vim: 정규식 치환'
+post_id: '727'
+date: 2013-12-06 17:18:35.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 개발도구
+tags:
+- re
+- Vim
+- 정규식
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Vim에서 정규식 쓸 일이 있었는데, 간만에 쓰려니 헷갈...</p>
+<p>세상에나... 게으른 한정자가 \{-}였다니...</p>
+<p>적어둬야겠음.</p>
+<pre class="lang:vim decode:true">:%s/\tc\w*{\(.\{-}\)}//g</pre>
+<p>\tcfilename{abcd}<br />
+\tccmd{abcd.efg}<br />
+\tcenv{abcd-efg.hij}<br />
+\tcoption{abcd-efg-hij.klm}<br />
+\tcclass{fsfasfsa}<br />
+\tcerror{afsdfsf}</p>
+<p>같은 것들을 abcd, abcd.efg, abcd-efg.hij, ... 처럼 변경.</p>

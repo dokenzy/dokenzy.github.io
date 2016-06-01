@@ -1,0 +1,44 @@
+---
+layout: post
+title: 3월 1주 KTUG
+post_id: '982'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- LaTeX
+tags:
+- charraise
+- ktug
+- latex
+- numbering
+- paracols
+- part
+- sharelatex
+- tabu
+- xetexko
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<ol>
+<li><a href="http://www.ktug.org/xe/index.php?mid=KTUG_open_board&amp;document_srl=180602" target="_blank">sharelatex 오픈소스화</a>: 실시간 온라인 협력 라텍 작업 환경인 sharelatex가 오픈소스로 공개됐음</li>
+<li><a href="http://www.ktug.org/xe/index.php?mid=KTUG_QnA_board&amp;document_srl=180838" target="_blank">xetex 옵션 charraise</a>: 버전 2.2부터 제공. 글자의 수직 위치를 조절. 다른 글꼴 효과와 충돌할 수 있음.</li>
+<li><a href="http://www.ktug.org/xe/index.php?mid=KTUG_QnA_board&amp;document_srl=180856" target="_blank">tabular에서 글자를 중앙에 위치시키는 방법</a>: 내가 선호하는 방법은 tabu 패키지를 사용하는 것.
+<pre class="lang:tex decode:true crayon-selected">\begin{tabu}{X[1.2cm]|X[cm]|X[cm]|X[cm]}
+....
+\end{tabu}</pre>
+</li>
+<li><a href="http://www.ktug.org/xe/index.php?mid=KTUG_QnA_board&amp;document_srl=180899">두 언어 이단 조판</a>: paracols라는 패키지를 알게 됨. 참고 <a href="http://hoze.tistory.com/847" target="_blank">http://hoze.tistory.com/847</a></li>
+<li><a href="http://www.ktug.org/xe/index.php?document_srl=180922" target="_blank">section 넘버링을 Part가 바뀔 때마다 1부터 다시 시작하도록 변경하는 방법</a>
+<pre class="lang:tex decode:true ">\makeatletter
+\@addtoreset{section}{part}
+\makeatother</pre>
+<p>&nbsp;</li>
+</ol>

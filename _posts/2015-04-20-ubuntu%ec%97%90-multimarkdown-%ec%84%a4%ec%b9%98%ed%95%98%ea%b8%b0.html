@@ -1,0 +1,36 @@
+---
+layout: post
+title: Ubuntu에 MultiMarkDown 설치하기
+post_id: '2023'
+date: 2015-04-20 15:43:12.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- greg
+- latex
+- make
+- MultiMarkdown
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>개인프로젝트로 만들고 있는 웹어플리케이션이 MultiMarkdown(<a href="http://fletcherpenney.net/multimarkdown/">http://fletcherpenney.net/multimarkdown/</a>)을 사용하고 있다. 맥용은 바이너리 인스톨러를 제공하기 때문에 편하게 설치할 수 있는데, 리눅스는 직접 컴파일해서 써야 한다.</p>
+<p>컴파일 방법은 <a href="http://fletcher.github.io/MultiMarkdown-4/installation">http://fletcher.github.io/MultiMarkdown-4/installation</a>에 나와있다.</p>
+<p>그런데 <strong>이대로 하면 안된다!</strong> make에서 실패한다. 푸념을 했더니 <a href="http://doeun.blogspot.kr/">능력자</a>께서 직접 작성하신 문서를 알려주셨다. 십중팔구 greg 문제일 것이라고 말씀하셨는데, 역시 말씀대로다.</p>
+<p><a href="http://wiki.ktug.org/wiki/wiki.php/KTUGExtDocArchive">http://wiki.ktug.org/wiki/wiki.php/KTUGExtDocArchive</a>에서 '멀티마크다운과 라텍'이라는 문서를 참고하면 된다. 공식문서에서는</p>
+<pre class="lang:sh decode:true">git submodule init
+git submodule update</pre>
+<p>이렇게 해야된다고 하는데, <strong>공식문서는 다 무시하고</strong> '멀티마크다운과 라텍'문서만 참고하면 쉽게 할 수 있다.</p>
+<p>참고로 문제의 원인이었던 greg관련 부분만 언급하자면, multimarkdown 을 받아오면 greg이라는 디렉토리가 이미 들어있다. 이건 지워버리고 greg을 다시 받아온다. (어지간하면 git은 설치하자;;;)</p>
+<pre class="lang:sh decode:true">git clone git://github.com/fasterthanlime/greg.git</pre>
+<p>그리고나서 다시 make를 하면 잘 된다. Multimarkdown으로 한국어 문서를 조판하는 방법 역시 위 문서에서 안내하는 대로 따르면 된다.</p>
+<p>덧.<br />
+본문과 아무 상관없는 글인데, 눈에는 '애플리케이션'이 더 익숙한데, 입에는 '어플리케이션'이 더 익숙하다. 뭘까?</p>

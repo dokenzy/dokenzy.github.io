@@ -1,0 +1,54 @@
+---
+layout: post
+title: 'LaTeX:: 찾아보기(색인) 만들기'
+post_id: '885'
+date: 2014-02-10 02:21:13.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- idx
+- ind
+- latex
+- makeindex
+- printindex
+- texindy
+- xelatex
+- 색인
+- 찾아보기
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>LaTeX과 XeLaTeX에서 찾아보기 만드는 방법에 차이가 있다. 여기서는 XeLaTeX에서 만드는 방법만 다룬다.</p>
+<ol>
+<li>프리앰블에 이 코드를 입력한다.
+<pre class="lang:tex decode:true ">\usepackage{makeidx}
+\makeindex</pre>
+</li>
+<li>본문 중에 찾아보기 만들 항목에 이렇게 입력한다.
+<pre class="lang:tex decode:true">홍길동은 형을 형이라 부르지 않았다. \index{갑자년}형이 같은 갑자년생 동갑인데, 생일이 빨라 서당을 일찍 들어갔다.</pre>
+</li>
+<li>찾아보기 항목들이 보일 곳(대체로 문서 끝부분)에 <span class="lang:tex decode:true  crayon-inline ">\printindex</span> 명령을 입력한다.</li>
+<li>이 텍 문서를 xelatex으로 컴파일한다.
+<pre class="lang:tex decode:true">$ xelatex foo</pre>
+</li>
+<li>그러면 foo.idx라는 파일이 생성되는데, 찾아보기에 들어갈 항목들이 다음과 같은 형식으로 쪽번호순대로 들어있다.
+<pre>\indexentry{갑자년|hyperpage}{14}</pre>
+</li>
+<li>이제 texindy라는 유틸리티를 이용해 idx파일을 가지고 ind파일을 만든다. 한국어 문서이므로 ㄱ, ㄴ, ㄷ 순으로 정렬하기 위해 아래와 같이 명령한다.
+<pre>$ texindy -L korean -I omega foo.idx</pre>
+</li>
+<li>이제 다시 xelatex을 다시 실행하면 texindy가 만든 ind파일을 이용해서 자동으로 찾아보기가 만들어진다.
+<pre>$ xelatex foo</pre>
+</li>
+</ol>
+<p>여기서는 달랑 xelatex, texindy, xelatex 이렇게 총 3번의 명령을 실행했지만, 차례(\tableofcontents)가 있는 문서에서는 xelatex 3번, texindy 1번, xelatex 2번 이렇게 실행하는 것이 안전하다.</p>
+<p>찾아보기와 관련한 자세한 내용은 ko.TeX 설명서 제 8장을 참조하기 바란다. 참고로 ko.TeX 설명서는 TeXLive 2013이 설치된 시스템에서 <span class="lang:sh decode:true  crayon-inline ">$ texdoc kotex</span>  명령을 사용하면 쉽게 접근할 수 있다.</p>

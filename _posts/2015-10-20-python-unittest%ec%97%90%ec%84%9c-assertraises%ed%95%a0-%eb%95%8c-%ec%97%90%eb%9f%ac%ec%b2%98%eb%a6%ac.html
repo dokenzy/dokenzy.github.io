@@ -1,0 +1,34 @@
+---
+layout: post
+title: 'Python:: unittest에서 assertRaises()할 때 에러처리'
+post_id: '2114'
+date: 2015-10-20 23:36:45.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- assertRaises
+- lambda
+- LookupError
+- Python
+- unittest
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>LookupError를 일으키는 코드를 테스트 하려고 한다.</p>
+<pre class="lang:python decode:true ">class FooTest(unittest.TestCase):
+    def test_error(self):
+        self.assertRaises(LookupError, myfunc())</pre>
+<p>LookupError 에러가 뜬다. 함수 동작 자체는 정상이지만, 이 테스트 자체는 pass가 되어야 한다.</p>
+<p>다음 블로그에서 답을 찾았다(<a href="http://www.lengrand.fr/2011/12/pythonunittest-assertraises-raises-error/">Python/Unittest : assertRaises raises Error</a>)</p>
+<pre class="lang:python decode:true ">self.assertRaises(LookupError, lamda: myfunc())</pre>
+<p>와 같이 lambda 함수로 처리하면 된다.</p>
+<p>with self.assertRaises()로 하는 방법도 있는 거 같은데 어떻게 쓰는 건지 모르겠다.</p>

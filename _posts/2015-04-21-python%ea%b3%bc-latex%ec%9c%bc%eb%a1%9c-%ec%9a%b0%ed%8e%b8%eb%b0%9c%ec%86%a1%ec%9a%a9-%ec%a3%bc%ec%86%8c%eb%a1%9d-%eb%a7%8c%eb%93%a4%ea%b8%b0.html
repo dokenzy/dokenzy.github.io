@@ -1,0 +1,90 @@
+---
+layout: post
+title: Python과 LaTeX으로 우편발송용 주소록 만들기
+post_id: '2038'
+date: 2015-04-21 20:38:51.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Python
+tags:
+- expl3
+- 엑셀
+- 우편발송
+- 주소록
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>동생이 결혼을 한다. 청첩장을 돌려야 한다. 받는 사람 주소를 스티커 용지에 출력해서 청첩장에 붙여야 한다.</p>
+<p><a title="Python과 LaTeX 템플릿 파일을 이용한 문서작성" href="http://blog.dokenzy.com/archives/1473">Python과 LaTeX 템플릿 파일을 이용한 문서작성</a>에서 사용한 코드를 재활용할까 했는데, 용도가 달라서 새로 만들었다.</p>
+<p>전체 코드: <a href="https://github.com/dokenzy/wedding-invitation">https://github.com/dokenzy/wedding-invitation</a></p>
+<p>1. 엑셀파일에 [이름, 주소, 상세주소, 우편번호]순으로 입력한다. 여기서 주소는 예를 들면 '~~~아파트'까지이고, 상세주소는 '~동 ~호'이다.</p>
+<p>그래서 최종적으로 다음과 같은 포맷으로 만들 것이다.</p>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2015/04/wedding-sample.png"><img class="alignnone size-full wp-image-2039" src="{{ site.baseurl }}/assets/wedding-sample.png" alt="wedding-sample" width="270" height="88" /></a></p>
+<p>&nbsp;</p>
+<p>엑셀파일에 있는 모든 사람들마다 저런 식으로 만드는 것이다.</p>
+<p>2. tex 템플릿 코드 작성(template.tex)</p>
+<pre class="lang:tex decode:true" title="wedding-sample.tex">\documentclass[a4paper, twocolumn]{oblivoir}
+\usepackage{fapapersize}
+\usefapapersize{210mm,297mm,10mm,*,10mm,*}
+\setmainfont{08SeoulNamsanM}
+\parindent=0pt
+\pagestyle{empty}
+\newcommand{\guest}[3]{%
+\fbox{
+\begin{minipage}{.45\textwidth}
+\begin{flushright}
+\vskip 1em
+\Large{%
+#1\ % \newlinew으로 바꾸면 오른쪽 정렬이 안됨
+#2\
+우) #3
+}
+\end{flushright}
+\vskip 1em
+\end{minipage}
+}
+\vskip 1em
+}
+
+\begin{document}
+\guest{대전시 유성구 무슨로 어쩌구아파트}{101동 1101호 아저씨 귀하}{111-111}
+\end{document}</pre>
+<p>이딴 식으로 작성 후, xelatex으로 컴파일하면 위 그림과 같은 결과를 얻는다. 이제 <span class="lang:tex decode:true  crayon-inline ">\guest{주소}{세부주소 + 이름}{우편번호}</span>  코드를 엑셀파일을 이용해 만들면 된다.</p>
+<p>3. 엑셀파일로부터 \guest{}{}{} 코드 만들기</p>
+<p>파이썬을 이용하면 쉽다. 엑셀 파일을 읽기만 할 때는 xlrd가 좋다.</p>
+<p>전체 코드: <a href="https://gist.github.com/dokenzy/fcf212156b76c9115e4a">wedding-guests.py</a></p>
+<p>각 시트에서 전체 행으로부터 정보를 구하는 코드는 다음과 같다.</p>
+<pre class="lang:python decode:true ">NUM_ROWS = sheet.nrows
+for row_idx in range(1, NUM_ROWS):
+    juso = sheet.cell(row_idx, 1).value
+    detail_juso = sheet.cell(row_idx, 2).value
+    name = sheet.cell(row_idx, 0).value
+    zipcode = sheet.cell(row_idx, 3).value
+    guests.append((juso, detail_juso, name, zipcode))
+</pre>
+<p>이렇게 구한 guests 리스트를 이용해 tex코드를 만들자.</p>
+<pre class="lang:python decode:true">data = ''
+for guest in guests:
+    row = '\guest{%s}{%s %s 귀하}{%s}\n' % (guest[0], guest[1], guest[2], guest[3])
+    data += row
+with open('data.tex', 'w') as dat:
+    dat.write(data)</pre>
+<p>이 스크립트를 실행하면(&gt;= Python 3.4.2) 엑셀파일에 있는 데이타가 \guest{}{}{} 형식으로 들어간 data.tex 파일이 만들어진다.</p>
+<p>4. template.tex에 data.tex 넣기</p>
+<p>LaTeX은 \input{}명령을 제공한다. 위 template.tex 코드 중</p>
+<pre class="lang:tex decode:true">\guest{대전시 유성구 무슨로 어쩌구아파트}{101동 1101호 아저씨 귀하}{111-111}</pre>
+<p>를 다음과 같이 바꾼다.</p>
+<pre class="lang:tex decode:true ">\input{data.tex}</pre>
+<p>다시 xelatex으로 컴파일하면 다음과 같은 PDF파일을 만들 수 있다(진짜 주소라서 가렸다).</p>
+<p><a href="http://blog.dokenzy.com/wp-content/uploads/2015/04/wedding-sample2.png"><img class="alignnone size-full wp-image-2042" src="{{ site.baseurl }}/assets/wedding-sample2.png" alt="wedding-sample2" width="771" height="595" /></a></p>
+<p>&nbsp;</p>
+<p>참고: 능력자님께서 expl3를 이용해서 만들 수 있는 방법을 소개해 주셨다. <a href="http://doeun.blogspot.kr/2015/04/expl3.html">우편 발송용 주소록 만들기: expl3</a></p>

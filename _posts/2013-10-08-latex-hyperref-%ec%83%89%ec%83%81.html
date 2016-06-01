@@ -1,0 +1,46 @@
+---
+layout: post
+title: 'LaTeX:: hyperref 색상'
+post_id: '577'
+date: 2013-10-08 13:31:16.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- hyperref
+- latex
+- 링크
+- 색상
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>출처: <a href="http://tex.stackexchange.com/questions/61015/how-to-use-different-colors-for-different-href-commands" target="_blank">http://tex.stackexchange.com/questions/61015/how-to-use-different-colors-for-different-href-commands</a></p>
+<p>hyperref 패키지는 LaTeX으로 문서를 작성할 때 링크 색상을 지정할 수 있는 기능을 제공한다. 외부 URL은 물론, LaTeX 문서내 링크도 가능하다.</p>
+<p>URL색상 지정은 프리앰블에 다음과 같이 선언해 주면 된다.</p>
+<pre class="lang:tex decode:true ">\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}</pre>
+<p>이렇게 색상을 지정하면, 여러 방법으로 링크를 만들 수 있는데, 예컨데 <span class="lang:python decode:true  crayon-inline ">\href{http://google.com/}{Google}</span>  다음과 같은 방식이다.</p>
+<p>그런데 어떤 링크는 다른 색을 지정해야 할 경우가 생긴다. 다음과 같이 한다.</p>
+<pre class="lang:tex decode:true ">\newcommand{\MYhref}[3][blue]{\href{#2}{\color{#1}{#3}}}%
+
+\begin{document}
+Here is \MYhref{http://www.google.com}{Google} and \MYhref{http://www.yahoo.com}{Yahoo!}.
+
+Here is \MYhref[brown]{http://www.google.com}{Google} and \MYhref[red]{http://www.yahoo.com}{Yahoo!}.
+\end{document}</pre>
+<p>위 코드의 결과는 다음과 같다.</p>
+<p><img class="alignnone" alt="" src="{{ site.baseurl }}/assets/Dl7FA.png" width="510" height="121" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

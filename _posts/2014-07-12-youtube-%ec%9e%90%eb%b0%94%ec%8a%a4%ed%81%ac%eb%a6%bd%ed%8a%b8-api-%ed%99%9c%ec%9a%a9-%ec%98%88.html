@@ -1,0 +1,85 @@
+---
+layout: post
+title: youtube 자바스크립트 API 활용 예
+post_id: '1679'
+date: 2014-07-12 17:26:45.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- api
+- bootstrap
+- modal
+- youtube
+- 부트스트랩
+- 유투브
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>youtube 동영상을 넣을 때 iframe 대신 자바스크립트를 이용하는 방법</h2>
+<p>참고</p>
+<ul>
+<li><a href="https://developers.google.com/youtube/iframe_api_reference">https://developers.google.com/youtube/iframe_api_reference</a></li>
+<li><a href="https://developers.google.com/youtube/player_parameters">https://developers.google.com/youtube/player_parameters</a></li>
+<li><a href="https://developers.google.com/youtube/js_api_reference">https://developers.google.com/youtube/js_api_reference</a></li>
+</ul>
+<p>목표: 부트스트랩의 버튼을 클릭하면 유투브 동영상을 modal 창에 띄워 자동으로 재생한다.</p>
+<h3>1. HTML 코드</h3>
+<pre class="lang:xhtml decode:true">&lt;!-- Button --&gt;
+&lt;button class="btn btn-primary" data-toggle="modal" data-target="#youtube"&gt;Play&lt;/button&gt;
+
+&lt;!-- Modal --&gt;
+&lt;div class="modal fade" id="youtube" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"&gt;
+    &lt;div class="modal-dialog modal-lg"&gt;
+        &lt;div class="modal-content"&gt;
+               &lt;div class="modal-body"&gt;
+                    &lt;div id="youtube-player"&gt;&lt;/div&gt;
+               &lt;/div&gt;
+               &lt;div class="modal-footer"&gt;
+                   &lt;button type="button" class="btn btn-default" data-dismiss="modal"&gt;Close&lt;/button&gt;
+               &lt;/div&gt;
+        &lt;/div&gt;&lt;!-- modal-content --&gt;
+    &lt;/div&gt;&lt;!-- modal-dialog --&gt;
+&lt;/div&gt;&lt;!-- main modal --&gt;</pre>
+<h3>2. Javascript 코드</h3>
+<pre class="lang:js decode:true">var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+var player;
+$('#youtube').on('shown.bs.modal', function () {
+    player = new YT.Player('youtube-player', {
+        height: '488',
+        width: '867',
+        videoId: '유투브 동영상 ID',
+        playerVars: {
+            modestbranding: '1',
+            showinfo: '0',
+            autoplay: '1',
+            rel: '0'
+        },
+        events: {
+            'onReady': function (event) { event.target.playVideo(); }
+        }
+    });
+});
+
+$('#youtube').on('hidden.bs.modal', function () {
+    player.stopVideo();
+    var parent = $('#youtube-player').parent();
+    parent.html('&lt;div id="youtube-player"&gt;&lt;/div&gt;');
+});</pre>
+<h3>설명:</h3>
+<p>'Play'버튼을 눌러서 모달창에 유투브 동영상을 재생하다가 'Close' 버튼을 눌러 모달창을 닫아도 크롬이나 사파리에서는 동영상이 계속 재생된다. 이를 위해 'Close'버튼을 누르면 동영상을 중지시키고, 유투브 자바스크립트가 만든 다음코드를 원래대로 돌려놓는다.</p>
+<pre class="lang:xhtml decode:true ">&lt;iframe id="youtube-player" frameborder="0" allowfullscreen="1" title="YouTube video player" width="867" height="488" src="https://www.youtube.com/embed/동영상ID?modestbranding=1&amp;amp;showinfo=0&amp;amp;autoplay=1&amp;amp;rel=0&amp;amp;enablejsapi=1&amp;amp;origin=http%3A%2F%2Flocalhost"&gt;&lt;/iframe&gt;</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

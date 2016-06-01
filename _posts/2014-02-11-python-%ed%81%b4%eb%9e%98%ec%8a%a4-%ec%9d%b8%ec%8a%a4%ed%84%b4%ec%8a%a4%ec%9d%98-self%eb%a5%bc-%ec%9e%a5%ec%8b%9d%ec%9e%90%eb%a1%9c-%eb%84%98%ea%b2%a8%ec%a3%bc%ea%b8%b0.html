@@ -1,0 +1,70 @@
+---
+layout: post
+title: 'Python:: 클래스 인스턴스의 self를 장식자로 넘겨주기'
+post_id: '888'
+date: 2014-02-11 15:57:14.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- decorator
+- Python
+- self
+- 인스턴스
+- 장식자
+- 클래스
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>다음과 같은 코드가 있다.</p>
+<pre class="lang:python decode:true">class Sample(object):
+    def __init__(self, excelfile):
+        self.excel = excelfile
+        self.flag = False
+
+    def create_working_dir(self):
+        dest_dir = os.path.dirname(self.excel)
+        dest_name = os.path.basename(self.excel).rsplit('.', 1)[0]
+        ... 중략 ...
+        self.flag = True
+
+    def sheetnames(self):
+        if not self.flag:
+            self.create_working_dir(self)
+
+        WORKBOOK_NAME = 'workbook.xml'
+        ... 중략 ...</pre>
+<p>Sample 클래스가 실질적으로 동작하려면 먼저 create_working_dir()메소드가 동작해야 한다. 하지만, 인스턴스를 만드는 동시에 이 메소드가 실행하는 것은 원하지 않는다. 뭔가 일을 시작할 때만 이 메소드가 동작했으면 좋겠다.</p>
+<p>그래서 self.flag가 True인지 False인지 검사한 후 동작하도록 했다.</p>
+<p>이렇게 검사하는 코드가 sheetnames()외에 여러 메소드에 쓰이는데 매번 같은 코드를 넣고 싶지 않다. 장식자를 쓰자.</p>
+<p>문제는 장식자에 self, 즉 인스턴스 자체를 넘겨주어야 하는데, self라는 것이 인스턴스가 생긴 후에야 접근할 수 있기 때문에 런타임에 넘겨주어야 한다.</p>
+<p>다음과 같이 한다.</p>
+<pre class="lang:python decode:true">def check_exist_working_dir(f):
+    def wrapper(*args):
+        if not args[0].flag_working_dir:
+            args[0].create_working_dir()
+            return f(*args)
+    return wrapper
+
+class Sample(object):
+    def __init__(self, excelfile):
+        self.excel = excelfile
+        self.flag = False
+
+    def create_working_dir(self):
+        ... 생략 ...
+
+    @check_exist_working_dir
+    def sheetnames(self):
+        WORKBOOK_NAME = 'workbook.xml'
+        ... 중략 ...</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

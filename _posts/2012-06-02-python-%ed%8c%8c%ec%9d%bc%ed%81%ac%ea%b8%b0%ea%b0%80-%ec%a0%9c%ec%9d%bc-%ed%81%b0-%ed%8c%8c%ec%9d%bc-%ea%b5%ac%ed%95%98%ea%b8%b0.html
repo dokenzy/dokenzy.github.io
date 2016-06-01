@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Python:: 파일크기가 제일 큰 파일 구하기'
+post_id: '15'
+date: 2012-06-02 17:44:04.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- built-in
+tags:
+- Python
+- sorted()
+- 내장함수
+- 파일 크기
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a title="http://www.daniweb.com/software-development/python/threads/234497/find-largest-file-in-directory" href="http://www.daniweb.com/software-development/python/threads/234497/find-largest-file-in-directory">http://www.daniweb.com/software-development/python/threads/234497/find-largest-file-in-directory</a></p>
+<p>여기 올라온 답변</p>
+<pre class="lang:python decode:true">import os, glob
+largest = sorted( (os.path.getsize(s), s) for s in glob.glob('yourdir/*.avi') )[-1][1]</pre>
+<p>위 코드와 동일하지만 쉽게 풀어쓴 코드</p>
+<pre class="lang:python decode:true">import os, glob
+files = glob.glob('yourdir/*.avi')
+largest = sorted((os.path.getsize(s), s) for s in files)[-1][1]</pre>
+<p>sorted() 함수 설명: <a href="http://docs.python.org/2/library/functions.html#sorted" target="_blank">http://docs.python.org/2/library/functions.html#sorted</a></p>

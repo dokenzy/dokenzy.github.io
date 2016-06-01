@@ -1,0 +1,37 @@
+---
+layout: post
+title: 'LaTeX:: Ubuntu에서 xelatex 실행할 때 "xelatex: I can''t write on file `test.pdf''.
+  발생시 해결방법'
+post_id: '2065'
+date: 2015-05-13 16:30:52.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- aws
+- ec2
+- error
+- I can't write on file
+- ubuntu
+- xelatex
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>AWS EC2에서 xelatex으로 텍 파일을 컴파일하는데, 마지막 PDF 생성할 때  <span class="lang:sh decode:true  crayon-inline ">"xelatex: I can't write on file `test.pdf'."</span>  오류가 발생한다.</p>
+<p>latex - dvipdfmx는 정상, latex - xdvipdfmx도 정상, pdflatex도 정상이다. xelatex만 저 오류가 발생한다.</p>
+<p>메모리 문제일 거라고는 생각하지 못했는데 strace xelatex test 명령을 실행하고 살펴보니</p>
+<pre class="lang-tex prettyprint prettyprinted"><code>Cannot allocate memory</code></pre>
+<p>오류가 발생한다.</p>
+<p>구글링해보니 스왑을 만들어서 하라고... 다음 두 글을 참조해서 해결할 수 있었다.</p>
+<ul>
+<li><a href="http://tex.stackexchange.com/questions/16801/xelatex-i-cant-write-on-file-test-pdf/16901#16901">xelatex: I can't write on file `test.pdf'.</a></li>
+<li><a href="http://blog.joshsoftware.com/2012/11/22/amazon-ec2-mongodb-configuration-great-performance/">Amazon EC2 and MongoDB configuration for great performance</a></li>
+</ul>

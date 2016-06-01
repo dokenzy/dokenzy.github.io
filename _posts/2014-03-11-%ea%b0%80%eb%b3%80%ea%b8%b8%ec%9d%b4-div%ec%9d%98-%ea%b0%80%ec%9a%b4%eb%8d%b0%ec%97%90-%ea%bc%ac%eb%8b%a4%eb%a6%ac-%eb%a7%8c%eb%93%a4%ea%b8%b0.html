@@ -1,0 +1,75 @@
+---
+layout: post
+title: 가변길이 div의 가운데에 꼬다리(?) 만들기
+post_id: '1095'
+date: 2014-03-11 21:44:59.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- CSS
+- html
+- javascript
+- jQuery
+- Web
+tags:
+- jquery
+- 가운데
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>모 사이트에 질문올라온 거 답변해준 거.</p>
+<p>결과부터 보기: <a href="http://jsbin.com/socut/1">http://jsbin.com/socut/1</a></p>
+<pre class="lang:xhtml decode:true crayon-selected" title="DIV 가운데에 꼬다리 만들기">&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+	&lt;meta charset="utf-8"&gt;
+	&lt;style&gt;
+		.TabWrap a {
+			display: inline-block;
+			border: 1px solid #CCCCCC;
+			float: left;
+			text-align: center;
+			text-decoration: none;
+			position: relative;
+			padding: 10px 30px 8px;
+		}
+		.TabWrap a:hover {
+			background: #ffa500;
+			color: #fff;
+		}
+		.TabWrap a.active:after {
+			content: "";
+			position: absolute;
+			top: 100%;
+			left: 50%;
+			z-index: 1000;
+			border-top: 8px solid #ffa500;
+			border-left: 8px solid transparent;
+			border-right: 8px solid transparent;
+			margin-left: -8px;
+		}
+	&lt;/style&gt;
+	&lt;script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class="TabWrap"&gt;
+	&lt;a href="#"&gt;가나다라&lt;/a&gt;
+	&lt;a href="#"&gt;가나다라마바사아자차&lt;/a&gt;
+&lt;/div&gt;
+&lt;script type="text/javascript"&gt;
+	$('a').mouseover(function(e){
+		$(this).addClass('active');
+	}).mouseout(function(e){
+		$(this).removeClass('active');
+	});
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;</pre>
+<p>끝.</p>

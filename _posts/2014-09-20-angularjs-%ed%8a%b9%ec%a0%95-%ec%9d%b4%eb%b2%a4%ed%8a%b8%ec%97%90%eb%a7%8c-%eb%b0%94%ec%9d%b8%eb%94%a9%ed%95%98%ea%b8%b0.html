@@ -1,0 +1,40 @@
+---
+layout: post
+title: 'AngularJS: 특정 이벤트에만 바인딩하기'
+post_id: '1714'
+date: 2014-09-20 01:13:08.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- angularjs
+tags:
+- angularjs
+- directive
+- 바인딩
+- 이벤트
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>디렉티브를 만들었다. 포커스를 잃을 때에만 바인딩을 하고 싶다.</p>
+<pre class="lang:js decode:true">function (UtilService) {
+return {
+  restrict: 'A',
+  link: function (scope, iElem, iAttr) {
+    iElem.unbind('input').unbind('keydown').unbind('change');
+    iElem.bind('blur', function() {
+      scope.$apply(iAttr.labelBlur);
+    });
+  }
+};
+}</pre>
+<p>끝.</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

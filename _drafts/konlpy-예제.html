@@ -1,0 +1,71 @@
+---
+layout: post
+title: konlpy 예제
+post_id: '1813'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- Python
+tags:
+- kkma
+- konlpy
+- Python
+- 자연어
+- 한국어
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>코드</p>
+<pre class="lang:python decode:true"># -*- coding: utf-8 -*-
+
+import source
+from konlpy.tag import Kkma
+kkma = Kkma()
+
+
+subjects = {
+    'people': source.People_s_Nation,
+    'political': source.Political_Philosophy,
+    'nation': source.The_Nation_That_I_Desire
+}
+
+sentences_list = []
+morphs_list = []
+nouns_list = []
+for key in subjects.keys():
+    subj = subjects[key]
+    for s in subj:
+        s = unicode(s, 'utf-8')
+        sentences = kkma.sentences(s)
+        morphs = kkma.morphs(s)
+        nouns = kkma.nouns(s)
+        for sentence in sentences:
+            sentences_list.append(sentence)
+        for morph in morphs:
+            morphs_list.append(morph[0])
+        for noun in nouns:
+            if (len(noun) &gt; 1):
+                nouns_list.append(noun)
+
+sentences = list(set(sentences_list))
+morphs = list(set(morphs_list))
+nouns = list(set(nouns_list))
+
+
+with open('sentences.py', 'w') as f:
+    f.write(str(sentences))
+
+with open('morphs.py', 'w') as f:
+    f.write(str(morphs))
+
+with open('nouns.py', 'w') as f:
+    f.write(str(nouns))
+</pre>

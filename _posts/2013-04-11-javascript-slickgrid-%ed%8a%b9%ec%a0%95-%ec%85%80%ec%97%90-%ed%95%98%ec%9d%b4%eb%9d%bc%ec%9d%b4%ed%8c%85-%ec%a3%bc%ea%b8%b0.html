@@ -1,0 +1,58 @@
+---
+layout: post
+title: 'Javascript:: Slickgrid - 특정 셀에 하이라이팅 주기'
+post_id: '413'
+date: 2013-04-11 17:09:48.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- CSS
+- javascript
+tags:
+- highlight
+- slickgrid
+- 자바스크립트
+- 하이라이트
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a href="https://github.com/mleibman/SlickGrid" target="_blank">SlickGrid</a>는 엑셀과 같은 형태의 그리드 데이터를 웹 상에서 표현해주는 훌륭한 라이브러리다.</p>
+<p>잘 써먹고 있는데 하이라이팅을 구현하는데 어려움을 겪었다. 이 부분은 문서화가 부실해 보인다. 예제 프로그램을 보고 해결했다.</p>
+<p>예제 프로그램: <a href="http://mleibman.github.io/SlickGrid/examples/example14-highlighting.html" target="_blank">Highlighting and flashing cells</a></p>
+<p>1. SlickGrid를 이용할 때는 옵션을 설정하는데, 아래와 같이 하자. 아래 옵션은 필수는 아니다.</p>
+<pre class="lang:js decode:true">var options = {
+    cellHighlightCssClass: "err-highlight"
+};</pre>
+<p>2. CSS에 하이라이팅될 스타일을 정의해 주자. 위에서 err-highlight 라는 이름을 사용했으니 이 이름으로 정의한다.</p>
+<pre class="lang:css decode:true">.err-highlight{ 
+    background: #f00;
+}</pre>
+<p>3. 셀에 스타일을 적용하는 부분</p>
+<pre class="lang:js decode:true">$('a.cellname').live('click', function(e) {
+	var err_cell = {};
+	var col = 6;//열 번호
+	var row = 3;// 행 번호
+	if (!err_cell[row]) {
+		err_cell[row] = {};
+	}
+	err_cell[row][col] = 'err-highlight';
+
+	grid.setCellCssStyles("err-highlight", err_cell);
+	grid.render();
+});</pre>
+<p>1.  err_cell 이라는 빈 배열 객체를 선언한다.</p>
+<p>2. err_cell[row][col]에 하이라이팅 이름(err-highlight)을 대입한다.</p>
+<p>3. setCellCssStyles 메소드를 이용해서 err_cell 객체에 하이라이팅을 적용한다. 여기서 셀 정보와 어떤 스타일을 줄 것인지 나오기 때문에, options에 cellHighlightCssClass: "highlight"를 써주지 않아도 된다.</p>
+<p>4. 내 경우 render()를 실행하지 않아도 하이라이팅 하는데 문제가 없다. 예제 프로그램에 있어서 그냥 써주었다.</p>
+<p>이렇게 셀에 주고나서 다시 없애고 싶다면,  removeCellCssStyles() 메소드를 사용한다.</p>
+<pre class="lang:js decode:true ">grid.removeCellCssStyles("err-highlight");</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

@@ -1,0 +1,53 @@
+---
+layout: post
+title: 'LaTeX:: 패키지 dramatist'
+post_id: '608'
+date: 2013-10-17 23:24:54.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- dramatist
+- latex
+- 대본
+- 패키지
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>영어공부를 하고 있다. 스크립트를 외워야 하는데, 대화체다.</p>
+<p>LaTeX으로 대본을 다룰 수 있는 스타일이나 패키지를 찾아보았더니 <a href="http://www.ctan.org/tex-archive/macros/latex/contrib/dramatist" target="_blank">dramatist</a>라는 게 있다. 매뉴얼을 봐도 어떻게 쓰는 건지 모르겠다.</p>
+<p>좋은 샘플이 <a href="http://tex.stackexchange.com/questions/39360/justification-when-using-the-dramatist-package" target="_blank">tex.stackexchange.com</a>에 있다.</p>
+<p><span class="lang:tex decode:true  crayon-inline ">\scene[]</span> 은 장면을 넣을 때 사용한다. 옵션은 장면 제목이다. 옵션을 비우더라도 괄호([])를 써야한다. 그렇지 않으면 컴파일할 때 에러가 발생한다.</p>
+<p>장면 번호는 자동으로 넘버링 된다.</p>
+<pre class="lang:tex decode:true">\Character[Tom - a person]{Tom}{tom}</pre>
+<p><span class="lang:tex decode:true  crayon-inline ">\Character</span>  명령은 인물을 추가하는 명령이다. []안에 들어가는 첫번째 옵션은 등장인물 목록에 쓰이는 엔트리라고 하는데, 등장인물 목록까지 써본 적이 없어서 잘 모르겠다.</p>
+<p>두 번째 인자인 <span class="lang:tex decode:true crayon-inline">{Tom}</span>은 실제 PDF로 출력될 때 나타날 이름이다.</p>
+<p>마지막 인자인 <span class="lang:tex decode:true  crayon-inline ">{tom}</span> 은 Tom의 대화를 입력할 때 쓰인다. 일종의 명령 역할을 한다.</p>
+<p>다음과 같이 사용한다. 자세한 사용법은 <span class="lang:sh decode:true  crayon-inline ">texdoc dramatist</span></p>
+<pre class="lang:tex decode:true">\documentclass[11pt]{oblivoir}    
+\usepackage{dramatist}
+\begin{document}
+
+\Character[Bob - a person]{Bob}{bob} % define characters
+\Character[Ana - a person]{Ana}{ana}
+
+\scene[]
+\begin{drama}
+\anaspeaks So, why don't you want a pet?
+\bobspeaks  Well, we all know that they're expensive.
+\anaspeaks You mean the cost of pet food?
+\bobspeaks Yes, and the cost of the medical treatment. The thing is, I don't have the money and \cntrdots
+\anaspeaks Yes, but I find it hard to understand why \cntrdots
+\end{drama}
+
+\end{document}</pre>
+<p>&nbsp;</p>

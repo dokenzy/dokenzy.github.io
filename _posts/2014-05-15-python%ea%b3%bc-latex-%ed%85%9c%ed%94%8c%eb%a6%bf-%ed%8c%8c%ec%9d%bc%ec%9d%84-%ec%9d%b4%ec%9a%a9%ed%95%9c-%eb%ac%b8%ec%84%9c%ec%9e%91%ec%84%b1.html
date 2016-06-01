@@ -1,0 +1,99 @@
+---
+layout: post
+title: Python과 LaTeX 템플릿 파일을 이용한 문서작성
+post_id: '1473'
+date: 2014-05-15 01:38:25.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Python
+tags:
+- latex
+- Python
+- subprocess
+- template
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>1. 조건</h2>
+<p>다음과 같은 요구사항이 있다.</p>
+<ul>
+<li>서비스 사용자가 받는 사람과 보내는 사람의 주소와 이름, 우편번호를 입력한다.</li>
+<li>입력한 주소를 바탕으로 PDF 문서를 생성한다.</li>
+<li>받는 사람의 주소는 1개 이상 처리할 수 있어야 한다.</li>
+</ul>
+<p>위에서 세번째 조건은 그냥 반복문으로 처리할 수 있으므로, 첫 번째와 두 번째 요구사항을 처리하는 방법만 설명한다.</p>
+<p>템플릿으로 쓸 tex파일과 자동으로 처리하기 위한 파이썬 스크립트를 만들어야 한다.</p>
+<h2>2. template.tex</h2>
+<pre class="lang:tex decode:true">\documentclass{oblivoir}
+
+\setmainfont{NanumGothic}
+
+\begin{document}
+
+{\Large{$send_address}{$send_name}}
+{\LARGE $send_zipcodeA}
+{\LARGE $send_zipcodeB}
+
+{\Large {$recv_address}{$recv_name}}
+{\LARGE $recv_zipcodeA}
+{\LARGE $recv_zipcodeB}
+
+\end{document}</pre>
+<p>위와 같이 <span class="lang:default decode:true  crayon-inline ">{$변수명}</span>  형식으로 텍 문서를 작성한다. 이 부분은 나중에 파이썬 코드에 의해 일반 문자열로 대치될 것이다.</p>
+<h2>3. makepdf.py</h2>
+<pre class="lang:python decode:true"># -*- coding: utf-8 -*-
+
+import os
+import tempfile
+import shutil
+import subprocess
+from string import Template
+
+
+baseDir = os.path.dirname(os.path.abspath(__file__))
+templatefile = 'template.tex'
+
+
+def makePDF():
+    texfile = os.path.join(baseDir, templatefile)
+    with open(texfile) as template:
+        template = template.read().decode('utf-8')
+    texsource = Template(template)
+
+    tmpfolder = tempfile.mkdtemp()
+    os.chdir(tmpfolder)
+
+    d = {'send_address': 'Newyork, US',
+         'send_name': 'Gabdol',
+         'send_zipcodeA': '111',
+         'send_zipcodeB': '222',
+         'recv_address': 'Chicago, US',
+         'recv_name': 'Gabsun',
+         'recv_zipcodeA': '333',
+         'recv_zipcodeB': '444'
+         }
+    texcode = texsource.substitute(d)
+    with open('letter.tex', 'w') as tex:
+        tex.write(texcode.encode('utf-8'))
+    cmd = 'xelatex letter'
+    subprocess.call(cmd, shell=True)
+    shutil.copyfile('letter.pdf', os.path.join(baseDir, 'myletter.pdf'))
+    shutil.rmtree(tmpfolder)
+
+
+if __name__ == '__main__':
+    makePDF()
+</pre>
+<p>위와 같이 파이썬 스크립트를 작성한다. 사전형식(Dictionary)의 데이터를 만들어서 Template.substitude()에 넘겨주면 된다. 사전형식 데이타의 키는 템플릿 파일에서 사용한 변수명이다.</p>
+<p>이렇게 만들어진 코드를 letter.tex 파일에 저장하고, XeLaTeX으로 컴파일한다. 이 때 shell=True 옵션을 꼭 주어야 한다.</p>
+<p>샘플파일: <a href="https://www.dropbox.com/s/47k6run6eb6y1mu/makepdf-from-tex-template.zip">makepdf-from-tex-template.zip</a></p>
+<p>끝.</p>

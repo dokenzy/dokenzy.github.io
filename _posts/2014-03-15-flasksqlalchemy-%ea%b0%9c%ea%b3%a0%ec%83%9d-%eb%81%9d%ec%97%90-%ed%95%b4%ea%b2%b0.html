@@ -1,0 +1,38 @@
+---
+layout: post
+title: Flask+SQLAlchemy 개고생 끝에 해결
+post_id: '1110'
+date: 2014-03-15 04:29:19.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Flask
+tags:
+- db.app
+- flask
+- sqlalchemy
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p><a href="http://piotr.banaszkiewicz.org/blog/2012/06/29/flask-sqlalchemy-init_app/">Flask and SQLAlchemy: init_app</a> 참고</p>
+<p>나는 2번 방법으로 해결</p>
+<pre class="lang:python decode:true">from models import db
+
+app = Flask(__name__)
+
+db.init_app(app)
+db.app = app
+db.create_all()</pre>
+<p>이 자식 때문에... db.app = app</p>
+<p>db  =  SQLAlchemy(app) 과 같은 형태로 db 인스턴스를 만들 때에는 db.app = app 코드가 필요하지 않다.</p>
+<p>그런데 db = SQLAlchemy()로 db인스턴스만 먼저 만들고, 위 예제코드처럼 db를 가져와서 create_all()을 호출할 때에는 db.app = app 을 해주어야 한다.</p>
+<p>왜 이런 중요한 내용이 튜토리얼에 없는지 모르겠다.</p>
+<p>잊지 않겠다!</p>
+<p>&nbsp;</p>

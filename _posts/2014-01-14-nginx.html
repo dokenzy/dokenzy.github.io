@@ -1,0 +1,37 @@
+---
+layout: post
+title: nginx
+post_id: '792'
+date: 2014-01-14 15:39:44.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Web
+tags:
+- '403'
+- forbidden
+- ipv6
+- nginx
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>debian에서 nginx를 설치하고 실행했다.</p>
+<pre class="lang:sh decode:true">sudo service nginx start</pre>
+<p>다음과 같은 에러가 발생한다.</p>
+<pre class="lang:sh decode:true">* Starting nginx nginx
+nginx: [emerg] bind() to [::]:80 failed (98: Address already in use)</pre>
+<p><a href="http://stackoverflow.com/questions/14972792/nginx-nginx-emerg-bind-to-80-failed-98-address-already-in-use" target="_blank">스택오버플로우의 댓글</a>에 의하면</p>
+<blockquote><p>[::]:80 is a ipv6 address.</p>
+<p>This error can be caused if you have a nginx configuration that is listening on port 80 and also on port [::]:80.</p></blockquote>
+<p>nginx 설정파일(/etc/nginix/sites-available/default)을 열어서</p>
+<pre class="lang:sh decode:true">listen [::]:80 ipv6only=on default;</pre>
+<p>를</p>
+<pre class="lang:sh decode:true">listen [::]:80;</pre>
+<p>로 고친다.</p>

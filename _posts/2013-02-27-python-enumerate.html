@@ -1,0 +1,42 @@
+---
+layout: post
+title: 'python:: enumerate'
+post_id: '270'
+date: 2013-02-27 20:59:55.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- built-in
+tags:
+- enumerate()
+- Python
+- 내장함수
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>파이썬 내장함수 enumerate() <a href="http://docs.python.org/2/library/functions.html#enumerate" target="_blank">http://docs.python.org/2/library/functions.html#enumerate</a></p>
+<pre class="lang:python decode:true">myList = ['a', 'b', 'c', 'd']
+for i, item in enumerate(myList):
+	print '{0}: {1}'.format(i, item)</pre>
+<p>결과:</p>
+<pre class="lang:python decode:true  crayon-selected">0: a
+1: b
+2: c
+3: d</pre>
+<p>C언어처럼 인덱스 번호를 얻기 위해 별도의 변수를 사용할 필요가 없다.</p>
+<p>즉, 이 따위로 하지 않아도 된다.</p>
+<pre class="lang:python decode:true">myList = ['a', 'b', 'c', 'd']
+i = 0
+for item in myList:
+	print '{0}: {1}'.format(i, item)
+	i += 1</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

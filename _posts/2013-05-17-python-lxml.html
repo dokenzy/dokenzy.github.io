@@ -1,0 +1,69 @@
+---
+layout: post
+title: 'Python:: lxml'
+post_id: '471'
+date: 2013-05-17 23:15:09.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- Element
+- lxml
+- namespaces
+- nsmap
+- Python
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>(작업중인 문서)</p>
+<pre class="lang:python decode:true">from lxml import etree
+
+my_elem = etree.XML(XML 코드)
+print my_elem # element tag만 보여준다.
+print etree.tostring(my_elem) #XML 코드를 보여준다.
+print etree.tostring(my_elem, encoding=unicode) # 인코딩을 명시할 수도 있다.
+print etree.tostring(my_elem, pretty_print=True) # XML 코드를 보기 쉬운 형태로 보여준다.
+
+# 새 요소 만들기
+new_elem = etree.Element('mytag')
+
+# 새 요소를 속성을 추가해서 만들기
+new_elem = etree.Element('mytag', user='dokenzy')
+
+# 새 요소 만들 때 네임스페이스 지정하기(아, 이거 알아내기 힘들었다. ㅜㅜ)
+NSMAP = {'vt': 'http://schemas.openxmlformats.org/officeDocument/2006/docPropsVTypes'}
+new_elem = etree.Element('{%s}tag' % NSMAP['vt'], nsmap=NSMAP)
+
+# 요소에서 속성 가져오기
+new_elem.get('user') #get(attribute name)// return 'dokenzy'
+
+# 요소에 속성 넣기
+new_elem.set('company', 'My company') # set(attribute name, attribute value)
+
+# 요소에 네임스페이스가 있는 속성 넣기(이것도 힘들었다...ㅜㅜ)
+NSMAP = {'r': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'}
+new_sheet = etree.Element('sheet')
+new_sheet.set('{%s}id' % NSMAP['r'], 'rId9') #result: &lt;sheet r:id="rId9"&gt;
+
+# 요소에서 속성 제거하기
+new_elem.attrib.pop('company')  # remove 'company' attribute of &lt;new_elem&gt; Element.
+
+# 요소에 값 설정하기(BeatifulSoup4에서의 bs4object.string 같은 것) 
+new_elem.text = 'my element' 
+
+# 요소의 값 가져오기 
+print new_elem.text # return 'my element'
+
+# 요소(new_elem) 삭제하기
+# http://stackoverflow.com/questions/7981840/how-to-remove-an-element-in-lxml
+new_elem.getparent().remove(new_elem)</pre>
+<p>lxml, 인터페이스 정말 구리다...;;;</p>
+<p>&nbsp;</p>

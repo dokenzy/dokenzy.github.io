@@ -1,0 +1,88 @@
+---
+layout: post
+title: Vim으로 워드프레스에 글을 쓸 수 있게 해주는 VimRepress
+post_id: '1551'
+date: 2014-05-26 13:24:34.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- plugins
+- Vim
+- vimrepress
+- wordpress
+- 워드프레스
+meta:
+  mkd_text: "## VimRepress\r\n\r\n1. 오리지널 소스는 <http://www.vim.org/scripts/script.php?script_id=3510>
+    에서 받음.\r\n1. 블로그 글 보기, 새 글 작성하기, 글 수정하기 기능 등이 제공됨.\r\n1. 워드프레스 3.5부터는 XML-RPC로
+    글쓰기 하는 기능이 기본제공되므로, 워드프레스에서 뭔가 설정할 필요는 없다.\r\n1. BlogOpen <POST ID> 명령에서 오류 발생해서
+    약간 수정했음.\r\n1. 참고로 이 포스트도 VimRepress로 작성했다.\r\n\r\n## 설치\r\n\r\n### 필수조건\r\n\r\n1.
+    vimrepress 내부에서 python을 사용하므로 python을 사용할 수 있는 Vim이 있어야 한다. 터미널에서 vim --version
+    이라고 입력하면 나오는 화면에서 +python이 보이면 된다. 관련글 참고 [MacVim 직접 빌드 & 설치하기](http://blog.dokenzy.com/archives/631)\r\n1.
+    파이썬용 [markdown](https://pypi.python.org/pypi/Markdown)을 설치한다. pip install markdown
+    명령으로 쉽게 설치할 수 있다.\r\n\r\n### vimrepress 설치\r\n\r\n1. <http://github.com/dokenzy/vimrepress>
+    에서 파일을 다운로드받은 후, .vim 디렉토리에 복사한다.\r\n1. 홈디렉토리에 .vimpressrc 파일을 만든다.\r\n1. ~/.vimpressrc
+    파일을 다음과 같은 형식으로 편집한다.\r\n\r\n    [Blog0]\r\n    blog_url = http://blog.dokenzy.com\r\n
+    \   username = dokenzy\r\n    password =\r\n\r\n1. password에 비밀번호를 넣으면 Vim으로 접근할
+    때 비밀번호를 묻지 않아서 편하지만, 플레인 텍스트로 저장되므로 절대 추천하지 않는다. 비밀번호를 저장해 두지 않더라도 저 항목은 두어야 한다.\r\n\r\n##
+    명령어\r\n\r\n1. BlogList: 최근 포스트 30개\r\n1. BlogList page: 최근 페이지 30개\r\n1. BlogList
+    post 100: 최근 포스트 100개\r\n1. BlogNew post: 새 포스트 쓰기\r\n1. BlogNew page: 새 페이지 쓰기\r\n1.
+    BlogSave: 저장하고 공개하기\r\n1. BlogSave draft: 임시글 상태로 저장하기\r\n1. BlogPreview local:
+    웹브라우저에서 포스트나 페이지 미리보기\r\n1. BlogPreview publish: BlogSave publish 실행 후 브라우저로 여는
+    것과 같다.\r\n1. BlogOpen 679\r\n1. BlogOpen http://your-first-blog.com/archives/679\r\n1.
+    BlogOpen http://your-second-blog.com/?p=679\r\n1. BlogOpen http://your-third-blog.com/with-your-custom-permalink"
+  _edit_last: '1'
+  _wp_old_slug: vimrepress
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<h2>VimRepress</h2>
+<ol>
+<li>오리지널 소스는 <a href="http://www.vim.org/scripts/script.php?script_id=3510">http://www.vim.org/scripts/script.php?script_id=3510</a> 에서 받음.</li>
+<li>블로그 글 보기, 새 글 작성하기, 글 수정하기 기능 등이 제공됨.</li>
+<li>워드프레스 3.5부터는 XML-RPC로 글쓰기 하는 기능이 기본제공되므로, 워드프레스에서 뭔가 설정할 필요는 없다.</li>
+<li>마크다운이나 HTML로 글을 쓸 수 있다.</li>
+<li>카테고리 자동으로 불러오는 단축키가 있다는데, 내 맥에서는 동작하지 않았다.</li>
+<li>BlogOpen 명령에서 오류 발생해서 약간 수정했음.</li>
+<li>참고로 이 포스트도 VimRepress로 작성했다.</li>
+</ol>
+<h2>설치</h2>
+<h3>필수조건</h3>
+<ol>
+<li>vimrepress 내부에서 python을 사용하므로 python을 사용할 수 있는 Vim이 있어야 한다. 터미널에서 vim --version 이라고 입력하면 나오는 화면에서 +python이 보이면 된다. 관련글 참고 <a href="http://blog.dokenzy.com/archives/631">MacVim 직접 빌드 &amp; 설치하기</a></li>
+<li>파이썬용 <a href="https://pypi.python.org/pypi/Markdown">markdown</a>을 설치한다. pip install markdown 명령으로 쉽게 설치할 수 있다.</li>
+</ol>
+<h3>vimrepress 설치</h3>
+<ol>
+<li><a href="http://github.com/dokenzy/vimrepress">http://github.com/dokenzy/vimrepress</a> 에서 파일을 다운로드받은 후, .vim 디렉토리에 복사한다.</li>
+<li>홈디렉토리에 .vimpressrc 파일을 만든다.</li>
+<li>~/.vimpressrc 파일을 다음과 같은 형식으로 편집한다.
+<pre class="lang:vim decode:true  crayon-selected">[Blog0]
+blog_url = http://blog.dokenzy.com
+username = admin
+password =</pre>
+<p>&nbsp;</li>
+<li>password에 비밀번호를 넣으면 Vim으로 접근할 때 비밀번호를 묻지 않아서 편하지만, 플레인 텍스트로 저장되므로 절대 추천하지 않는다. 비밀번호를 저장해 두지 않더라도 저 항목은 두어야 한다.</li>
+</ol>
+<h2>명령어</h2>
+<ol>
+<li>BlogList: 최근 포스트 30개</li>
+<li>BlogList page: 최근 페이지 30개</li>
+<li>BlogList post 100: 최근 포스트 100개</li>
+<li>BlogNew post: 새 포스트 쓰기</li>
+<li>BlogNew page: 새 페이지 쓰기</li>
+<li>BlogSave: 저장하고 공개하기</li>
+<li>BlogSave draft: 임시글 상태로 저장하기</li>
+<li>BlogPreview local: 웹브라우저에서 포스트나 페이지 미리보기</li>
+<li>BlogPreview publish: BlogSave publish 실행 후 브라우저로 여는 것과 같다.</li>
+<li>BlogOpen 679</li>
+<li>BlogOpen http://your-first-blog.com/archives/679</li>
+<li>BlogOpen http://your-second-blog.com/?p=679</li>
+<li>BlogOpen http://your-third-blog.com/with-your-custom-permalink</li>
+</ol>

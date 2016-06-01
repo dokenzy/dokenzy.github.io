@@ -1,0 +1,42 @@
+---
+layout: post
+title: 'Vim plugin:: syntastic'
+post_id: '1635'
+date: 2014-06-13 22:13:56.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- jshint
+- plugin
+- syntastic
+- Vim
+- 플러그인
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>파이썬만 할 때는 python-mode만 있으면 만사 땡이었는데, angular.js, node.js 등을 하다보니 html과 javascript도 문법체크를 해야할 필요가 생겼다.</p>
+<p>이런 다양한 언어들의 문법체크를 해주는 플러그인 중에 syntastic(<a href="https://github.com/scrooloose/syntastic">https://github.com/scrooloose/syntastic</a>)이 가장 마음에 든다. 물런 이런 문법 검사기는 Vim 플러그인만으로는 동작할 수 없다. 예컨데 자바스크립트의 경우는 jshint(<a href="http://www.jshint.com/">http://www.jshint.com/</a>)같은 게 있어야 syntastic 플러그인이 동작한다.</p>
+<h2>1. 설치</h2>
+<p>pathogen으로 설치한다.</p>
+<pre class="lang:sh decode:true">cd ~/.vim/bundle &amp;&amp; git clone https://github.com/scrooloose/syntastic.git</pre>
+<h2>2. 자바스크립트 문법 검사 설정</h2>
+<p>자바스크립트 문법을 jshint와 jslint로 검사하고 싶다면 .vimrc 파일에 다음과 같이 설정해 준다.</p>
+<pre class="lang:vim decode:true">let g:syntastic_javascript_checkers = ['jshint', 'jslint']</pre>
+<p>다른 언어도 같은 패턴이다.</p>
+<p>javascript 대신 python, perl, php 등을 써주고, 각 언어에 맞는 문법검사기를 등록해주면 된다.</p>
+<h2>3. HTML 문법 검사 설정</h2>
+<p>파일을 열 때 문법 검사를 하도록 다음과 같이 설정했다.</p>
+<pre class="lang:vim decode:true ">let g:syntastic_check_on_open = 1</pre>
+<p>그랬더니 HTML에 대해서는 따로 설정해 주지 않았는데도 HTML 문법검사를 한다. 덕분에 AngularJS 지시자를 쓴 요소나 속성들이 모두 에러로 체크된다.</p>
+<p>나는 AngularJS의 지시자를 ng-* 꼴로 많이 쓰므로 이런 패턴을 무시하도록 설정해 주었다.</p>
+<pre class="lang:vim decode:true">let g:syntastic_html_tidy_ignore_errors=[" proprietary attribute \"ng-"]</pre>
+<p>이제 ng-*에 대해서는 오류라고 체크하지 않는다.</p>

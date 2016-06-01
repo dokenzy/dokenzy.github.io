@@ -1,0 +1,36 @@
+---
+layout: post
+title: 'LaTeX:: 시스템에 설치하지 않고 폰트 파일 사용하기'
+post_id: '1461'
+date: 2014-05-09 23:43:57.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- fonts
+- latex
+- xelatex
+- 나눔바른고딕
+- 폰트경로
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>어떤 웹사이트를 만드는 데 XeLaTeX을 이용한 간단한 서비스를 추가하기로 했다.</p>
+<p>폰트는 저작권 문제 없는 나눔바른고딕을 사용하기로 했다. 하지만 이 폰트를 서버에 설치하지 않고 사용하고 싶다.</p>
+<p>디렉토리 구조는 다음과 같다.</p>
+<pre class="lang:default decode:true">── fonts
+│   NanumBarunGothic.ttf
+├── main.tex
+├── style.tex</pre>
+<p>이 폰트를 사용하기 위해서 tex파일에는 다음과 같이 폰트를 설정해 주면 된다.</p>
+<pre class="lang:default decode:true">\setmainfont[Path = fonts/]{NanumBarunGothic.ttf}</pre>
+<p>끝.</p>
+<p>참고: fontspec</p>

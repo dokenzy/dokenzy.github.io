@@ -1,0 +1,101 @@
+---
+layout: post
+title: 'Python:: lxml로 Excel 2010 파일의 시트이름 가져오기'
+post_id: '868'
+date: 2014-02-09 23:04:19.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- etree
+- excel
+- lxml
+- Python
+- 엑셀
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>파이썬용 Excel 2010 라이브러리 중에 맘에 드는 게 없어서 직접 만들던 것을 정리해서 다시 만들기로 했다.</p>
+<p>이 글에서 보일 것은 Excel 2010파일에서 시트 이름을 가져오는 것이다. 일단은 Python 3.3.3용으로만 만들 것이다.</p>
+<h2>1. 전체 코드</h2>
+<p>(예외처리 같은 코드는 제거하였다.)</p>
+<pre class="lang:python decode:true" title="전체 코드">import os
+import shutil
+from zipfile import ZipFile
+from lxml import etree
+
+class ExcelPy(object):
+    ns = u'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
+
+    def __init__(self, excelfile):
+        self.excel = excelfile
+        dest_dir = os.path.dirname(self.excel)
+        dest_name = os.path.basename(self.excel).rsplit('.', 1)[0]
+        self.dest = os.path.join(dest_dir, dest_name + '.zip')
+        self.xlsx = os.path.join(dest_dir, dest_name + '.xlsx')
+        shutil.copy2(self.excel, self.dest)
+
+        self.target_dir = os.path.join(dest_dir, dest_name)
+        z = ZipFile(self.dest)
+        if os.path.isdir(self.target_dir):
+            shutil.rmtree(self.target_dir)
+        os.mkdir(self.target_dir)
+        z.extractall(self.target_dir)
+
+    def sheetnames(self):
+        with open(os.path.join(self.target_dir, 'xl', 'workbook.xml')) as xml:
+            workbook_XML = etree.parse(xml)
+            sheet_elems = workbook_XML.findall('//ns:sheet', namespaces={'ns': self.ns})
+            return [sheet_elem.values()[0] for sheet_elem in sheet_elems]</pre>
+<h2>2. Excel 2010용 XLSX파일 구조</h2>
+<p>엑셀 2010 파일의 확장자는 xlsx인데, 사실 zip으로 압축된 파일이다. 압축을 풀면 다음과 같은 구조를 갖는 것을 알 수 있다.</p>
+<pre class="lang:default decode:true">├── [Content_Types].xml
+├── _rels
+├── docProps
+│   ├── app.xml
+│   └── core.xml
+└── xl
+    ├── _rels
+    │   └── workbook.xml.rels
+    ├── sharedStrings.xml
+    ├── styles.xml
+    ├── theme
+    │   └── theme1.xml
+    ├── workbook.xml
+    └── worksheets
+        ├── sheet1.xml
+        ├── sheet2.xml
+        └── sheet3.xml</pre>
+<h2>3. lxml로 파싱하기</h2>
+<ol>
+<li>엑셀 파일을 zip파일로 복사한다.</li>
+<li>zip파일의 압축을 푼다.</li>
+<li>시트이름을 구하기 위해서는 xl/workbook.xml파일에서 &lt;sheets&gt; 노드 밑에 있는 각 시트별 노드 &lt;sheet&gt;를 찾아야 한다. 테스트 중인 문서는 3개의 시트가 있으므로, 3개의 &lt;sheet&gt;노드가 있다.
+<pre title="전체 코드">with open(os.path.join(self.target_dir, 'xl', 'workbook.xml')) as xml:
+    workbook_XML = etree.parse(xml)
+    sheet_elems = workbook_XML.findall('//ns:sheet', namespaces={'ns': self.ns})
+    return [sheet_elem.values()[0] for sheet_elem in sheet_elems]</pre>
+</li>
+<li>etree.parse() 함수는 파일 객체를 인자로 받는다.</li>
+<li>xpath 자체는 어렵지 않은데, 위와 같이 네임스페이스를 지정해 주어야 한다. 이것때문에 처음에 많이 헤맸다;;;</li>
+<li><span class="lang:python decode:true  crayon-inline ">sheet_elem.values()</span> 를 실행하면 ['시트이름', '1', 'rId1']와 같은 형태의 리스트를 구할 수 있다. 당연히 '시트이름'이 구하고자 하는 시트 이름이다. 따라서 sheet_elem.values()[0]으로 시트 이름만 가져오자('1', 'rId1'값도 중요한 값이지만 시트이름만 가져오면 되므로 여기서는 다루지 않는다).</li>
+</ol>
+<h2>4. 그 외 메모해둘 사항:</h2>
+<p>기존에 Python 2.7에서 만들 때에는 etree.parse() 로 파일 객체를 파싱하려 할 때, 에러가 발생했다(무슨 에러인지는 기억이...). 그래서 xml파일을 문자열(바이트 코드)로 읽어와서 etree.XML(str)와 같은 식으로 했었는데,  Python 3.X에서는 이런 에러가 발생한다.</p>
+<pre class="lang:python decode:true">Unicode strings with encoding declaration are not supported. Please use bytes input or XML fragments without declaration.</pre>
+<p>workbook.xml은 다음과 같이 시작한다.</p>
+<pre class="lang:python decode:true">&lt;?xml version="1.0" encoding="UTF-8" standalone="yes"?&gt;</pre>
+<p>여기 encoding 속성 때문이다. 이와 관련해서는 <a href="http://lxml.de/parsing.html#python-unicode-strings" target="_blank">http://lxml.de/parsing.html#python-unicode-strings</a> 참고. 다행히 Python 3.x에서 하니까 etree.parse(&lt;파일객체&gt;)가 에러 없이 동작한다.</p>
+<p>만약 etree.XML()을 사용하고 싶다면 다음과 같이 한다.</p>
+<pre class="lang:python decode:true crayon-selected">def _getEtree(self, xml):
+    with open(xml) as f:
+        return etree.XML(bytes(f.read(), 'utf-8'))</pre>
+<p>그런데 MS는 Content_Types.xml파일 이름에 왜 대괄호([])를 씌웠는지 모르겠다. 도대체 왜...</p>

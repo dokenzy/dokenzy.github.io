@@ -1,0 +1,28 @@
+---
+layout: post
+title: 'Vim: 더블 탭으로 분할된 창 이동하기'
+post_id: '1700'
+date: 2014-08-30 16:19:20.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Vim
+tags:
+- keymap
+- nmap
+- Vim
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>Vim에서는 :sp 나 :vs 명령으로 창을 나눌 수 있다. 이렇게 창을 이동하고 나서는 Control-w+화살표나 Control-w-w 키로 커서를 원하는 창으로 이동할 수 있다. 나는 양손쓰는 게 귀찮아서 Control-w-w 키만 쓴다.</p>
+<p>그런데 이 키 조합은 참 불편하다. 내가 창을 잘 나누지 않는 이유 중 하나이기도 하다. 그래서 더블 탭으로 창을 이동할 수 있도록 맵핑했다.</p>
+<p>.vimrc에 아래 코드를 추가한다.</p>
+<pre class="lang:vim decode:true">nmap &lt;TAB&gt;&lt;TAB&gt; &lt;C-w&gt;&lt;C-w&gt;</pre>
+<p>이 편한 세상~</p>

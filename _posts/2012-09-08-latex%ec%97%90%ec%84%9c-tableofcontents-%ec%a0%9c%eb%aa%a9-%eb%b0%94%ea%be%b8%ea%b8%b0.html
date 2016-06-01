@@ -1,0 +1,53 @@
+---
+layout: post
+title: latex에서 tableofcontents 제목 바꾸기
+post_id: '87'
+date: 2012-09-08 23:14:20.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+- Packages
+tags:
+- contentsname
+- kotex
+- latex
+- tableofcontents
+- 목차
+- 차례
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>이 글은 <a title="\tableofcontents명령을 쓰면 나오는 &quot;Contents&quot;대신 한글로 &quot;목차&quot;로 나타나게 하려면 어떻게 해요?" href="http://www.ktug.or.kr/xe/index.php?_filter=search&amp;mid=KTUG_QnA_board&amp;search_target=title_content&amp;search_keyword=tableofcontents&amp;document_srl=155604" target="_blank">KTUG 게시물</a>을 요약한 것입니다.</p>
+<p>latex에서는 \tableofcontents 명령으로 목차를 간단하게 만들 수 있다.</p>
+<p>이 명령만으로 목차를 만들면 목차의 제목이 "Contents"로 나온다.</p>
+<p>이 이름을 원하는 것으로 바꾸는 방법을 소개한다. 단, kotex 패키지를 이용했을 때만 다룬다<br />
+(oblivoir나 xoblivoir 클래스를 이용하는 경우, 내부적으로 kotex 패키지를 불러오므로, 이 두 개의 클래스를 쓰는 경우에도 해당한다) .</p>
+<h2>1. kotex불러오기</h2>
+<p>먼저 kotex 패키지를 불러오는데, 다음과 같이 hangul옵션을 주어야 한다.</p>
+<pre class="lang:tex decode:true">\usepackage[hangul]{kotex}</pre>
+<p>만약 oblivoir나 xoblivoir 클래스를 사용한다면 클래스 옵션에 hangul을 추가한다.</p>
+<pre class="lang:tex decode:true">\documentclass[hangul]{xoblivoir}</pre>
+<h2></h2>
+<h2>2. contentsname 바꾸기</h2>
+<p>이제 다음 3가지 방법을 사용할 수 있다. 골라쓰면 된다.</p>
+<ol>
+<li><span class="lang:tex decode:true  crayon-inline">\ksnamedef{contentsname}{목차}</span></li>
+<li>
+<pre class="lang:tex decode:true">\AtBeginDocument{
+    \renewcommand\contentsname{목차}
+}</pre>
+</li>
+<li><span class="lang:tex decode:true  crayon-inline ">\begin{document}</span> 이후에
+<pre class="lang:tex decode:true ">\renewcommand\contentsname{목차}</pre>
+</li>
+</ol>
+<p>목차의 이름 뿐만 아니라 색상, 스타일 등도 바꿀 수 있다. 아래 그 예를 보인다.</p>
+<pre class="lang:tex decode:true">\ksnamedef{contentsname}{{\ttfamily{\HUGE{\color{gray}{여정}}}}}</pre>

@@ -1,0 +1,34 @@
+---
+layout: post
+title: 'LaTeX:: 수식 정렬하기'
+post_id: '647'
+date: 2013-11-04 17:53:25.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- eqnarray
+- latex
+- 수식
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>출처: <a href="http://www.personal.ceu.hu/tex/cookbook.html" target="_blank">LaTeX Cookbook</a></p>
+<p>다음과 같은 형식으로 수식을 입력하고 싶다.</p>
+<p><img class="alignnone" alt="" src="{{ site.baseurl }}/assets/e196dcbef27b2b53ccc236d169996f53.png" width="348" height="94" /></p>
+<p>다음과 같이 입력한다.</p>
+<pre class="lang:tex decode:true">\begin{eqnarray}
+ y &amp;=&amp; x^4 + 4      \nonumber \
+   &amp;=&amp; (x^2+2)^2 -4x^2 \nonumber \
+   &amp;\le&amp;(x^2+2)^2
+\end{eqnarray}</pre>
+<p>만약 매번 \nonumber 명령을 입력하는 것이 귀찮다면<span class="lang:tex decode:true  crayon-inline ">eqnarray</span>  대신 <span class="lang:tex decode:true  crayon-inline ">eqnarray*</span>  환경을 이용한다.</p>
+<p>이 외에 많은 수식 입력 방법이 궁금하면 출처인 <a href="http://www.personal.ceu.hu/tex/cookbook.html" target="_blank">http://www.personal.ceu.hu/tex/cookbook.html</a>를 방문해 보자.</p>

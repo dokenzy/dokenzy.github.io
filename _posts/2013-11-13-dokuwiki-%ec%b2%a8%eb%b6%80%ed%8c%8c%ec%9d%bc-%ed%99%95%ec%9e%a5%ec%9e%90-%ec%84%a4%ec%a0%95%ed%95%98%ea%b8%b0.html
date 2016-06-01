@@ -1,0 +1,28 @@
+---
+layout: post
+title: Dokuwiki 첨부파일 확장자 설정하기
+post_id: '665'
+date: 2013-11-13 01:29:28.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- 일반
+tags:
+- dokuwiki
+- mime
+- x-hwp
+- 도쿠위키
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>dokuwiki/conf/mime.conf 파일을 열어서 다음 코드를 추가한다.</p>
+<pre class="lang:sh decode:true "># HWP
+hwp    application/x-hwp</pre>
+<p>x-hwp로 하면 다운로드가 안되는 경우도 있다고 한다. 그럴 때는 application/unknown으로 시도해보자.</p>

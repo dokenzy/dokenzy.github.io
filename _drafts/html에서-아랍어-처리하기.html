@@ -1,0 +1,28 @@
+---
+layout: post
+title: HTML에서 아랍어 처리하기
+post_id: '1147'
+date: 
+type: post
+published: false
+status: draft
+categories:
+- 일반
+tags: []
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>아랍어 HTML문서를 만들다보면, 가끔 뛰쳐나가고 싶을 때가 있다.</p>
+<p>업무상 급히 아랍어 문서를 처리하다보니, 가장 원칙에 맞고 결과가 확실한 방법을 알게 되었다.</p>
+<p>다 기억나는 것은 아니지만, 이것마저 잊어버리기 전에 간단하게나마 요약한다.</p>
+<p>그 전에 먼저 알아두어야 할 것이 두 개 있다.</p>
+<p>먼저, 아랍어는 에디터에 따라 커서 움직임이 제각각이다. 즉, 오른쪽 화살표 키를 눌렀는데, 정작 커서는 왼쪽으로 가는 경우도 있다. 특히 드래그를 하다보면 도대체 무슨 일이 벌어지나 혼란스럽다. 윈도우즈에서 가장 선호하는 에디터는 EmEditor(요즘은 Sublime Text)인데, 아쉽게도 EmEditor는 아랍어 처리할 때 매우 혼란스러운 장면을 연출한다. 윈도우즈에서 아랍어를 다룰 때 그나마 가장 만족스러웠던 에디터는 Editplus다. 특히 드래그 할 때 EmEditor처럼 요란하지 않다.</p>
+<p>두 번째로 알아두어야 할 것은, HTML의 텍스트에는 방향성이라는 것이 있다. 영어는 ltr, 아랍어는 rtl이다. 문제는 방향성이 없거나 중립인 기호나 숫자다. 이런 것은 대게 앞에 있는 문자의 방향성을 따라간다.</p>
+<p>1. &lt;html dir="rtl"&gt;. 과감히 dir="rtl"속성을 사용한다.</p>
+<p>2. 문서를 논리적인 순서대로 입력한다. 즉 ltr로 생각하고</p>

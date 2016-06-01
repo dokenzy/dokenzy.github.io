@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Python: iter()와 next() 사용하기'
+post_id: '202'
+date: 2012-11-13 23:55:18.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- built-in
+tags:
+- iter()
+- next()
+- Python
+- 내장함수
+- 이터레이터
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>iter() 함수: <a href="http://docs.python.org/2/library/functions.html#iter" target="_blank">http://docs.python.org/2/library/functions.html#iter</a></p>
+<p>next() 함수: <a href="http://docs.python.org/2/library/functions.html#next" target="_blank">http://docs.python.org/2/library/functions.html#next</a></p>
+<pre class="lang:python decode:true">myList = ['a', 'b', 'c', 'd', 'e']
+it = iter(myList)
+
+for x in range(5):
+	print next(it)
+	#또는 print it.next()</pre>

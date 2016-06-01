@@ -1,0 +1,33 @@
+---
+layout: post
+title: PyQt에서 한글 처리
+post_id: '50'
+date: 2012-07-12 01:27:47.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- PyQt
+tags:
+- cp949
+- encode
+- pyqt
+- Python
+- unicode
+- 인코딩
+- 한글
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>윈도우즈는 인코딩 처리가 골치아프다.</p>
+<p>PyQt에서 한글을 처리하는 간단한 예.</p>
+<p>윈도우즈의 특정 폴더를 탐색기로 열어주는 코드이다.</p>
+<pre class="lang:python decode:true">Popen('explorer "%s"' % unicode(파일경로).encode('cp949'))</pre>
+<p>PyQt 내부적으로는 unicode(파일경로)와 같이 unicode()로 처리하면 되는데, 윈도우즈에서는 한글 경로를 탐색기로 열 때는 encode('cp949')로 다시 인코딩해야 한다.</p>
+<p>느닷없이 자정 넘어까지 야근하는 바람에 포스팅 의욕이 떨어진다... 야근, 싫다.</p>

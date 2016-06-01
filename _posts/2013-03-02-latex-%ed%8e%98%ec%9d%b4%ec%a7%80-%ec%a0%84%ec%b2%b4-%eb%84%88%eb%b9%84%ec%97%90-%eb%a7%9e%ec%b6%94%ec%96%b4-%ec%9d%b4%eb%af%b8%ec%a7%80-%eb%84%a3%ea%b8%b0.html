@@ -1,0 +1,35 @@
+---
+layout: post
+title: 'LaTeX:: 페이지 전체 너비에 맞추어 이미지 넣기'
+post_id: '376'
+date: 2013-03-02 00:01:26.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- LaTeX
+tags:
+- graphicx
+- includegraphics
+- latex
+- paperwidth
+- textwidth
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>LaTeX에서 이미지를 넣는 가장 쉬운 방법은 graphicx패키지를 이용하는 것이다.</p>
+<p>이 패키지의 \includegraphics[width=\textwidth]{filename} 명령을 이용하면 이미지를 본문 너비만큼의 크기로 넣을 수 있다.</p>
+<p>그런데 이미지를 페이지 너비 전체에 맞게 넣고 싶어졌다.</p>
+<p>구글링한 결과(<a href="http://tex.stackexchange.com/questions/39147/scale-image-to-page-width" target="_blank">http://tex.stackexchange.com/questions/39147/scale-image-to-page-width</a>) 다음과 같이 했더니 원하는 결과를 얻을 수 있었다.</p>
+<pre class="lang:tex decode:true crayon-selected">\begin{center}
+  \makebox[\textwidth]{\includegraphics[width=\paperwidth]{filename}}
+\end{center}</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

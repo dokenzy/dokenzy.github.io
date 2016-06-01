@@ -1,0 +1,33 @@
+---
+layout: post
+title: 'Python:: timezone 구하기'
+post_id: '2059'
+date: 2015-05-06 03:58:43.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- localtime
+- timezone
+- UTC
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>파이썬으로 현재 시스템의 timezone을 구하는 방법을 찾아봤는데, 다 번거롭다. 한참 검색한 끝에 tzlocal(<a href="https://github.com/regebro/tzlocal">https://github.com/regebro/tzlocal</a>)이라는 라이브러리를 찾았다. 아주 맘에 든다.</p>
+<pre class="lang:python decode:true">from tzlocal import get_localzone
+tz = get_localzone()
+# 결과: Asia/Seoul</pre>
+<p>그 외 이런 방법도 있다. 출처(<a href="http://stackoverflow.com/questions/1111056/get-time-zone-information-of-the-system-in-python">Get time zone information of the system in Python?</a>)</p>
+<pre class="lang:default decode:true ">import time
+offset = time.timezone if (time.localtime().tm_isdst == 0) else time.altzone
+tz_offset = offset / 60 / 60 * -1
+# 결과: 9.0</pre>
+<p>경우에 따라 이것이 더 필요한 경우도 있을 수 있겠다.</p>

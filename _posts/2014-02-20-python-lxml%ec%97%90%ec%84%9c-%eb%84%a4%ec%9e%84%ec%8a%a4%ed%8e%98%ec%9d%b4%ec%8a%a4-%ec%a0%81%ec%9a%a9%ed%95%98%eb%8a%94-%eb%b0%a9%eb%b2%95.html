@@ -1,0 +1,39 @@
+---
+layout: post
+title: 'Python:: lxml에서 네임스페이스 적용하는 방법'
+post_id: '937'
+date: 2014-02-20 16:17:48.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- Python
+tags:
+- excel
+- find
+- lxml
+- namespaces
+- Python
+- 네임스페이스
+meta:
+  _edit_last: '1'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>작년에 만든 파이썬 2.7용 엑셀 2010 라이브러리를 파이썬 3.3.3에서 다시 만들고 있는데, 몇 가지 안되는 부분들이 있다. 파이써 버전과 lxml버전이 모두 바뀌어서 그냥 에러메시지 보면서 작업하고 있다.</p>
+<p>최근에 고생한 작업은 이렇다.</p>
+<p>기존에는 Element.find('sheetData')로 sheetData 노드를 구할 수 있었다. 그런데 지금은 안된다. 아마 lxml쪽이 변한 것 같다.(이거 정확히 알자고 lxml의 changeslog를 뒤지고 싶지 않다.)</p>
+<p>노드를 구하지 못하니 당연히 None이 리턴된다. 네임스페이스를 적용해 보기로 했다. 그런데 이 XML문서에는 네임스페이스가 4개나 있다.</p>
+<p>다행히 상위노드인 Element에서 리스트 형식으로 sheetData노드를 구할 수 있다. Element[3]과 같이...</p>
+<p>이것을 콘솔에서 print해보면 <span class="lang:xhtml decode:true  crayon-inline">&lt;Element {http://schemas.openxmlformats.org/spreadsheetml/2006/main}sheetData at 0x1023056c8&gt;</span> 와 같이 네임스페이스가 나온다. 이 네임스페이스를 적용해서 다시 찾아보자.</p>
+<pre class="lang:xhtml decode:true">sheetData = self.sheetXML.find('ns:sheetData', namespaces={'ns': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'})</pre>
+<p>이제 sheetData 노드가 찾아진다.</p>
+<p>새로운 노드를 추가하는 방법도 바뀌었다. 부모 노드에서 네임스페이스를 사용하는 경우, 자식 노드를 만들 때에 네임스페이스를 적용해야 한다. 기존에서 네임스페이스를 써야 하는 것도 있고 생략해도 되는 게 있었는데 차라리 이렇게 일관성있게 바뀌니 더 낫다.</p>
+<pre class="lang:python decode:true">NSMAP = {'ns': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'}
+new_row = etree.Element('{%s}row' % NSMAP['ns'], nsmap=NSMAP, r='8')</pre>
+<p>이 파일의 root 노드에는 네임스페이스가 있다. 이의 자식노드인 row를 추가하고 싶을 때에는 위와 같은 형식으로 노드를 추가해야 원하는 결과를 얻을 수 있다. 주의할 점은 네임스페이스 없이 노드를 만들어도 오류가 발생하지는 않는다. 다만 원하는 노드가 생성되지 않을 뿐이다.</p>
+<p>끝.</p>

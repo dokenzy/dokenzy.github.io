@@ -1,0 +1,47 @@
+---
+layout: post
+title: html5 meter 요소에 CSS 적용하기
+post_id: '79'
+date: 2012-09-07 00:38:55.000000000 +09:00
+type: post
+published: true
+status: publish
+categories:
+- CSS
+tags:
+- css3
+- html5
+- meter
+meta:
+  _edit_last: '1'
+  video_type: '#NONE#'
+author:
+  login: dokenzy
+  email: dokenzy@gmail.com
+  display_name: dokenzy
+  first_name: ''
+  last_name: ''
+---
+<p>HTML5에는 meter라는 요소가 추가되었다. 현재 어떤 값을 갖고 있는지 시각적으로 쉽게 나타내 준다.</p>
+<p>현재 이 요소를 지원하는 브라우저는 구글 크롬과 오페라 밖에 없다. 구글크롬과 같은 웹킷 엔진을 쓰는 사파리는 아직 지원하지 않는다.</p>
+<p>아무튼 이 요소를 이용하면 브라우저가 기본적으로 제공하는 초록색 밖에 안나타난다. low와 high값을 함께 이용하면 value값에 따라 노란 색이 나오기도 하는데, 이 역시 브라우저가 제공하는 기본값이다.</p>
+<p>구글링과 약간의 시행착오 끝에 meter에 색상을 지정하는 방법을 찾았다.</p>
+<p>HTML코드는 다음과 같다.</p>
+<pre class="lang:xhtml decode:true">&lt;meter min="0" max="100" value="80" class="percent"&gt;&lt;/meter&gt;</pre>
+<p>여기에 대한 CSS</p>
+<pre class="lang:css decode:true">meter {height: 7px; color:#7BAD39; }
+meter::-webkit-meter-bar {background: #174672; /*미터기 전체에 대한 색상*/}
+meter::-webkit-meter-optimum-value,
+meter::-webkit-meter-suboptimum-value,
+meter::-webkit-meter-even-less-good-value,
+meter::meter-bar,
+meter::meter-optimum-value,
+meter::meter-suboptimum-value,
+meter::meter-even-less-good-value {
+	border: 1px solid #444;
+	border-radius: 3px;
+	background: #87CEDA;/*상태바에 대한 색상*/
+}</pre>
+<p>미터기 전체(배경)에 대한 색상과 value값에 해당하는 바(bar) 색상 모두 background 로 처리한다는 점이 특징이다. 이것이 CSS3 Spec에 따른 것인지 구글 크롬에만 해당하는 것인지는 아직 확인하지 못했다.</p>
+<p>추가) 맥에서는 테스트를 못해봤는데, 오늘 맥용 구글 크롬에서 테스트해보니 스타일이 제대로 적용되지 않는다.</p>
+<p>리눅스(데비안)용 구글 크롬(v. 23)에서는 잘 된다.</p>
